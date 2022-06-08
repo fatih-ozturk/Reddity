@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = Config.applicationId + ".base" // todo refactor later
+    namespace = Config.applicationId + ".data" // todo refactor later
     compileSdk = Config.SdkVersions.compile
 
     defaultConfig {
@@ -34,18 +34,32 @@ android {
 }
 
 dependencies {
-    api(libs.kotlin.stdlib)
-    api(libs.kotlin.coroutines.core)
-    api(libs.dagger.dagger)
-
-    implementation(libs.androidx.core)
-    api(libs.kotlin.coroutines.core)
-
-    implementation(libs.timber)
+    implementation(project(":base"))
+    implementation(project(":auth"))
 
     implementation(libs.hilt.library)
+    implementation(libs.androidx.hilt.compose)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.czerwinski.android.hilt.extension)
-    kapt(libs.czerwinski.android.hilt.processor)
+    implementation(libs.androidx.hilt.work)
+    kapt(libs.androidx.hilt.compiler)
+
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.gsonConverter)
+    implementation(libs.retrofit.mock)
+
+    implementation(libs.okhttp.okhttp)
+    implementation(libs.okhttp.loggingInterceptor)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.mockK)
+    testImplementation(libs.androidx.archCoreTesting)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.hilt.testing)
+    testImplementation(libs.kotlin.coroutines.android)
 }

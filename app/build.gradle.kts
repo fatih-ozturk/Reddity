@@ -102,16 +102,12 @@ dependencies {
 
     implementation(libs.accompanist.navigation.animation)
 
-    implementation(libs.threeTenAbp)
-
     implementation(libs.timber)
 
     implementation(libs.kotlin.stdlib)
 
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
-
-    implementation(libs.okhttp.loggingInterceptor)
 
     implementation(libs.hilt.library)
     implementation(libs.androidx.hilt.compose)

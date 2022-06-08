@@ -1,5 +1,5 @@
 include(":app")
 include(":auth")
 include(":base")
-
+include(":data")
 enableFeaturePreview("VERSION_CATALOGS")
