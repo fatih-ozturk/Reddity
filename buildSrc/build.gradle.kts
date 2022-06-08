@@ -12,11 +12,11 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.android.pluginGradle)
-    implementation(libs.kotlin.pluginGradle)
-    implementation(libs.kotlin.extensions)
-    implementation(libs.hilt.pluginGradle)
-    implementation(libs.gradleDependencyUpdate)
-    implementation(libs.ktlint)
-    implementation(libs.spotless)
+    api(libs.android.pluginGradle)
+    api(libs.kotlin.pluginGradle)
+    api(libs.kotlin.extensions)
+    api(libs.hilt.pluginGradle)
+    api(libs.gradleDependencyUpdate)
+    api(libs.ktlint)
+    api(libs.spotless)
 }

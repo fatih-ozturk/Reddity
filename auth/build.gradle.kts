@@ -41,5 +41,8 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core)
 
+    implementation(libs.czerwinski.android.hilt.extension)
+    kapt(libs.czerwinski.android.hilt.processor)
+
     api(libs.appauth)
 }

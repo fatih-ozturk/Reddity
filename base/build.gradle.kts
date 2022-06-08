@@ -46,4 +46,7 @@ dependencies {
 
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.czerwinski.android.hilt.extension)
+    kapt(libs.czerwinski.android.hilt.processor)
 }
