@@ -44,6 +44,7 @@ subprojects {
             kotlinOptions {
                 jvmTarget = "11"
                 kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
+                kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
             }
         }
     }
@@ -53,7 +54,7 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java){
+tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java) {
     rejectVersionIf {
         val current = DependencyUpdates.versionToRelease(currentVersion)
         if (current == utils.ReleaseType.SNAPSHOT) return@rejectVersionIf true

@@ -6,7 +6,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 1.11)
 export JAVA_HOME
 
 OUTPUT="/tmp/analysis-result"
-./gradlew detekt ktlintCheck spotlessCheck --daemon > ${OUTPUT}
+./gradlew ktlintCheck spotlessCheck --daemon > ${OUTPUT}
 EXIT_CODE=$?
 if [ ${EXIT_CODE} -ne 0 ]; then
     cat ${OUTPUT}
