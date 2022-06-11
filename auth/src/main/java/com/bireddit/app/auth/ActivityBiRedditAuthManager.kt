@@ -17,6 +17,7 @@ package com.bireddit.app.auth
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
 import it.czerwinski.android.hilt.annotations.Bound
@@ -51,6 +52,7 @@ internal class ActivityBiRedditAuthManager @Inject constructor(
                     val state = AuthState().apply {
                         update(token, ex)
                     }
+                    Log.e("Fat", state.accessToken.toString())
                     authManager.onNewAuthState(state)
                 }
             }

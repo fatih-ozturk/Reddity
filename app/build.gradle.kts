@@ -36,6 +36,7 @@ android {
             useSupportLibrary = true
         }
     }
+
     buildTypes {
         debug {
             isDebuggable = true

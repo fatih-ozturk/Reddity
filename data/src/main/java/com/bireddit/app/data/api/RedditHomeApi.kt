@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.data.di
+package com.bireddit.app.data.api
 
-import okhttp3.Authenticator
-import okhttp3.Request
-import okhttp3.Response
-import okhttp3.Route
-import javax.inject.Inject
-import javax.inject.Singleton
+import retrofit2.http.GET
 
-@Singleton
-class BiRedditAuthenticator @Inject constructor() : Authenticator {
+interface RedditHomeApi {
 
-    override fun authenticate(route: Route?, response: Response): Request? {
-        TODO("Not yet implemented")
-    }
+    @GET
+    fun getHomeHotFeed()
 }

@@ -67,7 +67,6 @@ object BiRedditAuthModule {
             ResponseTypeValues.CODE,
             redirectUri.toUri()
         )
-            .setResponseType("code")
             .setAdditionalParameters(buildMap { put("duration", "permanent") })
             .setScope(
                 "identity edit flair history " +

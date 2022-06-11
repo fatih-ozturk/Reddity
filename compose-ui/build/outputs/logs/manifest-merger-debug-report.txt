@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml:2:1-51
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml:2:1-51
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml:2:1-51
+	package
+		ADDED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml:2:11-48
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml:2:1-51
+uses-sdk
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+		ADDED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+		ADDED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/fatihozturk/Projects/biReddit/compose-ui/src/main/AndroidManifest.xml
