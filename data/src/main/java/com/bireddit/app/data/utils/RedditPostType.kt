@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.data.api
+package com.bireddit.app.data.utils
 
-import com.bireddit.app.data.model.RedditListingResponse
-import retrofit2.Call
-import retrofit2.http.GET
-
-interface RedditHomeApi {
-
-    @GET("/hot.json")
-    fun getHomeHotFeed(): Call<RedditListingResponse>
+enum class RedditPostType(type: String) {
+    COMMENT("t1"),
+    ACCOUNT("t2"),
+    LINK("t3"),
+    MESSAGE("t4"),
+    SUBREDDIT("t5"),
+    AWARD("t6");
 }

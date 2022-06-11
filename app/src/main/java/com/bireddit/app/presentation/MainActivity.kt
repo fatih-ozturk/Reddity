@@ -66,6 +66,11 @@ class MainActivity : ComponentActivity() {
             }, content = {
                 Text(text = "GET AUTH")
             })
+            Button(onClick = {
+                viewModel.test()
+            }, content = {
+                Text(text = "TEST")
+            })
         }
     }
 }

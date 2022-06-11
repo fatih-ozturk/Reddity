@@ -85,6 +85,7 @@ android {
 dependencies {
     implementation(project(":auth"))
     implementation(project(":base"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)
@@ -109,7 +110,10 @@ dependencies {
 
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
-
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.gsonConverter)
+    implementation(libs.retrofit.mock)
+    implementation(libs.retrofit.moshiConverter)
     implementation(libs.hilt.library)
     implementation(libs.androidx.hilt.compose)
     kapt(libs.hilt.compiler)

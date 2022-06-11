@@ -16,7 +16,13 @@
 package com.bireddit.app.data.di
 
 import com.bireddit.app.auth.AuthManager
-import com.google.gson.Gson
+import com.bireddit.app.data.api.RedditHomeApi
+import com.bireddit.app.data.model.RedditKind
+import com.bireddit.app.data.model.RedditListingDetailResponse
+import com.bireddit.app.data.utils.RedditPostType
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +30,8 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -35,12 +42,12 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(
         okHttp: OkHttpClient,
-        gson: Gson
+        moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttp)
-            .baseUrl("")
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .baseUrl("https://reddit.com/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 
@@ -58,11 +65,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGson(): Gson = Gson()
-        .newBuilder()
-        .setLenient()
-        .serializeSpecialFloatingPointValues()
-        .create()
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .add(
+            PolymorphicJsonAdapterFactory.of(RedditKind::class.java, "kind")
+                .withSubtype(RedditListingDetailResponse::class.java, RedditPostType.LINK.name)
+        )
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     @Provides
     @Singleton
@@ -77,4 +86,8 @@ object NetworkModule {
     ): BiRedditAuthInterceptor {
         return BiRedditAuthInterceptor(authManager)
     }
+
+    @Provides
+    @Singleton
+    internal fun provideRedditHomeApi(retrofit: Retrofit): RedditHomeApi = retrofit.create()
 }

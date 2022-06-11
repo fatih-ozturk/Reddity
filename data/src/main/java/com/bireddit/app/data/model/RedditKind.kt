@@ -13,14 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.data.api
+package com.bireddit.app.data.model
 
-import com.bireddit.app.data.model.RedditListingResponse
-import retrofit2.Call
-import retrofit2.http.GET
+import com.bireddit.app.data.utils.RedditPostType
 
-interface RedditHomeApi {
-
-    @GET("/hot.json")
-    fun getHomeHotFeed(): Call<RedditListingResponse>
-}
+sealed class RedditKind(val kind: RedditPostType)
