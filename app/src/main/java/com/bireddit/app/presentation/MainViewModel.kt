@@ -15,17 +15,34 @@
  */
 package com.bireddit.app.presentation
 
-import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.bireddit.app.auth.AuthManager
 import com.bireddit.app.auth.RedditAuthManager
+import com.bireddit.app.data.api.RedditHomeApi
+import com.bireddit.app.data.model.RedditListingResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val redditAuthManager: RedditAuthManager,
-    private val authManager: AuthManager,
-    @Named("auth") private val authPrefs: SharedPreferences
-) : ViewModel(), RedditAuthManager by redditAuthManager
+    private val redditHomeApi: RedditHomeApi
+) : ViewModel(), RedditAuthManager by redditAuthManager {
+    fun test() {
+        redditHomeApi.getHomeHotFeed().enqueue(object : Callback<RedditListingResponse?> {
+            override fun onResponse(
+                call: Call<RedditListingResponse?>,
+                response: Response<RedditListingResponse?>
+            ) {
+                Log.e("FAT", response.toString())
+            }
+
+            override fun onFailure(call: Call<RedditListingResponse?>, t: Throwable) {
+                Log.e("FAT ERR", t.toString())
+            }
+        })
+    }
+}

@@ -24,19 +24,32 @@ class BiRedditAuthInterceptor @Inject constructor(
     private val authManager: AuthManager
 ) : Interceptor {
 
+    private val url: String
+        get() = if (authManager.authState.value.isAuthorized) oauthBaseUrl else baseUrl
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val oauthBaseUrl = "https://oauth.reddit.com/"
-        val baseUrl = "https://reddit.com/"
-        if (!authManager.authState.value.isAuthorized) {
-            val builder = originalRequest.newBuilder().url(baseUrl).build()
-            return chain.proceed(builder)
+        val requestBuilder = originalRequest.newBuilder()
+        val urlBuilder = originalRequest.url
+            .newBuilder()
+            .scheme(originalRequest.url.scheme)
+            .host(url)
+            .build()
+
+        if (authManager.authState.value.isAuthorized) {
+            requestBuilder.header(
+                "Authorization",
+                "Bearer " + authManager.authState.value.accessToken.toString()
+            )
         }
 
-        val requestBuilder = originalRequest.newBuilder()
-            .header("Authorization", "Bearer " + authManager.authState.value.accessToken.toString())
-            .url(oauthBaseUrl)
+        requestBuilder.url(urlBuilder)
         val request = requestBuilder.build()
         return chain.proceed(request)
+    }
+
+    companion object {
+        const val oauthBaseUrl = "oauth.reddit.com"
+        const val baseUrl = "reddit.com"
     }
 }

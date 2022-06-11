@@ -47,6 +47,10 @@ dependencies {
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.gsonConverter)
     implementation(libs.retrofit.mock)
+    implementation(libs.retrofit.moshiConverter)
+    implementation(libs.moshi.core)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.adapter)
 
     implementation(libs.okhttp.okhttp)
     implementation(libs.okhttp.loggingInterceptor)
