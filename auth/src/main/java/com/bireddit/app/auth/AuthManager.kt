@@ -39,7 +39,9 @@ class AuthManager @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @Named("auth") private val authPrefs: SharedPreferences
 ) {
-    private val authState = MutableStateFlow(EmptyAuthState)
+    private val _authState = MutableStateFlow(EmptyAuthState)
+    val authState: StateFlow<AuthState>
+        get() = _authState.asStateFlow()
 
     private val _state = MutableStateFlow(BiRedditAuthState.LOGGED_OUT)
     val state: StateFlow<BiRedditAuthState>
@@ -47,21 +49,21 @@ class AuthManager @Inject constructor(
 
     init {
         GlobalScope.launch(IoDispatchers) {
-            authState.collect { authState ->
+            _authState.collect { authState ->
                 updateAuthState(authState)
             }
         }
         // Read the auth state from prefs
         GlobalScope.launch(mainDispatcher) {
             val state = withContext(IoDispatchers) { readAuthState() }
-            authState.value = state
+            _authState.value = state
         }
     }
 
     fun onNewAuthState(newState: AuthState) {
         GlobalScope.launch(mainDispatcher) {
             // Update our local state
-            authState.value = newState
+            _authState.value = newState
         }
         GlobalScope.launch(IoDispatchers) {
             // Persist auth state
@@ -88,6 +90,7 @@ class AuthManager @Inject constructor(
             else -> AuthState()
         }
     }
+
     private fun updateAuthState(authState: AuthState) {
         if (authState.isAuthorized) {
             _state.value = BiRedditAuthState.LOGGED_IN

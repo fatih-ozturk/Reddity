@@ -15,6 +15,7 @@
  */
 package com.bireddit.app.data.di
 
+import com.bireddit.app.auth.AuthManager
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -47,11 +48,11 @@ object NetworkModule {
     @Provides
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
-        biRedditAuthenticator: BiRedditAuthenticator
+        biRedditAuthInterceptor: BiRedditAuthInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .authenticator(biRedditAuthenticator)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(biRedditAuthInterceptor)
             .build()
     }
 
@@ -71,7 +72,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideBiRedditAuthenticator(): BiRedditAuthenticator {
-        return BiRedditAuthenticator()
+    internal fun provideBiRedditAuthInterceptor(
+        authManager: AuthManager
+    ): BiRedditAuthInterceptor {
+        return BiRedditAuthInterceptor(authManager)
     }
 }
