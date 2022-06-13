@@ -37,12 +37,17 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":auth"))
 
+    implementation(libs.timber)
+
     implementation(libs.hilt.library)
     implementation(libs.androidx.hilt.compose)
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.hilt.work)
     kapt(libs.androidx.hilt.compiler)
+
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.gsonConverter)

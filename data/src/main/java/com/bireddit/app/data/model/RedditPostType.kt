@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.data.utils
+package com.bireddit.app.data.model
 
 enum class RedditPostType(type: String) {
     COMMENT("t1"),

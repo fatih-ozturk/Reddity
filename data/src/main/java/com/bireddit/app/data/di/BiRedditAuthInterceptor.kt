@@ -18,6 +18,7 @@ package com.bireddit.app.data.di
 import com.bireddit.app.auth.AuthManager
 import okhttp3.Interceptor
 import okhttp3.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 class BiRedditAuthInterceptor @Inject constructor(
@@ -25,7 +26,7 @@ class BiRedditAuthInterceptor @Inject constructor(
 ) : Interceptor {
 
     private val url: String
-        get() = if (authManager.authState.value.isAuthorized) oauthBaseUrl else baseUrl
+        get() = if (authManager.isUserAuthorized()) oauthBaseUrl else baseUrl
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
@@ -36,15 +37,17 @@ class BiRedditAuthInterceptor @Inject constructor(
             .host(url)
             .build()
 
-        if (authManager.authState.value.isAuthorized) {
+        if (authManager.isUserAuthorized()) {
             requestBuilder.header(
                 "Authorization",
-                "Bearer " + authManager.authState.value.accessToken.toString()
+                "Bearer " + authManager.getUserAuthorizationToken()
             )
         }
 
         requestBuilder.url(urlBuilder)
         val request = requestBuilder.build()
+
+        Timber.e(request.headers["Authorization"].toString())
         return chain.proceed(request)
     }
 

@@ -38,6 +38,8 @@ dependencies {
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
 
+    implementation(libs.timber)
+
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core)
 
