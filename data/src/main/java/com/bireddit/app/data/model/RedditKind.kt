@@ -15,6 +15,4 @@
  */
 package com.bireddit.app.data.model
 
-import com.bireddit.app.data.utils.RedditPostType
-
 sealed class RedditKind(val kind: RedditPostType)

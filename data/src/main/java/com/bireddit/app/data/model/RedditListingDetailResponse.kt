@@ -15,8 +15,6 @@
  */
 package com.bireddit.app.data.model
 
-import com.bireddit.app.data.utils.RedditPostType
-
 data class RedditListingDetailResponse(
     val data: RedditLinkResponse
 ) : RedditKind(RedditPostType.LINK)

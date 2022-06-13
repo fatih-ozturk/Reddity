@@ -19,7 +19,7 @@ import com.bireddit.app.auth.AuthManager
 import com.bireddit.app.data.api.RedditHomeApi
 import com.bireddit.app.data.model.RedditKind
 import com.bireddit.app.data.model.RedditListingDetailResponse
-import com.bireddit.app.data.utils.RedditPostType
+import com.bireddit.app.data.model.RedditPostType
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

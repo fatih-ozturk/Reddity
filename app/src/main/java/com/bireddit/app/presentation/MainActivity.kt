@@ -26,10 +26,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bireddit.app.auth.BiRedditAuthState
 import com.bireddit.app.presentation.theme.BiRedditTheme
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -54,6 +58,14 @@ class MainActivity : ComponentActivity() {
     fun MainScreen() {
         Column {
             val viewModel: MainViewModel = hiltViewModel()
+            val isLogin by viewModel.getAuthManagerState().collectAsState(null)
+            when (isLogin) {
+                BiRedditAuthState.LOGGED_IN -> Timber.e("LOGIN")
+                BiRedditAuthState.LOGGED_OUT -> Timber.e("LOGOUT")
+                else -> {
+                    // do nothing while fetching local auth state
+                }
+            }
             val loginLauncher = rememberLauncherForActivityResult(
                 contract = viewModel.buildLoginActivityResult()
             ) { result ->
@@ -64,12 +76,17 @@ class MainActivity : ComponentActivity() {
             Button(onClick = {
                 loginLauncher.launch(Unit)
             }, content = {
-                Text(text = "GET AUTH")
+                Text(text = "Login")
+            })
+            Button(onClick = {
+                viewModel.logout()
+            }, content = {
+                Text(text = "Logout")
             })
             Button(onClick = {
                 viewModel.test()
             }, content = {
-                Text(text = "TEST")
+                Text(text = "request")
             })
         }
     }

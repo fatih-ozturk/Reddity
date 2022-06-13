@@ -22,9 +22,10 @@ import com.bireddit.app.base.MainDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.openid.appauth.AuthState
@@ -40,23 +41,18 @@ class AuthManager @Inject constructor(
     @Named("auth") private val authPrefs: SharedPreferences
 ) {
     private val _authState = MutableStateFlow(EmptyAuthState)
-    val authState: StateFlow<AuthState>
-        get() = _authState.asStateFlow()
 
-    private val _state = MutableStateFlow(BiRedditAuthState.LOGGED_OUT)
-    val state: StateFlow<BiRedditAuthState>
-        get() = _state.asStateFlow()
+    private val _state = MutableSharedFlow<BiRedditAuthState>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val state: SharedFlow<BiRedditAuthState> = _state
 
     init {
-        GlobalScope.launch(IoDispatchers) {
-            _authState.collect { authState ->
-                updateAuthState(authState)
-            }
-        }
-        // Read the auth state from prefs
         GlobalScope.launch(mainDispatcher) {
             val state = withContext(IoDispatchers) { readAuthState() }
             _authState.value = state
+            updateAuthState(state)
         }
     }
 
@@ -64,6 +60,7 @@ class AuthManager @Inject constructor(
         GlobalScope.launch(mainDispatcher) {
             // Update our local state
             _authState.value = newState
+            updateAuthState(newState)
         }
         GlobalScope.launch(IoDispatchers) {
             // Persist auth state
@@ -93,10 +90,20 @@ class AuthManager @Inject constructor(
 
     private fun updateAuthState(authState: AuthState) {
         if (authState.isAuthorized) {
-            _state.value = BiRedditAuthState.LOGGED_IN
+            _state.tryEmit(BiRedditAuthState.LOGGED_IN)
         } else {
-            _state.value = BiRedditAuthState.LOGGED_OUT
+            _state.tryEmit(BiRedditAuthState.LOGGED_OUT)
         }
+    }
+
+    fun isUserAuthorized() = _authState.value.isAuthorized
+
+    fun getUserAuthorizationToken() = _authState.value.accessToken
+
+    fun clearAuth() {
+        _authState.value = EmptyAuthState
+        clearPersistedAuthState()
+        updateAuthState(EmptyAuthState)
     }
 
     companion object {
