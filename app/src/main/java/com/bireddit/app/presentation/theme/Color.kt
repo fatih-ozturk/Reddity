@@ -17,7 +17,16 @@ package com.bireddit.app.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val white = Color(0xffFFFFFF)
+val athensGray = Color(0xffF3F5F7)
+val rollingStone = Color(0xff7F8183)
+val codGray = Color(0xff0B0B0B)
+val boulder = Color(0xff767676)
+val scienceBlue = Color(0xff066AC3)
+val ceruleanBlue = Color(0xff2651A7)
+val caribbeanGreen = Color(0xff02CE7A)
+val redRibbon = Color(0xffEE071F)
+val goldenBell = Color(0xffE27512)
+val vermilion = Color(0xffFE460B)
+val catskillWhite = Color(0xffFDFEFE)
+val javaTurquoise = Color(0xff11D0B8)
