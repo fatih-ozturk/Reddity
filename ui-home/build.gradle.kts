@@ -31,7 +31,34 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-rc01"
+    }
 }
 
 dependencies {
+    implementation(project(":base"))
+    implementation(project(":auth"))
+    implementation(project(":domain"))
+    implementation(project(":compose-ui"))
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation(libs.compose.foundation.foundation)
+    implementation(libs.compose.foundation.layout)
+    implementation(libs.compose.material.material)
+    implementation(libs.compose.material.iconsext)
+    implementation(libs.compose.animation.animation)
+    implementation(libs.compose.ui.tooling)
+
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.systemuicontroller)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.rules)
 }

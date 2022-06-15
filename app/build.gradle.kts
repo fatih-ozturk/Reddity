@@ -74,7 +74,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc03"
+        kotlinCompilerExtensionVersion = "1.2.0-rc01"
     }
 
     testOptions {
@@ -86,6 +86,7 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":base"))
     implementation(project(":data"))
+    implementation(project(":compose-ui"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)

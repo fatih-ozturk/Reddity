@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.presentation.theme
+package com.bireddit.app.composeui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.bireddit.app.R
+import com.bireddit.app.composeui.R
 
 private val Roboto = FontFamily(
     Font(R.font.roboto_regular, FontWeight.Normal),

@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = Config.applicationId + ".compose-ui" // todo refactor later
+    namespace = Config.applicationId + ".composeui" // todo refactor later
     compileSdk = Config.SdkVersions.compile
 
     defaultConfig {
@@ -31,7 +31,23 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-rc01"
+    }
 }
 
 dependencies {
+
+    implementation(libs.compose.foundation.foundation)
+    implementation(libs.compose.foundation.layout)
+    implementation(libs.compose.material.material)
+    implementation(libs.compose.material.iconsext)
+    implementation(libs.compose.animation.animation)
+    implementation(libs.compose.ui.tooling)
+
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.systemuicontroller)
 }
