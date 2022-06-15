@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.compose.ui.tooling)
 
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.timber)
 
