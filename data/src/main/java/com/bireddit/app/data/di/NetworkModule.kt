@@ -58,8 +58,8 @@ object NetworkModule {
         biRedditAuthInterceptor: BiRedditAuthInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(biRedditAuthInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
