@@ -16,101 +16,66 @@
 package com.bireddit.app.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-@Stable
-class BiRedditColors(
-    gradient1: List<Color>,
-    colorPrimary: Color,
-    colorPrimaryVariant: Color,
-    colorBackground: Color,
-    colorSurface: Color,
-    colorError: Color,
-    colorButtonVariant: Color,
-    textColor: Color,
-    textColorVariant: Color
-) {
-    var gradient1 by mutableStateOf(gradient1)
-        private set
-    var colorPrimary by mutableStateOf(colorPrimary)
-        private set
-    var colorPrimaryVariant by mutableStateOf(colorPrimaryVariant)
-        private set
-    var colorBackground by mutableStateOf(colorBackground)
-        private set
-    var colorSurface by mutableStateOf(colorSurface)
-        private set
-    var colorError by mutableStateOf(colorError)
-        private set
-    var colorButtonVariant by mutableStateOf(colorButtonVariant)
-        private set
-    var textColor by mutableStateOf(textColor)
-        private set
-    var textColorVariant by mutableStateOf(textColorVariant)
-        private set
+@Immutable
+data class ExtendedColors(
+    val onBackgroundVariant: Color,
+    val success: Color,
+    val indicator: Color
+)
 
-    fun update(other: BiRedditColors) {
-        gradient1 = other.gradient1
-        colorPrimary = other.colorPrimary
-        colorPrimaryVariant = other.colorPrimaryVariant
-        colorBackground = other.colorBackground
-        colorSurface = other.colorSurface
-        colorError = other.colorError
-        colorButtonVariant = other.colorButtonVariant
-        textColor = other.textColor
-        textColorVariant = other.textColorVariant
-    }
-
-    fun copy(): BiRedditColors = BiRedditColors(
-        gradient1 = gradient1,
-        colorPrimary = colorPrimary,
-        colorPrimaryVariant = colorPrimaryVariant,
-        colorBackground = colorBackground,
-        colorSurface = colorSurface,
-        colorError = colorError,
-        colorButtonVariant = colorButtonVariant,
-        textColor = textColor,
-        textColorVariant = textColorVariant
+val LocalExtendedColors = staticCompositionLocalOf {
+    ExtendedColors(
+        onBackgroundVariant = Color.Unspecified,
+        success = Color.Unspecified,
+        indicator = Color.Unspecified
     )
 }
 
-private val lightColorPalette = BiRedditColors(
-    colorPrimary = redRibbon,
-    colorPrimaryVariant = scienceBlue,
-    colorBackground = white,
-    colorSurface = athensGray,
-    colorError = vermilion,
-    colorButtonVariant = ceruleanBlue,
-    textColor = codGray,
-    textColorVariant = boulder,
-    gradient1 = listOf(redRibbon, goldenBell)
+val extendedColors = ExtendedColors(
+    onBackgroundVariant = catskillWhite,
+    success = emerald,
+    indicator = caribbeanGreen
+)
+
+val lightColors = lightColors(
+    primary = vermilion,
+    primaryVariant = pumpkin,
+    secondary = toryBlue,
+    secondaryVariant = scienceBlue,
+    surface = white,
+    onPrimary = white,
+    onSecondary = white,
+    onError = white,
+    background = athensGray,
+    error = redRibbon,
+    onBackground = rollingStone,
+    onSurface = rollingStone
 )
 
 @Composable
-fun BiRedditTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = lightColorPalette
-
+fun BiRedditTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
-            color = colors.colorBackground.copy(alpha = 0.4f)
+            color = lightColors.primary.copy(alpha = 0.4f)
         )
     }
-    ProvideBiRedditColors(colors) {
+    CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
         MaterialTheme(
-            colors = debugColors(darkTheme),
+            colors = lightColors,
             typography = Typography,
             shapes = Shapes,
             content = content
@@ -118,35 +83,8 @@ fun BiRedditTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
     }
 }
 
-@Composable
-fun ProvideBiRedditColors(
-    colors: BiRedditColors,
-    content: @Composable () -> Unit
-) {
-    val colorPalette = remember { colors.copy() }
-    colorPalette.update(colors)
-    CompositionLocalProvider(LocalBiRedditColors provides colorPalette, content = content)
+object ExtendedTheme {
+    val colors: ExtendedColors
+        @Composable
+        get() = LocalExtendedColors.current
 }
-
-private val LocalBiRedditColors = staticCompositionLocalOf<BiRedditColors> {
-    error("No BiRedditColorPalette provided")
-}
-
-fun debugColors(
-    darkTheme: Boolean,
-    debugColor: Color = Color.Magenta
-) = Colors(
-    primary = debugColor,
-    primaryVariant = debugColor,
-    secondary = debugColor,
-    secondaryVariant = debugColor,
-    background = debugColor,
-    surface = debugColor,
-    error = debugColor,
-    onPrimary = debugColor,
-    onSecondary = debugColor,
-    onBackground = debugColor,
-    onSurface = debugColor,
-    onError = debugColor,
-    isLight = !darkTheme
-)
