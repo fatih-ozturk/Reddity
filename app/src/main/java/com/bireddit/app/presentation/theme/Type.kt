@@ -17,27 +17,82 @@ package com.bireddit.app.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.bireddit.app.R
 
-// Set of Material typography styles to start with
+private val Roboto = FontFamily(
+    Font(R.font.roboto_regular, FontWeight.Normal),
+    Font(R.font.roboto_medium, FontWeight.Medium),
+    Font(R.font.roboto_bold, FontWeight.Bold)
+)
+
 val Typography = Typography(
+    h1 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Medium
+    ),
+    h2 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Light
+    ),
+    h3 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    h4 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    h5 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    h6 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 10.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    subtitle1 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    subtitle2 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium
+    ),
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
-    /* Other default text styles to override
+        fontFamily = Roboto,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    body2 = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Medium
+    ),
     button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontFamily = Roboto,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold
     ),
     caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontFamily = Roboto,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    overline = TextStyle(
+        fontFamily = Roboto,
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Normal
     )
-    */
 )
