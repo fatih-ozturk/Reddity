@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.presentation.theme
+package com.bireddit.app.composeui.theme
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Shapes
+import androidx.compose.ui.unit.dp
 
-val vermilion = Color(0xffFE460B)
-val pumpkin = Color(0xffFE6F12)
-val toryBlue = Color(0xff0E56B3)
-val scienceBlue = Color(0xff066AC3)
-val white = Color(0xffFFFFFF)
-val athensGray = Color(0xffF3F5F7)
-val catskillWhite = Color(0xffFDFEFE)
-val codGray = Color(0xff0B0B0B)
-val rollingStone = Color(0xff7F8183)
-val redRibbon = Color(0xffEE071F)
-val emerald = Color(0xff45CD44)
-val caribbeanGreen = Color(0xff02CE7A)
+val Shapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(4.dp),
+    large = RoundedCornerShape(0.dp)
+)

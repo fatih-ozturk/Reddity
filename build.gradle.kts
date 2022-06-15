@@ -1,3 +1,4 @@
+import com.android.build.gradle.BaseExtension
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import plugins.BuildPlugins
@@ -45,6 +46,13 @@ subprojects {
                 jvmTarget = "11"
                 kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
                 kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+            }
+        }
+        extensions.findByType<BaseExtension>() ?: return@tasks
+        configure<BaseExtension> {
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_1_8
+                targetCompatibility = JavaVersion.VERSION_1_8
             }
         }
     }
