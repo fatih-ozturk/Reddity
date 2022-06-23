@@ -53,7 +53,7 @@ val Typography = Typography(
     h5 = TextStyle(
         fontFamily = Roboto,
         fontSize = 12.sp,
-        fontWeight = FontWeight.Normal
+        fontWeight = FontWeight.Medium
     ),
     h6 = TextStyle(
         fontFamily = Roboto,
