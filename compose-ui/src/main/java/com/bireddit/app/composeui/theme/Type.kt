@@ -48,17 +48,17 @@ val Typography = Typography(
     h4 = TextStyle(
         fontFamily = Roboto,
         fontSize = 14.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.Normal
     ),
     h5 = TextStyle(
         fontFamily = Roboto,
         fontSize = 12.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.Normal
     ),
     h6 = TextStyle(
         fontFamily = Roboto,
         fontSize = 10.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.Normal
     ),
     subtitle1 = TextStyle(
         fontFamily = Roboto,

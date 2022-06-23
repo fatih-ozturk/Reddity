@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bireddit.app.auth.BiRedditAuthState
 import com.bireddit.app.composeui.theme.BiRedditTheme
+import com.bireddit.app.home.SearchView
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreen() {
         Column {
+            SearchView()
             val viewModel: MainViewModel = hiltViewModel()
             val isLogin by viewModel.getAuthManagerState().collectAsState(null)
             when (isLogin) {
