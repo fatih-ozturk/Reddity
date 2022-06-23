@@ -32,6 +32,7 @@ android {
         versionCode = Config.Versions.versionCode
         versionName = Config.Versions.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner
+        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "com.bireddit.app"))
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -87,6 +88,7 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":data"))
     implementation(project(":compose-ui"))
+    implementation(project(":ui-home"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)

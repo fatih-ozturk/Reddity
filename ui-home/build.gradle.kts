@@ -25,6 +25,7 @@ android {
 
     defaultConfig {
         minSdk = Config.SdkVersions.min
+        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "com.bireddit.app"))
     }
 
     compileOptions {

@@ -59,7 +59,7 @@ val lightColors = lightColors(
     background = athensGray,
     error = redRibbon,
     onBackground = rollingStone,
-    onSurface = rollingStone
+    onSurface = codGray
 )
 
 @Composable
@@ -70,7 +70,7 @@ fun BiRedditTheme(
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
-            color = lightColors.primary.copy(alpha = 0.4f)
+            color = lightColors.surface
         )
     }
     CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
