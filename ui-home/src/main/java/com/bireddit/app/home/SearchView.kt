@@ -15,6 +15,7 @@
  */
 package com.bireddit.app.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -95,7 +96,7 @@ fun SearchView() {
                 },
                 onSearchFocused = onSearchFocused
             )
-            if (!onSearchFocused) {
+            AnimatedVisibility(visible = !onSearchFocused) {
                 Image(
                     painterResource(id = R.drawable.icon_profile),
                     contentDescription = "Profile",
