@@ -51,7 +51,9 @@ import androidx.compose.ui.unit.dp
 import com.bireddit.app.composeui.theme.BiRedditTheme
 
 @Composable
-fun SearchView() {
+fun SearchView(
+    onMenuClicked: (() -> Unit)? = null
+) {
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -72,6 +74,8 @@ fun SearchView() {
                 onClick = {
                     if (onSearchFocused) {
                         focusManager.clearFocus()
+                    } else {
+                        onMenuClicked?.invoke()
                     }
                 },
                 modifier = Modifier.then(Modifier.size(20.dp))
