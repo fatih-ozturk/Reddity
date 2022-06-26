@@ -20,11 +20,11 @@ plugins {
 }
 
 android {
-    namespace = Config.applicationId + ".base" // todo refactor later
     compileSdk = Config.SdkVersions.compile
 
     defaultConfig {
         minSdk = Config.SdkVersions.min
+        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
     }
 
     compileOptions {
