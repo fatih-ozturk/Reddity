@@ -17,24 +17,26 @@ package com.bireddit.app.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.DrawerValue
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.rememberDrawerState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.bireddit.app.auth.BiRedditAuthState
 import com.bireddit.app.composeui.theme.BiRedditTheme
+import com.bireddit.app.home.HomeTabView
+import com.bireddit.app.home.ListingFilterView
 import com.bireddit.app.home.SearchView
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -56,39 +58,33 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainScreen() {
-        Column {
-            SearchView()
-            val viewModel: MainViewModel = hiltViewModel()
-            val isLogin by viewModel.getAuthManagerState().collectAsState(null)
-            when (isLogin) {
-                BiRedditAuthState.LOGGED_IN -> Timber.e("LOGIN")
-                BiRedditAuthState.LOGGED_OUT -> Timber.e("LOGOUT")
-                else -> {
-                    // do nothing while fetching local auth state
+        val coroutineScope = rememberCoroutineScope()
+
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        val scaffoldState = rememberScaffoldState(drawerState = drawerState)
+
+        Scaffold(
+            modifier = Modifier,
+            scaffoldState = scaffoldState,
+            topBar = {
+                Column {
+                    SearchView(
+                        onMenuClicked = {
+                            coroutineScope.launch {
+                                drawerState.open()
+                            }
+                        }
+                    )
+                    HomeTabView()
+                }
+            },
+            drawerContent = { Text(text = "drawerContent") },
+            bottomBar = {},
+            content = {
+                Column(modifier = Modifier.padding(it)) {
+                    ListingFilterView()
                 }
             }
-            val loginLauncher = rememberLauncherForActivityResult(
-                contract = viewModel.buildLoginActivityResult()
-            ) { result ->
-                if (result != null) {
-                    viewModel.onLoginResult(result)
-                }
-            }
-            Button(onClick = {
-                loginLauncher.launch(Unit)
-            }, content = {
-                Text(text = "Login")
-            })
-            Button(onClick = {
-                viewModel.logout()
-            }, content = {
-                Text(text = "Logout")
-            })
-            Button(onClick = {
-                viewModel.test()
-            }, content = {
-                Text(text = "request")
-            })
-        }
+        )
     }
 }
