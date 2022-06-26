@@ -20,11 +20,11 @@ plugins {
 }
 
 android {
-    namespace = Config.applicationId + ".composeui" // todo refactor later
     compileSdk = Config.SdkVersions.compile
 
     defaultConfig {
         minSdk = Config.SdkVersions.min
+        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
     }
 
     compileOptions {
@@ -35,7 +35,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-rc01"
+        kotlinCompilerExtensionVersion = "1.2.0-rc02"
     }
 }
 

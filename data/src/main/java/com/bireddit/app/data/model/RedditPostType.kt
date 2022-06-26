@@ -15,11 +15,15 @@
  */
 package com.bireddit.app.data.model
 
-enum class RedditPostType(type: String) {
+enum class RedditPostType(val type: String) {
     COMMENT("t1"),
     ACCOUNT("t2"),
     LINK("t3"),
     MESSAGE("t4"),
     SUBREDDIT("t5"),
     AWARD("t6");
+
+    companion object {
+        fun of(type: String): RedditPostType? = values().firstOrNull { it.type == type }
+    }
 }

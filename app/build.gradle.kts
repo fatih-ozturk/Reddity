@@ -32,7 +32,7 @@ android {
         versionCode = Config.Versions.versionCode
         versionName = Config.Versions.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner
-        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "com.bireddit.app"))
+        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -75,7 +75,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-rc01"
+        kotlinCompilerExtensionVersion = "1.2.0-rc02"
     }
 
     testOptions {
