@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.home
+package com.bireddit.app.home.main.listing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -40,19 +40,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bireddit.app.composeui.theme.BiRedditTheme
+import com.bireddit.app.home.Mocks
+import com.bireddit.app.home.R
 
 @Composable
-fun HomeListingT3Item() {
+fun ListingT3Item() {
     Surface(
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
         ) {
-            HomeListingT3ItemHeader()
+            ListingT3ItemHeader()
             HomeListingT3ItemBody()
             HomeListingT3ItemFooter()
         }
@@ -222,12 +222,4 @@ fun HomeListingT3ItemBody() {
         )
     }
     // TODO Video
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeListingT3ItemPreview() {
-    BiRedditTheme {
-        HomeListingT3Item()
-    }
 }

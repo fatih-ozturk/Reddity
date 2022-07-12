@@ -24,7 +24,6 @@ android {
 
     defaultConfig {
         minSdk = Config.SdkVersions.min
-        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
     }
 
     compileOptions {

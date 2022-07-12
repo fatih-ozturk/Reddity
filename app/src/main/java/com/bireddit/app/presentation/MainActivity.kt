@@ -18,25 +18,12 @@ package com.bireddit.app.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.rememberDrawerState
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.bireddit.app.composeui.theme.BiRedditTheme
-import com.bireddit.app.home.HomeTabView
-import com.bireddit.app.home.ListingFilterView
-import com.bireddit.app.home.SearchView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -45,7 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BiRedditTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -54,37 +40,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    @Composable
-    fun MainScreen() {
-        val coroutineScope = rememberCoroutineScope()
-
-        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-        val scaffoldState = rememberScaffoldState(drawerState = drawerState)
-
-        Scaffold(
-            modifier = Modifier,
-            scaffoldState = scaffoldState,
-            topBar = {
-                Column {
-                    SearchView(
-                        onMenuClicked = {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
-                        }
-                    )
-                    HomeTabView()
-                }
-            },
-            drawerContent = { Text(text = "drawerContent") },
-            bottomBar = {},
-            content = {
-                Column(modifier = Modifier.padding(it)) {
-                    ListingFilterView()
-                }
-            }
-        )
     }
 }

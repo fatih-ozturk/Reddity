@@ -24,7 +24,6 @@ android {
 
     defaultConfig {
         minSdk = Config.SdkVersions.min
-        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
     }
 
     compileOptions {
@@ -41,7 +40,6 @@ android {
 
 dependencies {
     implementation(project(":base"))
-    implementation(project(":auth"))
     implementation(project(":domain"))
     implementation(project(":compose-ui"))
 
@@ -56,6 +54,8 @@ dependencies {
 
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.pager.pager)
+    implementation(libs.accompanist.pager.indicators)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)

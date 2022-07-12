@@ -31,6 +31,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
+
     @ApplicationId
     @Provides
     fun provideApplicationId(application: Application): String = application.packageName

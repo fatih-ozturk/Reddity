@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.home
+package com.bireddit.app.home.main.views
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -46,13 +48,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.bireddit.app.composeui.theme.BiRedditTheme
+import com.bireddit.app.home.R
 
 @Composable
-fun SearchView(
-    onMenuClicked: (() -> Unit)? = null
+fun HomeSearchView(
+    onMenuClicked: (() -> Unit)? = null,
+    onProfileClicked: (() -> Unit)? = null
 ) {
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }
@@ -107,7 +110,10 @@ fun SearchView(
                     modifier = Modifier
                         .padding(start = 16.dp)
                         .size(32.dp)
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .clickable {
+                            onProfileClicked?.invoke()
+                        },
                     alignment = Alignment.CenterEnd,
                     contentScale = ContentScale.Fit
                 )
@@ -149,6 +155,9 @@ fun BiRedditSearchTextField(
                 value = searchText,
                 textStyle = MaterialTheme.typography.h4,
                 onValueChange = doOnTextChange,
+                keyboardActions = KeyboardActions {
+                    this.defaultKeyboardAction(ImeAction.Search)
+                },
                 singleLine = true,
                 cursorBrush = SolidColor(value = MaterialTheme.colors.onBackground)
             )
@@ -176,13 +185,5 @@ fun BiRedditSearchTextField(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchViewPreview() {
-    BiRedditTheme {
-        SearchView()
     }
 }
