@@ -107,6 +107,8 @@ dependencies {
 
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.pager.pager)
+    implementation(libs.accompanist.pager.indicators)
 
     implementation(libs.timber)
 

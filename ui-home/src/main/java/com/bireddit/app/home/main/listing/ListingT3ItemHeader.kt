@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bireddit.app.home
+package com.bireddit.app.home.main.listing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -32,12 +32,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bireddit.app.composeui.theme.BiRedditTheme
+import com.bireddit.app.home.R
 
 @Composable
-fun HomeListingT3ItemHeader() {
+fun ListingT3ItemHeader() {
     Row(
         modifier = Modifier
             .height(48.dp)
@@ -77,13 +76,5 @@ fun HomeListingT3ItemHeader() {
             contentScale = ContentScale.Fit,
             colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onBackground)
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeListingT3ItemHeaderPreview() {
-    BiRedditTheme {
-        HomeListingT3ItemHeader()
     }
 }

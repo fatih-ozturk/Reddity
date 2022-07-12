@@ -13,24 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-}
-
-android {
-    compileSdk = Config.SdkVersions.compile
-
-    defaultConfig {
-        minSdk = Config.SdkVersions.min
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-}
+package com.bireddit.app.home.main.tabs.popular

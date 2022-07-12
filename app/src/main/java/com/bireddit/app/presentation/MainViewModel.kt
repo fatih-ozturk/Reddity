@@ -16,41 +16,8 @@
 package com.bireddit.app.presentation
 
 import androidx.lifecycle.ViewModel
-import com.bireddit.app.auth.AuthManager
-import com.bireddit.app.auth.RedditAuthManager
-import com.bireddit.app.data.api.RedditHomeApi
-import com.bireddit.app.data.model.RedditListingResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val redditAuthManager: RedditAuthManager,
-    private val redditHomeApi: RedditHomeApi,
-    private val authManager: AuthManager
-) : ViewModel(), RedditAuthManager by redditAuthManager {
-
-    fun test() {
-        redditHomeApi.getHomeHotFeed().enqueue(object : Callback<RedditListingResponse?> {
-            override fun onResponse(
-                call: Call<RedditListingResponse?>,
-                response: Response<RedditListingResponse?>
-            ) {
-                Timber.e(response.body().toString())
-                Timber.e(response.headers().toString())
-            }
-
-            override fun onFailure(call: Call<RedditListingResponse?>, t: Throwable) {
-                Timber.e(t.toString())
-            }
-        })
-    }
-
-    fun getAuthManagerState() = authManager.state
-
-    fun logout() = authManager.clearAuth()
-}
+class MainViewModel @Inject constructor() : ViewModel()
