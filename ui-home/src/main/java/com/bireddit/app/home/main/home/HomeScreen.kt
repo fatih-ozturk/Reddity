@@ -15,21 +15,13 @@
  */
 package com.bireddit.app.home.main.home
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.bireddit.app.home.main.listing.ListingFilterView
@@ -47,47 +39,31 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier,
-    navController: NavController
+    navController: NavController,
+    drawerState: DrawerState,
+    drawerProfileState: DrawerState
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val drawerProfileState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
     val pagerState = rememberPagerState()
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        ModalDrawer(drawerState = drawerProfileState, drawerContent = {
-            Box(contentAlignment = Alignment.Center) {
-                Text(text = "PROFILE")
-            }
-        }) {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                ModalDrawer(drawerState = drawerState, drawerContent = {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(text = "MENU")
-                    }
-                }) {
-                    Column {
-                        Surface(
-                            modifier = Modifier,
-                            elevation = 4.dp
-                        ) {
-                            Column {
-                                HomeToolbar(
-                                    coroutineScope = coroutineScope,
-                                    drawerState = drawerState,
-                                    drawerProfileState = drawerProfileState
-                                )
-                                HomeTabView(
-                                    pagerState = pagerState,
-                                    coroutineScope = coroutineScope
-                                )
-                            }
-                        }
-                        HomeContent(pagerState = pagerState)
-                    }
-                }
+
+    Column {
+        Surface(
+            modifier = modifier,
+            elevation = 4.dp
+        ) {
+            Column {
+                HomeToolbar(
+                    coroutineScope = coroutineScope,
+                    drawerState = drawerState,
+                    drawerProfileState = drawerProfileState
+                )
+                HomeTabView(
+                    pagerState = pagerState,
+                    coroutineScope = coroutineScope
+                )
             }
         }
+        HomeContent(pagerState = pagerState)
     }
 }
 

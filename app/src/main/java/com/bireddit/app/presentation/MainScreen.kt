@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -47,7 +48,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(drawerState: DrawerState, drawerProfileState: DrawerState) {
     val navController = rememberAnimatedNavController()
     val currentSelectedItem by navController.currentScreenAsState()
     Scaffold(
@@ -70,7 +71,9 @@ fun MainScreen() {
     ) {
         AppNavigation(
             navController = navController,
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it),
+            drawerState,
+            drawerProfileState
         )
     }
 }
