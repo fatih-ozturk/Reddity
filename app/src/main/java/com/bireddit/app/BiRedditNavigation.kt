@@ -17,6 +17,7 @@ package com.bireddit.app
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.DrawerState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,14 +53,16 @@ private sealed class LeafScreen(
 @Composable
 internal fun AppNavigation(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    drawerState: DrawerState,
+    drawerProfileState: DrawerState
 ) {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
-        addHomeTopLevel(navController)
+        addHomeTopLevel(navController,drawerState,drawerProfileState)
         addExploreTopLevel(navController)
         addCreatePostTopLevel(navController)
         addChatTopLevel(navController)
@@ -69,13 +72,15 @@ internal fun AppNavigation(
 
 @ExperimentalAnimationApi
 private fun NavGraphBuilder.addHomeTopLevel(
-    navController: NavController
+    navController: NavController,
+    drawerState: DrawerState,
+    drawerProfileState: DrawerState
 ) {
     navigation(
         route = Screen.Home.route,
         startDestination = LeafScreen.Home.createRoute(Screen.Home)
     ) {
-        addListing(navController, Screen.Home)
+        addListing(navController, Screen.Home,drawerState,drawerProfileState)
     }
 }
 
@@ -130,12 +135,14 @@ private fun NavGraphBuilder.addNotificationTopLevel(
 @ExperimentalAnimationApi
 private fun NavGraphBuilder.addListing(
     navController: NavController,
-    root: Screen
+    root: Screen,
+    drawerState: DrawerState,
+    drawerProfileState: DrawerState
 ) {
     composable(
         route = LeafScreen.Home.createRoute(root)
     ) {
-        HomeScreen(modifier = Modifier, navController = navController)
+        HomeScreen(modifier = Modifier, navController = navController,drawerState,drawerProfileState)
     }
 }
 
