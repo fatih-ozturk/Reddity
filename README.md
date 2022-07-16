@@ -1,3 +1,3 @@
-# biReddit (under development)
+# Reddity (under development)
 
-BiReddit is a reddit clone android app. 
+Reddity is a reddit clone android app. 
