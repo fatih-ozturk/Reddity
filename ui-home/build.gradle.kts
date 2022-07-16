@@ -42,9 +42,14 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":domain"))
     implementation(project(":compose-ui"))
+    implementation(project(":auth"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    implementation(libs.androidx.hilt.compose)
+    kapt(libs.hilt.compiler)
+
+    implementation(libs.androidx.activity.compose)
     implementation(libs.compose.foundation.foundation)
     implementation(libs.compose.foundation.layout)
     implementation(libs.compose.material.material)
