@@ -32,7 +32,6 @@ android {
         versionCode = Config.Versions.versionCode
         versionName = Config.Versions.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner
-        addManifestPlaceholders(mapOf("appAuthRedirectScheme" to "empty"))
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -109,6 +108,7 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.navigation)
 
     implementation(libs.timber)
 

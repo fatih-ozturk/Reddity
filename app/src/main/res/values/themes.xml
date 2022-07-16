@@ -13,5 +13,5 @@
   the License.
   -->
 <resources>
-    <style name="Theme.BiReddit" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+    <style name="Theme.Reddity" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
 </resources>
