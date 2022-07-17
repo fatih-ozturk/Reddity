@@ -45,7 +45,7 @@ fun ListingT3ItemHeader() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painterResource(id = R.drawable.icon_profile),
+            painterResource(id = R.drawable.icon_user_fill),
             contentDescription = "Profile Image",
             modifier = Modifier
                 .size(32.dp)

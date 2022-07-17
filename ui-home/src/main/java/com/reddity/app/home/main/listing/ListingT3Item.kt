@@ -165,7 +165,7 @@ fun HomeListingT3ItemBody() {
     LazyRow(modifier = Modifier.padding(start = 16.dp), content = {
         item {
             Image(
-                painterResource(id = R.drawable.icon_profile),
+                painterResource(id = R.drawable.icon_user_fill),
                 modifier = Modifier
                     .padding(end = 4.dp)
                     .width(16.dp)
@@ -176,7 +176,7 @@ fun HomeListingT3ItemBody() {
         }
         item {
             Image(
-                painterResource(id = R.drawable.icon_profile),
+                painterResource(id = R.drawable.icon_user_fill),
                 modifier = Modifier
                     .padding(end = 4.dp)
                     .width(16.dp)
