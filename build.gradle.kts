@@ -1,26 +1,29 @@
 import com.android.build.gradle.BaseExtension
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import plugins.BuildPlugins
-import utils.DependencyUpdates
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://jitpack.io")
-    }
+// Without these suppressions version catalog usage here and in other build
+// files is marked red by IntelliJ:
+// https://youtrack.jetbrains.com/issue/KTIJ-19369.
+@Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "MISSING_DEPENDENCY_CLASS",
+    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
+    "FUNCTION_CALL_EXPECTED"
+) plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.hilt.plugin) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.gradleDependencyUpdate)
+    alias(libs.plugins.spotless)
 }
 
-plugins.apply(BuildPlugins.GIT_HOOKS)
-plugins.apply(BuildPlugins.KTLINT)
-
 subprojects {
-    plugins.apply(BuildPlugins.SPOTLESS)
-    plugins.apply(BuildPlugins.KTLINT)
-    plugins.apply(BuildPlugins.JACOCO)
-
+    apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
+    apply("$rootDir/gradle/scripts/git-hooks.gradle.kts")
     tasks {
         withType<Test> {
             testLogging {
@@ -46,6 +49,8 @@ subprojects {
                 jvmTarget = "11"
                 kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
                 kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+                kotlinOptions.freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+                kotlinOptions.freeCompilerArgs += "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi"
             }
         }
         extensions.findByType<BaseExtension>() ?: return@tasks
@@ -56,18 +61,44 @@ subprojects {
             }
         }
     }
+
+    spotless {
+        val ktlintVersion = "0.43.2"
+        kotlin {
+            target("**/*.kt")
+            licenseHeaderFile(
+                rootProject.file("spotless/copyright.kt"), "^(package|object|import|interface)"
+            )
+            ktlint(ktlintVersion)
+        }
+
+        kotlinGradle {
+            target("**/*.gradle.kts")
+            licenseHeaderFile(
+                rootProject.file("spotless/copyright.kt"),
+                "package|import|tasks|apply|plugins|include|val|object|interface"
+            )
+            ktlint(ktlintVersion)
+        }
+    }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+fun String.isNonStable(): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(this)
+    return isStable.not()
 }
 
-tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java) {
-    rejectVersionIf {
-        val current = DependencyUpdates.versionToRelease(currentVersion)
-        if (current == utils.ReleaseType.SNAPSHOT) return@rejectVersionIf true
-        val candidate = DependencyUpdates.versionToRelease(candidate.version)
-        return@rejectVersionIf candidate.isLessStableThan(current)
+tasks.withType<DependencyUpdatesTask> {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                if (candidate.version.isNonStable() && !currentVersion.isNonStable()) {
+                    reject("Release candidate")
+                }
+            }
+        }
     }
 }
 

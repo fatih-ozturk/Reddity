@@ -1,6 +1,9 @@
-package plugins
+import java.util.*
 
-import utils.isLinuxOrMacOs
+fun isLinuxOrMacOs(): Boolean {
+    val osName = System.getProperty("os.name").toLowerCase(Locale.ROOT)
+    return listOf("linux", "mac os", "macos", "mac os x").contains(osName)
+}
 
 tasks {
     register<Copy>("copyGitHooks") {

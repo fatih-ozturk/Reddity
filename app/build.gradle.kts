@@ -21,17 +21,17 @@ plugins {
 }
 
 android {
-    namespace = Config.applicationId
-    compileSdk = Config.SdkVersions.compile
-    buildToolsVersion = Config.buildToolsVersion
+    namespace = "com.reddity.app"
+    compileSdk = 33
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
-        applicationId = Config.applicationId
-        minSdk = Config.SdkVersions.min
-        targetSdk = Config.SdkVersions.target
-        versionCode = Config.Versions.versionCode
-        versionName = Config.Versions.versionName
-        testInstrumentationRunner = Config.testInstrumentationRunner
+        applicationId = "com.reddity.app"
+        minSdk = 24
+        targetSdk = 33
+        versionCode = 1
+        versionName = "1.0.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -74,7 +74,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-rc02"
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 
     testOptions {
@@ -94,7 +94,6 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.androidx.emoji)
     api(libs.androidx.work.runtime)
 
     implementation(libs.compose.foundation.foundation)

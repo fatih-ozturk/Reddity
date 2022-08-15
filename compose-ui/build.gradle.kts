@@ -20,10 +20,10 @@ plugins {
 }
 
 android {
-    compileSdk = Config.SdkVersions.compile
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = Config.SdkVersions.min
+        minSdk = 24
     }
 
     compileOptions {
@@ -34,7 +34,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-rc02"
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 

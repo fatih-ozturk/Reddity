@@ -16,11 +16,17 @@
 package com.reddity.app.data.api
 
 import com.reddity.app.data.model.RedditListingResponse
-import retrofit2.Call
+import com.reddity.app.data.model.SortPostEnum
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RedditHomeApi {
 
-    @GET("/hot.json")
-    suspend fun getHomeHotFeed(): Call<RedditListingResponse>
+    @GET("/{sort}")
+    suspend fun getHomeHotFeed(
+        @Path("sort") sort: SortPostEnum,
+        @Query("after") after: String? = null,
+        @Query("count") count: Int? = null
+    ): RedditListingResponse
 }

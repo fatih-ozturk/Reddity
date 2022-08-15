@@ -21,10 +21,10 @@ plugins {
 }
 
 android {
-    compileSdk = Config.SdkVersions.compile
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = Config.SdkVersions.min
+        minSdk = 24
     }
 
     compileOptions {

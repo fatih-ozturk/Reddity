@@ -18,12 +18,10 @@ package com.reddity.app.presentation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -41,16 +39,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.reddity.app.AppNavigation
 import com.reddity.app.R
 import com.reddity.app.Screen
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
-fun MainScreen(drawerState: DrawerState, drawerProfileState: DrawerState) {
+fun MainScreen() {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
     val currentSelectedItem by navController.currentScreenAsState()
@@ -75,8 +71,6 @@ fun MainScreen(drawerState: DrawerState, drawerProfileState: DrawerState) {
         AppNavigation(
             navController = navController,
             modifier = Modifier.padding(it),
-            drawerState,
-            drawerProfileState,
             bottomSheetNavigator
         )
     }

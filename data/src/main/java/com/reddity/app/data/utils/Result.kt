@@ -13,17 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.data.utils
 
-import android.os.Parcelable
-import com.squareup.moshi.Json
-import kotlinx.parcelize.Parcelize
+sealed class Result<out T> {
+    data class Success<T>(
+        val data: T,
+    ) : Result<T>()
 
-@Parcelize
-enum class SortPostEnum : Parcelable {
-    @Json(name = "hot") HOT,
-    @Json(name = "new") NEW,
-    @Json(name = "top") TOP,
-    @Json(name = "controversial") CONTROVERSIAL,
-    @Json(name = "rising") RISING
+    data class Error(
+        val exception: Exception,
+    ) : Result<Nothing>()
+
+    companion object {
+        fun success(): Success<Unit> = Success(Unit)
+        fun error(message: Any): Error = Error(IllegalStateException(message.toString()))
+    }
 }
+
+inline val <T> Result<T>.data: T?
+    get() = (this as? Result.Success)?.data
+
+inline val <T> Result<T>.exception: Exception?
+    get() = (this as? Result.Error)?.exception

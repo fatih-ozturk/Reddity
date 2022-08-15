@@ -15,15 +15,10 @@
  */
 package com.reddity.app
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.DrawerState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -33,9 +28,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.google.accompanist.navigation.material.BottomSheetNavigator
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.bottomSheet
 import com.reddity.app.data.model.PostViewEnum
 import com.reddity.app.data.model.SortPostEnum
 import com.reddity.app.home.main.home.HomeScreen
@@ -62,23 +55,17 @@ private sealed class LeafScreen(
     object ListingFilter : LeafScreen("listing_filter")
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
-@ExperimentalAnimationApi
 @Composable
 internal fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    drawerState: DrawerState,
-    drawerProfileState: DrawerState,
     bottomSheetNavigator: BottomSheetNavigator
 ) {
     ModalBottomSheetLayout(bottomSheetNavigator = bottomSheetNavigator) {
         AnimatedNavHost(
-            navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = modifier
+            navController = navController, startDestination = Screen.Home.route, modifier = modifier
         ) {
-            addHomeTopLevel(navController, drawerState, drawerProfileState)
+            addHomeTopLevel(navController)
             addExploreTopLevel(navController)
             addCreatePostTopLevel(navController)
             addChatTopLevel(navController)
@@ -87,35 +74,17 @@ internal fun AppNavigation(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addHomeTopLevel(
     navController: NavController,
-    drawerState: DrawerState,
-    drawerProfileState: DrawerState
 ) {
     navigation(
-        route = Screen.Home.route,
-        startDestination = LeafScreen.Home.createRoute(Screen.Home)
+        route = Screen.Home.route, startDestination = LeafScreen.Home.createRoute(Screen.Home)
     ) {
-        addListing(navController, Screen.Home, drawerState, drawerProfileState)
+        addListing(navController, Screen.Home)
         addFilterBottomSheet(navController, Screen.Home)
     }
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
-@ExperimentalAnimationApi
-private fun NavGraphBuilder.addFilterBottomSheet(
-    navController: NavController,
-    root: Screen
-) {
-    bottomSheet(
-        route = LeafScreen.ListingFilter.createRoute(root)
-    ) {
-        Box(modifier = Modifier.height(200.dp))
-    }
-}
-
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addExploreTopLevel(
     navController: NavController
 ) {
@@ -127,7 +96,6 @@ private fun NavGraphBuilder.addExploreTopLevel(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addCreatePostTopLevel(
     navController: NavController
 ) {
@@ -139,19 +107,16 @@ private fun NavGraphBuilder.addCreatePostTopLevel(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addChatTopLevel(
     navController: NavController
 ) {
     navigation(
-        route = Screen.Chat.route,
-        startDestination = LeafScreen.Chat.createRoute(Screen.Chat)
+        route = Screen.Chat.route, startDestination = LeafScreen.Chat.createRoute(Screen.Chat)
     ) {
         addChat(navController, Screen.Chat)
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addNotificationTopLevel(
     navController: NavController
 ) {
@@ -163,12 +128,20 @@ private fun NavGraphBuilder.addNotificationTopLevel(
     }
 }
 
-@ExperimentalAnimationApi
+private fun NavGraphBuilder.addFilterBottomSheet(
+    navController: NavController,
+    root: Screen
+) {
+    composable(
+        route = LeafScreen.ListingFilter.createRoute(root)
+    ) {
+        // TODO
+    }
+}
+
 private fun NavGraphBuilder.addListing(
     navController: NavController,
     root: Screen,
-    drawerState: DrawerState,
-    drawerProfileState: DrawerState
 ) {
     composable(
         route = LeafScreen.Home.createRoute(root),
@@ -183,18 +156,12 @@ private fun NavGraphBuilder.addListing(
             }
         )
     ) {
-        HomeScreen(
-            modifier = Modifier,
-            onFilterViewClicked = {
-                navController.navigate(LeafScreen.ListingFilter.createRoute(root))
-            },
-            drawerState = drawerState,
-            drawerProfileState = drawerProfileState
-        )
+        HomeScreen(modifier = Modifier, onFilterViewClicked = {
+            navController.navigate(LeafScreen.ListingFilter.createRoute(root))
+        })
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addExplore(
     navController: NavController,
     root: Screen
@@ -206,7 +173,6 @@ private fun NavGraphBuilder.addExplore(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addCreatePost(
     navController: NavController,
     root: Screen
@@ -218,7 +184,6 @@ private fun NavGraphBuilder.addCreatePost(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addChat(
     navController: NavController,
     root: Screen
@@ -230,7 +195,6 @@ private fun NavGraphBuilder.addChat(
     }
 }
 
-@ExperimentalAnimationApi
 private fun NavGraphBuilder.addNotification(
     navController: NavController,
     root: Screen
