@@ -20,10 +20,10 @@ plugins {
 }
 
 android {
-    compileSdk = Config.SdkVersions.compile
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = Config.SdkVersions.min
+        minSdk = 23
     }
 
     compileOptions {
@@ -34,7 +34,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-rc02"
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 
@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)
+
+    implementation(libs.modalSheet)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)

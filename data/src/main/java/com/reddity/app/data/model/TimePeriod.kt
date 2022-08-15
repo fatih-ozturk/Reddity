@@ -16,14 +16,14 @@
 package com.reddity.app.data.model
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class SortPostEnum : Parcelable {
-    @Json(name = "hot") HOT,
-    @Json(name = "new") NEW,
-    @Json(name = "top") TOP,
-    @Json(name = "controversial") CONTROVERSIAL,
-    @Json(name = "rising") RISING
+enum class TimePeriod : Parcelable {
+    HOUR,
+    DAY,
+    WEEK,
+    MONTH,
+    YEAR,
+    ALL
 }

@@ -30,7 +30,7 @@ interface RedditAuthManager {
 class LoginReddit internal constructor(
     private val intentBuilder: () -> Intent
 ) : ActivityResultContract<Unit, LoginReddit.Result?>() {
-    override fun createIntent(context: Context, input: Unit?): Intent = intentBuilder()
+    override fun createIntent(context: Context, input: Unit): Intent = intentBuilder()
 
     override fun parseResult(
         resultCode: Int,

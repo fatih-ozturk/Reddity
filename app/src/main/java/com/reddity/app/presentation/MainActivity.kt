@@ -18,19 +18,10 @@ package com.reddity.app.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.rememberDrawerState
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
 import com.reddity.app.composeui.theme.ReddityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,34 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                    val drawerProfileState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
-                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                        ModalDrawer(
-                            drawerState = drawerProfileState,
-                            drawerContent = {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Text(text = "PROFILE")
-                                }
-                            }
-                        ) {
-                            CompositionLocalProvider(
-                                LocalLayoutDirection provides LayoutDirection.Ltr
-                            ) {
-                                ModalDrawer(
-                                    drawerState = drawerState,
-                                    drawerContent = {
-                                        Box(contentAlignment = Alignment.Center) {
-                                            Text(text = "MENU")
-                                        }
-                                    }
-                                ) {
-                                    MainScreen(drawerState, drawerProfileState)
-                                }
-                            }
-                        }
-                    }
+                    MainScreen()
                 }
             }
         }
