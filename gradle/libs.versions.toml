@@ -54,7 +54,7 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.6.0"
 androidx-archCoreTesting = "androidx.arch.core:core-testing:2.1.0"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-collection = "androidx.collection:collection-ktx:1.2.0"
-androidx-core = "androidx.core:core-ktx:1.8.0"
+androidx-core = "androidx.core:core-ktx:1.9.0"
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.0.0"
 androidx-datastore = "androidx.datastore:datastore:1.0.0"
 
