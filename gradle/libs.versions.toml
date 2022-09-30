@@ -23,7 +23,7 @@ moshi = "1.13.0"
 ktlint = "10.3.0"
 
 gradleplugin = "7.2.2"
-hiltplugin = "2.43.2"
+hiltplugin = "2.44"
 gradleDependencyUpdate = "0.42.0"
 
 [plugins]
