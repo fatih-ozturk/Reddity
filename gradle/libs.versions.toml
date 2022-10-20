@@ -111,9 +111,9 @@ compose-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding", versio
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 
-google-analytics = "com.google.firebase:firebase-analytics-ktx:21.0.0"
-google-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.10"
-google-crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:2.8.1"
+google-analytics = "com.google.firebase:firebase-analytics-ktx:21.2.0"
+google-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.1"
+google-crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.2"
 google-gmsGoogleServices = "com.google.gms:google-services:4.3.10"
 
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
