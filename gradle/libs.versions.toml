@@ -50,7 +50,7 @@ accompanist-navigation = { module = "com.google.accompanist:accompanist-navigati
 czerwinski-android-hilt-extension = { module = "it.czerwinski.android.hilt:hilt-extensions", version.ref = "czerwinski"}
 czerwinski-android-hilt-processor = { module = "it.czerwinski.android.hilt:hilt-processor", version.ref = "czerwinski"}
 
-androidx-activity-compose = "androidx.activity:activity-compose:1.6.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.6.1"
 androidx-archCoreTesting = "androidx.arch.core:core-testing:2.1.0"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-collection = "androidx.collection:collection-ktx:1.2.0"
