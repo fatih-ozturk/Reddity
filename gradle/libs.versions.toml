@@ -130,7 +130,7 @@ kotlin-extensions = { module = "org.jetbrains.kotlin:kotlin-android-extensions",
 kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 
-leakCanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+leakCanary = "com.squareup.leakcanary:leakcanary-android:2.10"
 
 mockK = "io.mockk:mockk:1.13.2"
 
