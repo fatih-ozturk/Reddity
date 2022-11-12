@@ -112,7 +112,7 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 
 google-analytics = "com.google.firebase:firebase-analytics-ktx:21.2.0"
-google-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.1"
+google-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.2"
 google-crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.2"
 google-gmsGoogleServices = "com.google.gms:google-services:4.3.14"
 
