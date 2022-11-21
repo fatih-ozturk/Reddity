@@ -43,8 +43,6 @@ android {
             isJniDebuggable = true
             versionNameSuffix = "-dev"
             applicationIdSuffix = ".debug"
-            buildConfigField("String", "REDDIT_CLIENT_ID", "\"\"")
-            buildConfigField("String", "REDDIT_CLIENT_SECRET", "\"\"")
         }
         release {
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
@@ -70,7 +68,6 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-        resources.excludes.add("META-INF/*.kotlin_module")
     }
 
     composeOptions {
@@ -83,54 +80,34 @@ android {
 }
 
 dependencies {
-    implementation(project(":auth"))
-    implementation(project(":base"))
-    implementation(project(":data"))
-    implementation(project(":compose-ui"))
-    implementation(project(":ui-home"))
+    implementation(project(":core:auth"))
+    implementation(project(":core:base"))
+    implementation(project(":core:data"))
+    implementation(project(":core:ui"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:explore"))
+    implementation(project(":feature:createpost"))
+    implementation(project(":feature:chat"))
+    implementation(project(":feature:notification"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)
-
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.work.ktx)
 
-    api(libs.androidx.work.runtime)
-
-    implementation(libs.compose.foundation.foundation)
-    implementation(libs.compose.foundation.layout)
-    implementation(libs.compose.material.material)
-    implementation(libs.compose.material.iconsext)
-    implementation(libs.compose.animation.animation)
-    implementation(libs.compose.ui.tooling)
-
-    implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.accompanist.pager.pager)
-    implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.navigation)
 
-    implementation(libs.timber)
-
     implementation(libs.kotlin.stdlib)
-
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
-    implementation(libs.retrofit.retrofit)
-    implementation(libs.retrofit.gsonConverter)
-    implementation(libs.retrofit.mock)
-    implementation(libs.retrofit.moshiConverter)
     implementation(libs.hilt.library)
-    implementation(libs.androidx.hilt.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.hilt.work)
     kapt(libs.androidx.hilt.compiler)
 
-    debugImplementation(libs.chucker.library)
-    debugImplementation(libs.leakCanary)
-
     testImplementation(libs.junit)
-    testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.rules)
 }

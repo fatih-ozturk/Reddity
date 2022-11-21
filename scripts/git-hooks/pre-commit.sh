@@ -2,9 +2,6 @@
 
 echo "Running static analysis..."
 
-JAVA_HOME=$(/usr/libexec/java_home -v 1.11)
-export JAVA_HOME
-
 OUTPUT="/tmp/analysis-result"
 ./gradlew spotlessCheck --daemon > ${OUTPUT}
 EXIT_CODE=$?
