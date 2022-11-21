@@ -17,7 +17,6 @@ package com.reddity.app.di.app
 
 import android.app.Application
 import android.content.Context
-import com.reddity.app.BuildConfig
 import com.reddity.app.base.inject.ApplicationId
 import dagger.Module
 import dagger.Provides
@@ -42,12 +41,4 @@ object AppModule {
     fun provideCacheDir(
         @ApplicationContext context: Context
     ): File = context.cacheDir
-
-    @Provides
-    @Named("reddit-client-id")
-    fun provideRedditClientId(): String = BuildConfig.REDDIT_CLIENT_ID
-
-    @Provides
-    @Named("reddit-client-secret")
-    fun provideRedditClientSecret(): String = BuildConfig.REDDIT_CLIENT_SECRET
 }

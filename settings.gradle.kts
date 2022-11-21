@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
@@ -17,10 +17,15 @@ dependencyResolutionManagement {
 }
 
 include(":app")
-include(":auth")
-include(":base")
-include(":compose-ui")
-include(":data")
-include(":domain")
-include(":ui-home")
+include(":core:auth")
+include(":core:base")
+include(":core:data")
+include(":core:domain")
+include(":core:model")
+include(":core:ui")
+include(":feature:chat")
+include(":feature:createpost")
+include(":feature:explore")
+include(":feature:home")
+include(":feature:notification")
 enableFeaturePreview("VERSION_CATALOGS")

@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.secrets) apply false
     alias(libs.plugins.gradleDependencyUpdate)
     alias(libs.plugins.spotless)
 }
@@ -56,8 +57,8 @@ subprojects {
         extensions.findByType<BaseExtension>() ?: return@tasks
         configure<BaseExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_1_8
-                targetCompatibility = JavaVersion.VERSION_1_8
+                sourceCompatibility = JavaVersion.VERSION_11
+                targetCompatibility = JavaVersion.VERSION_11
             }
         }
     }

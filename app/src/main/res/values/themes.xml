@@ -12,6 +12,8 @@
   or implied. See the License for the specific language governing permissions and limitations under
   the License.
   -->
-<resources>
-    <style name="Theme.Reddity" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Reddity" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
 </resources>
