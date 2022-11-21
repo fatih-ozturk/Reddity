@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reddity">
         <activity
-            android:name="com.reddity.app.presentation.MainActivity"
+            android:name="com.reddity.app.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
