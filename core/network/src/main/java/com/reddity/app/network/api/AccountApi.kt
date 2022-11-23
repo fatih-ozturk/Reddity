@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.network.api
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.reddity.app.network.model.Me
+import retrofit2.http.GET
 
-@Parcelize
-enum class PostViewEnum : Parcelable {
-    CARD, CLASSIC
+interface AccountApi {
+
+    @GET("/api/v1/me/.json")
+    suspend fun me(): Me
 }

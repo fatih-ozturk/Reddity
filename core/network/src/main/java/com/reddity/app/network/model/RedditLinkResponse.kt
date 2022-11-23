@@ -13,25 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.api
+package com.reddity.app.network.model
 
-import com.reddity.app.data.model.Me
-import com.reddity.app.data.model.RedditListingResponse
-import com.reddity.app.data.model.SortPostEnum
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-
-interface RedditHomeApi {
-
-    @GET("/{sort}")
-    suspend fun getHomeHotFeed(
-        @Path("sort") sort: SortPostEnum,
-        @Query("after") after: String? = null,
-        @Query("count") count: Int? = null
-    ): RedditListingResponse
-
-    @GET("/api/v1/me/.json")
-    fun me(): Call<Me>
-}
+data class RedditLinkResponse(
+    val subreddit: String
+)

@@ -80,10 +80,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:auth"))
     implementation(project(":core:base"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
+    implementation(project(":core:auth"))
+
     implementation(project(":feature:home"))
     implementation(project(":feature:explore"))
     implementation(project(":feature:createpost"))

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.di
+package com.reddity.app.network.utils
 
 import com.reddity.app.auth.AuthPersistManager
 import com.reddity.app.auth.ReddityAuthManager

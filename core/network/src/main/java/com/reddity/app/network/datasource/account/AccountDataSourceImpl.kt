@@ -13,30 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.utils
+package com.reddity.app.network.datasource.account
 
-import com.reddity.app.base.IoDispatcher
-import com.squareup.moshi.Moshi
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import com.reddity.app.network.api.AccountApi
+import com.reddity.app.network.model.Me
+import it.czerwinski.android.hilt.annotations.Bound
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Bound
 @Singleton
-class ReddityApiCall @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    private val moshi: Moshi,
-) {
-
-    suspend operator fun <T> invoke(
-        call: suspend () -> T,
-    ): Result<T?> = withContext(ioDispatcher) {
-        try {
-            val response = call()
-            Result.Success(response)
-        } catch (exception: Exception) {
-            // TODO error handling
-            Result.Error(exception)
-        }
-    }
+class AccountDataSourceImpl @Inject constructor(
+    private val accountApi: AccountApi
+) : AccountDataSource {
+    override suspend fun getMe(): Me =
+        accountApi.me()
 }
