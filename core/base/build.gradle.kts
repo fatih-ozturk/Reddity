@@ -30,7 +30,6 @@ android {
 dependencies {
     api(libs.kotlin.stdlib)
     api(libs.kotlin.coroutines.core)
-    api(libs.dagger.dagger)
 
     implementation(libs.androidx.core.ktx)
     api(libs.kotlin.coroutines.core)
