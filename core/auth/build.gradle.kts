@@ -47,7 +47,6 @@ dependencies {
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.timber)
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.czerwinski.android.hilt.extension)

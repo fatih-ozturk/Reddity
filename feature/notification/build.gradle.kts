@@ -50,8 +50,4 @@ dependencies {
 
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.test.rules)
 }
