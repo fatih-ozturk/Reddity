@@ -22,13 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
-import com.reddity.app.data.model.PostViewEnum
-import com.reddity.app.data.model.SortPostEnum
 import com.reddity.app.home.home.HomeScreen
 
 sealed class Screen(val route: String) {
@@ -140,16 +136,7 @@ private fun NavGraphBuilder.addListing(
 ) {
     composable(
         route = LeafScreen.Home.createRoute(root),
-        arguments = listOf(
-            navArgument("filter") {
-                type = NavType.ParcelableType(SortPostEnum::class.java)
-                defaultValue = SortPostEnum.HOT
-            },
-            navArgument("post_view") {
-                type = NavType.ParcelableType(PostViewEnum::class.java)
-                defaultValue = PostViewEnum.CARD
-            }
-        )
+        arguments = listOf()
     ) {
         HomeScreen(
             modifier = Modifier,

@@ -18,6 +18,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -30,16 +31,15 @@ android {
 
 dependencies {
     implementation(project(":core:base"))
-    implementation(project(":core:network"))
+    implementation(project(":core:auth"))
 
     implementation(libs.timber)
 
     implementation(libs.hilt.library)
-    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.androidx.hilt.work)
-    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.czerwinski.android.hilt.extension)
+    kapt(libs.czerwinski.android.hilt.processor)
 
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)

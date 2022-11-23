@@ -20,10 +20,10 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 24
     }
 
     buildFeatures {
@@ -39,7 +39,6 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
-    implementation(project(":core:auth"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 

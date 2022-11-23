@@ -13,19 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-}
+package com.reddity.app.network.model
 
-android {
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-}
-
-dependencies {
-}
+data class RedditListingDataResponse(
+    val children: List<RedditListingDetailResponse>
+)

@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.di
+package com.reddity.app.network.di
 
 import com.reddity.app.auth.AuthPersistManager
 import com.reddity.app.auth.ReddityAuthManager
-import com.reddity.app.data.api.RedditHomeApi
-import com.reddity.app.data.model.RedditKind
-import com.reddity.app.data.model.RedditListingDetailResponse
-import com.reddity.app.data.model.RedditPostType
+import com.reddity.app.network.api.AccountApi
+import com.reddity.app.network.model.RedditKind
+import com.reddity.app.network.model.RedditListingDetailResponse
+import com.reddity.app.network.model.RedditPostType
+import com.reddity.app.network.utils.ReddityAuthInterceptor
+import com.reddity.app.network.utils.ReddityAuthenticator
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -32,7 +34,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -45,11 +46,8 @@ object NetworkModule {
         okHttp: OkHttpClient,
         moshi: Moshi
     ): Retrofit {
-        return Retrofit.Builder()
-            .client(okHttp)
-            .baseUrl("https://reddit.com/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
+        return Retrofit.Builder().client(okHttp).baseUrl("https://reddit.com/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
     }
 
     @Singleton
@@ -59,22 +57,19 @@ object NetworkModule {
         reddityAuthInterceptor: ReddityAuthInterceptor,
         reddityAuthenticator: ReddityAuthenticator
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(reddityAuthInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .authenticator(reddityAuthenticator)
-            .build()
+        return OkHttpClient.Builder().addInterceptor(reddityAuthInterceptor)
+            .addInterceptor(loggingInterceptor).authenticator(reddityAuthenticator).build()
     }
 
     @Singleton
     @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder()
-        .add(
-            PolymorphicJsonAdapterFactory.of(RedditKind::class.java, "kind")
-                .withSubtype(RedditListingDetailResponse::class.java, RedditPostType.LINK.name)
+    fun provideMoshi(): Moshi = Moshi.Builder().add(
+        PolymorphicJsonAdapterFactory.of(
+            RedditKind::class.java, "kind"
+        ).withSubtype(
+            RedditListingDetailResponse::class.java, RedditPostType.LINK.name
         )
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    ).add(KotlinJsonAdapterFactory()).build()
 
     @Provides
     @Singleton
@@ -96,10 +91,12 @@ object NetworkModule {
         reddityAuthManager: ReddityAuthManager,
         authPersistManager: AuthPersistManager
     ): ReddityAuthenticator {
-        return ReddityAuthenticator(reddityAuthManager, authPersistManager)
+        return ReddityAuthenticator(
+            reddityAuthManager, authPersistManager
+        )
     }
 
     @Provides
     @Singleton
-    internal fun provideRedditHomeApi(retrofit: Retrofit): RedditHomeApi = retrofit.create()
+    fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
 }

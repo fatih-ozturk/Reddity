@@ -13,8 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.network.model
 
-data class RedditListingDataResponse(
-    val children: List<RedditListingDetailResponse>
-)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class PostViewEnum : Parcelable {
+    CARD, CLASSIC
+}

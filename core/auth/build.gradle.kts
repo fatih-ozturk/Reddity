@@ -21,7 +21,7 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 24
@@ -43,8 +43,6 @@ dependencies {
 
     implementation(libs.timber)
     implementation(libs.androidx.core.ktx)
-
-    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.czerwinski.android.hilt.extension)
     kapt(libs.czerwinski.android.hilt.processor)

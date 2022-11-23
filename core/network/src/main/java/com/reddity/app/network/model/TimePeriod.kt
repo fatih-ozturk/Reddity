@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.network.model
 
-data class RedditLinkResponse(
-    val subreddit: String
-)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class TimePeriod : Parcelable {
+    HOUR,
+    DAY,
+    WEEK,
+    MONTH,
+    YEAR,
+    ALL
+}
