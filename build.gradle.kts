@@ -46,7 +46,7 @@ subprojects {
         }
         withType<KotlinCompile>().configureEach {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
                 kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
                 kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
             }
@@ -54,8 +54,8 @@ subprojects {
         extensions.findByType<BaseExtension>() ?: return@tasks
         configure<BaseExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_1_8
+                targetCompatibility = JavaVersion.VERSION_1_8
             }
         }
     }

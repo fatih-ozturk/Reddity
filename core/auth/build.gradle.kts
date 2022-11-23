@@ -21,6 +21,7 @@ plugins {
 }
 
 android {
+    namespace = "com.reddity.app.auth"
     compileSdk = 33
 
     defaultConfig {
@@ -29,6 +30,11 @@ android {
 
     buildFeatures {
         buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 

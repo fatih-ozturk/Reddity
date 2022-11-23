@@ -20,6 +20,7 @@ plugins {
 }
 
 android {
+    namespace = "com.reddity.app.chat"
     compileSdk = 33
 
     defaultConfig {
@@ -32,6 +33,11 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
