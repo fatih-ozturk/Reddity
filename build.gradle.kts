@@ -24,7 +24,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 subprojects {
     apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
-    apply("$rootDir/gradle/scripts/git-hooks.gradle.kts")
     tasks {
         withType<Test> {
             testLogging {
