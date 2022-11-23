@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.reddity.app.compose_ui.R
+import com.reddity.app.ui.R
 
 private val Roboto = FontFamily(
     Font(R.font.roboto_regular, FontWeight.Normal),
