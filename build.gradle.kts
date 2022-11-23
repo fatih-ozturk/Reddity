@@ -49,8 +49,6 @@ subprojects {
                 jvmTarget = "11"
                 kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
                 kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-                kotlinOptions.freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
-                kotlinOptions.freeCompilerArgs += "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi"
             }
         }
         extensions.findByType<BaseExtension>() ?: return@tasks
