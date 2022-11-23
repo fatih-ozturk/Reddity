@@ -13,9 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.network.model
 
-data class RedditListingResponse(
-    val kind: String,
-    val data: RedditListingDataResponse
-)
+enum class RedditPostType(val type: String) {
+    COMMENT("t1"),
+    ACCOUNT("t2"),
+    LINK("t3"),
+    MESSAGE("t4"),
+    SUBREDDIT("t5"),
+    AWARD("t6");
+
+    companion object {
+        fun of(type: String): RedditPostType? = values().firstOrNull { it.type == type }
+    }
+}

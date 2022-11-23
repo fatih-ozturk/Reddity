@@ -13,6 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.model
+package com.reddity.app.network.model
 
-sealed class RedditKind(val kind: RedditPostType)
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class SortPostEnum : Parcelable {
+    @Json(name = "hot") HOT,
+    @Json(name = "new") NEW,
+    @Json(name = "top") TOP,
+    @Json(name = "controversial") CONTROVERSIAL,
+    @Json(name = "rising") RISING
+}
