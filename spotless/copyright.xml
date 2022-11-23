@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2022 Fatih OZTURK
+    Copyright $YEAR Fatih OZTURK
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,12 +14,3 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="20dp"
-    android:height="20dp"
-    android:viewportWidth="20"
-    android:viewportHeight="20">
-    <path
-        android:fillColor="#ff000000"
-        android:pathData="M19,9.4l-8.4,0l0,-8.4l-1.2,0l0,8.4l-8.4,0l0,1.2l8.4,0l0,8.4l1.2,0l0,-8.4l8.4,0z" />
-</vector>

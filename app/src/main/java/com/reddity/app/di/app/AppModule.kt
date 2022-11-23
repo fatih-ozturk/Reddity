@@ -27,8 +27,8 @@ import java.io.File
 import javax.inject.Named
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @ApplicationId
