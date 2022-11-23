@@ -64,6 +64,7 @@ subprojects {
         val ktlintVersion = "0.43.2"
         kotlin {
             target("**/*.kt")
+            targetExclude("**/build/**/*.kt")
             licenseHeaderFile(
                 rootProject.file("spotless/copyright.kt"), "^(package|object|import|interface)"
             )
@@ -72,11 +73,20 @@ subprojects {
 
         kotlinGradle {
             target("**/*.gradle.kts")
+            targetExclude("**/build/**/*.kts")
             licenseHeaderFile(
-                rootProject.file("spotless/copyright.kt"),
-                "package|import|tasks|apply|plugins|include|val|object|interface"
+                rootProject.file("spotless/copyright.kts"),
+                "(^(?![\\/ ]\\*).*\$)"
             )
             ktlint(ktlintVersion)
+        }
+
+        format("xml") {
+            target("**/*.xml")
+            targetExclude("**/build/**/*.xml")
+            licenseHeaderFile(
+                rootProject.file("spotless/copyright.xml"),
+                "(<[^!?])")
         }
     }
 }
