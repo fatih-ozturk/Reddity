@@ -54,8 +54,4 @@ dependencies {
 
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.test.rules)
 }

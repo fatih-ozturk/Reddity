@@ -39,8 +39,6 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:auth"))
 
-    implementation(libs.timber)
-
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
 
@@ -60,13 +58,4 @@ dependencies {
 
     implementation(libs.okhttp.okhttp)
     implementation(libs.okhttp.loggingInterceptor)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.mockK)
-    testImplementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.test.junit)
-    testImplementation(libs.truth)
-    testImplementation(libs.kotlin.coroutines.test)
-    testImplementation(libs.hilt.testing)
-    testImplementation(libs.kotlin.coroutines.android)
 }
