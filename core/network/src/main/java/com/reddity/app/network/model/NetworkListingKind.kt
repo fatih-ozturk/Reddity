@@ -15,6 +15,4 @@
  */
 package com.reddity.app.network.model
 
-data class RedditListingDetailResponse(
-    val data: RedditLinkResponse
-) : RedditKind(RedditPostType.LINK)
+sealed class NetworkListingKind(val kind: NetworkListingType)

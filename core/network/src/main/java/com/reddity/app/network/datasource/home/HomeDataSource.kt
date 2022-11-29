@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.datasource.home
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.reddity.app.network.model.NetworkListingDataResponse
 
-@Parcelize
-enum class PostViewEnum : Parcelable {
-    CARD, CLASSIC
+interface HomeDataSource {
+
+    suspend fun getPopularPostList(after: String? = null, before: String? = null): NetworkListingDataResponse
 }

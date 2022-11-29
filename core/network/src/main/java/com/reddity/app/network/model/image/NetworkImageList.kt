@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.network.model.image
 
-import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.model.NetworkMe
-import it.czerwinski.android.hilt.annotations.Bound
-import javax.inject.Inject
-import javax.inject.Singleton
-
-@Bound
-@Singleton
-class AccountDataSourceImpl @Inject constructor(
-    private val accountApi: AccountApi
-) : AccountDataSource {
-    override suspend fun getMe(): NetworkMe =
-        accountApi.me()
-}
+data class NetworkImageList(
+    val id: String?,
+    val source: NetworkImageSource?
+)

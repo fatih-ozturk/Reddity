@@ -15,15 +15,15 @@
  */
 package com.reddity.app.network.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+enum class NetworkListingType(val type: String) {
+    COMMENT("t1"),
+    ACCOUNT("t2"),
+    LINK("t3"),
+    MESSAGE("t4"),
+    SUBREDDIT("t5"),
+    AWARD("t6");
 
-@Parcelize
-enum class TimePeriod : Parcelable {
-    HOUR,
-    DAY,
-    WEEK,
-    MONTH,
-    YEAR,
-    ALL
+    companion object {
+        fun of(type: String): NetworkListingType? = values().firstOrNull { it.type == type }
+    }
 }

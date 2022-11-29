@@ -15,7 +15,11 @@
  */
 package com.reddity.app.network.model
 
-data class RedditListingResponse(
-    val kind: String,
-    val data: RedditListingDataResponse
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class NetworkListingResponse(
+    @Json(name = "kind") val kind: String,
+    @Json(name = "data") val data: NetworkListingDataResponse
 )

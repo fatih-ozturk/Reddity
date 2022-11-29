@@ -15,9 +15,9 @@
  */
 package com.reddity.app.network.datasource.account
 
-import com.reddity.app.network.model.Me
+import com.reddity.app.network.model.NetworkMe
 
 interface AccountDataSource {
 
-    suspend fun getMe(): Me
+    suspend fun getMe(): NetworkMe
 }

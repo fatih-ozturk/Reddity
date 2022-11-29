@@ -13,8 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.datasource.home
 
-data class RedditListingDataResponse(
-    val children: List<RedditListingDetailResponse>
-)
+import com.reddity.app.network.api.HomeApi
+import com.reddity.app.network.model.NetworkListingDataResponse
+import it.czerwinski.android.hilt.annotations.Bound
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Bound
+@Singleton
+class HomeDataSourceImpl @Inject constructor(
+    private val homeApi: HomeApi
+) : HomeDataSource {
+    override suspend fun getPopularPostList(
+        after: String?,
+        before: String?
+    ): NetworkListingDataResponse = homeApi.getPopularPostList(
+        after = after, before = before
+    ).data
+}
