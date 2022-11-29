@@ -15,11 +15,11 @@
  */
 package com.reddity.app.network.api
 
-import com.reddity.app.network.model.Me
+import com.reddity.app.network.model.NetworkMe
 import retrofit2.http.GET
 
 interface AccountApi {
 
     @GET("/api/v1/me/.json")
-    suspend fun me(): Me
+    suspend fun me(): NetworkMe
 }

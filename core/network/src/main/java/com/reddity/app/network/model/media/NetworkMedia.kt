@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.media
 
-sealed class RedditKind(val kind: RedditPostType)
+import com.squareup.moshi.Json
+
+data class NetworkMedia(
+    @Json(name = "reddit_video") val redditVideo: NetworkVideo?
+)

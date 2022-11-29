@@ -21,7 +21,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 @Parcelize
-data class Me(
+data class NetworkMe(
 
     @Json(name = "id")
     val id: String,

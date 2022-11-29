@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.network.model
 
-import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.model.NetworkMe
-import it.czerwinski.android.hilt.annotations.Bound
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.squareup.moshi.Json
 
-@Bound
-@Singleton
-class AccountDataSourceImpl @Inject constructor(
-    private val accountApi: AccountApi
-) : AccountDataSource {
-    override suspend fun getMe(): NetworkMe =
-        accountApi.me()
+enum class NetworkListingPostType {
+    @Json(name = "image")
+    IMAGE,
+
+    @Json(name = "link")
+    LINK,
+
+    @Json(name = "hosted:video")
+    HOSTED_VIDEO,
+
+    @Json(name = "rich:video")
+    RICH_VIDEO,
+
+    @Json(name = "self")
+    SELF
 }

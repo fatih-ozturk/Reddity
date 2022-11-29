@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.network.model
 
-import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.model.NetworkMe
-import it.czerwinski.android.hilt.annotations.Bound
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.squareup.moshi.JsonClass
 
-@Bound
-@Singleton
-class AccountDataSourceImpl @Inject constructor(
-    private val accountApi: AccountApi
-) : AccountDataSource {
-    override suspend fun getMe(): NetworkMe =
-        accountApi.me()
-}
+@JsonClass(generateAdapter = true)
+data class NetworkListingDataResponse(
+    val after: String?,
+    val before: String?,
+    val children: List<NetworkListingEnveloped>?
+)

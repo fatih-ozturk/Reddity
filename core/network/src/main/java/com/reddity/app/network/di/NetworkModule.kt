@@ -18,9 +18,10 @@ package com.reddity.app.network.di
 import com.reddity.app.auth.AuthPersistManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.model.RedditKind
-import com.reddity.app.network.model.RedditListingDetailResponse
-import com.reddity.app.network.model.RedditPostType
+import com.reddity.app.network.api.HomeApi
+import com.reddity.app.network.model.NetworkListingEnveloped
+import com.reddity.app.network.model.NetworkListingKind
+import com.reddity.app.network.model.NetworkListingType
 import com.reddity.app.network.utils.ReddityAuthInterceptor
 import com.reddity.app.network.utils.ReddityAuthenticator
 import com.squareup.moshi.Moshi
@@ -65,11 +66,11 @@ object NetworkModule {
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder().add(
         PolymorphicJsonAdapterFactory.of(
-            RedditKind::class.java, "kind"
+            NetworkListingKind::class.java, "kind"
         ).withSubtype(
-            RedditListingDetailResponse::class.java, RedditPostType.LINK.name
+            NetworkListingEnveloped::class.java, NetworkListingType.LINK.name
         )
-    ).add(KotlinJsonAdapterFactory()).build()
+    ).addLast(KotlinJsonAdapterFactory()).build()
 
     @Provides
     @Singleton
@@ -99,4 +100,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideHomeApi(retrofit: Retrofit): HomeApi = retrofit.create(HomeApi::class.java)
 }
