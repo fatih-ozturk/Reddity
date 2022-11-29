@@ -20,7 +20,6 @@ import android.content.Intent
 import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
 import it.czerwinski.android.hilt.annotations.Bound
-import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
@@ -46,16 +45,17 @@ internal class ReddityAuthManagerImpl @Inject constructor(
         when {
             response != null -> {
                 authService.performTokenRequest(
-                    response.createTokenExchangeRequest(),
-                    clientAuth.get()
+                    response.createTokenExchangeRequest(), clientAuth.get()
                 ) { token, ex ->
-                    val state = AuthState().apply {
+                    val state = authPersistManager.currentAuthState.apply {
+                        update(response, ex)
                         update(token, ex)
                     }
-                    Timber.e(state.accessToken.toString())
+                    Timber.e("accessToken = %s", state.accessToken.toString())
                     authPersistManager.onNewAuthState(state)
                 }
             }
+
             error != null -> {
                 Timber.e(error.toString())
             }
@@ -64,13 +64,12 @@ internal class ReddityAuthManagerImpl @Inject constructor(
 
     override fun refreshAccessToken() {
         authService.performTokenRequest(
-            authPersistManager.currentAuthState.createTokenRefreshRequest(),
-            clientAuth.get()
+            authPersistManager.currentAuthState.createTokenRefreshRequest(), clientAuth.get()
         ) { token, ex ->
-            val state = AuthState().apply {
+            val state = authPersistManager.currentAuthState.apply {
                 update(token, ex)
             }
-            Timber.e(state.accessToken.toString())
+            Timber.e("refreshAccessToken = %s", state.accessToken.toString())
             authPersistManager.onNewAuthState(state)
         }
     }

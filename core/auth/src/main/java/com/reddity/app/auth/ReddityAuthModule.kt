@@ -75,7 +75,7 @@ object ReddityAuthModule {
             ResponseTypeValues.CODE,
             redirectUri.toUri()
         )
-            .setAdditionalParameters(buildMap { put("duration", "permanent") })
+            .setAdditionalParameters(buildMap { put("duration", "temporary") })
             .setScope(
                 "identity edit flair history " +
                     "modconfig modflair modlog " +
