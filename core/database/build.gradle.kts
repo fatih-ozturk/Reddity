@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.reddity.app.ui"
+    namespace = "com.reddity.app.database"
     compileSdk = 33
 
     defaultConfig {
         minSdk = 24
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     compileOptions {
@@ -42,18 +40,17 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
 
-    api(platform(libs.compose.bom))
-    api(libs.compose.foundation.foundation)
-    api(libs.compose.foundation.layout)
-    api(libs.compose.material.material)
-    api(libs.compose.material.iconsext)
-    api(libs.compose.animation.animation)
-    api(libs.compose.ui.tooling)
-    api(libs.androidx.metrics)
+    implementation(libs.hilt.library)
+    kapt(libs.hilt.compiler)
 
-    implementation(libs.accompanist.pager.pager)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.kotlin.datetime)
 
-    api(libs.accompanist.navigation.animation)
-    api(libs.accompanist.systemuicontroller)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+
+    implementation(libs.kotlin.coroutines.android)
 }

@@ -13,6 +13,7 @@ androidxWork = "2.7.1"
 androidxhilt = "1.0.0"
 androidxlifecycle = "2.5.1"
 androidxtest = "1.5.1"
+kotlinxDatetime = "0.4.0"
 appauthVersion = "0.11.1"
 coil = "2.2.2"
 compose-bom = "2022.11.00"
@@ -26,9 +27,11 @@ hiltplugin = "2.44.2"
 junit4 = "4.13.2"
 kotlin = "1.7.20"
 ktlint = "11.0.0"
+ksp = "1.7.20-1.0.8"
 mockkVersion = "1.13.2"
 moshi = "1.14.0"
 okhttp = "4.10.0"
+paging = "3.1.1"
 retrofit = "2.9.0"
 room = "2.5.0-beta02"
 spotless = "6.11.0"
@@ -47,6 +50,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -78,6 +82,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 appauth = { group = "net.openid", name = "appauth", version.ref = "appauthVersion" }
 coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -108,6 +113,7 @@ kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 kotlin-extensions = { group = "org.jetbrains.kotlin", name = "kotlin-android-extensions", version.ref = "kotlin" }
 kotlin-pluginGradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 mockK = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 moshi-adapter = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
 moshi-core = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
@@ -123,3 +129,6 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timberVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
+
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradleplugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
