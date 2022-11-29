@@ -42,9 +42,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.reddity.app.composeui.theme.ReddityTheme
 import com.reddity.app.home.Mocks
 import com.reddity.app.home.R
+import com.reddity.app.ui.theme.ReddityTheme
 
 @Composable
 fun ListingT3Item() {

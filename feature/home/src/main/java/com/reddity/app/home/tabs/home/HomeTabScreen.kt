@@ -43,13 +43,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.reddity.app.composeui.theme.ReddityTheme
 import com.reddity.app.home.R
+import com.reddity.app.ui.theme.ReddityTheme
 
 @Composable
 fun HomeTabScreen(
     viewModel: HomeTabViewModel = hiltViewModel(),
-    onRestartApp: () -> Unit = {},
 ) {
 
     val currentActivity: Context = LocalContext.current
@@ -58,8 +57,6 @@ fun HomeTabScreen(
     ) { result ->
         if (result != null) {
             viewModel.onLoginResult(result)
-            // viewModel.syncData()
-            // onRestartApp()
         }
     }
 

@@ -15,17 +15,12 @@
  */
 package com.reddity.app.home.home
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -40,11 +35,9 @@ import com.reddity.app.home.views.HomeTabView
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onFilterViewClicked: () -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val context = LocalContext.current
 
     Column {
         Surface(
@@ -61,10 +54,6 @@ fun HomeScreen(
         }
         HomeContent(
             pagerState = pagerState,
-            onFilterViewClicked = onFilterViewClicked,
-            onRestartApp = {
-                restartApp(context)
-            }
         )
     }
 }
@@ -78,8 +67,6 @@ fun HomeToolbar() {
 @Composable
 fun HomeContent(
     pagerState: PagerState,
-    onFilterViewClicked: () -> Unit = {},
-    onRestartApp: () -> Unit = {},
 ) {
     HorizontalPager(
         modifier = Modifier,
@@ -88,17 +75,8 @@ fun HomeContent(
         count = 2
     ) { page ->
         when (page) {
-            0 -> HomeTabScreen(onRestartApp = onRestartApp)
-            1 -> PopularTabScreen(onFilterViewClicked)
+            0 -> HomeTabScreen()
+            1 -> PopularTabScreen()
         }
     }
-}
-
-private fun restartApp(context: Context) {
-    val packageManager: PackageManager = context.packageManager
-    val intent: Intent = packageManager.getLaunchIntentForPackage(context.packageName)!!
-    val componentName: ComponentName = intent.component!!
-    val restartIntent: Intent = Intent.makeRestartActivityTask(componentName)
-    context.startActivity(restartIntent)
-    Runtime.getRuntime().exit(0)
 }
