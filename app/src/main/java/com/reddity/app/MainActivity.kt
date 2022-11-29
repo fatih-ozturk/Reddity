@@ -18,8 +18,8 @@ package com.reddity.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.reddity.app.composeui.theme.ReddityTheme
 import com.reddity.app.ui.RedditApp
+import com.reddity.app.ui.theme.ReddityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
