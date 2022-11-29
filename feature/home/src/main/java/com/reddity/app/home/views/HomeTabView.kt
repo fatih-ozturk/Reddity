@@ -36,7 +36,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
-import com.reddity.app.composeui.theme.ReddityTheme
+import com.reddity.app.ui.theme.ReddityTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

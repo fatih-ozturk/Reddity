@@ -23,9 +23,4 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeTabViewModel @Inject constructor(
     private val redditAuthManager: ReddityAuthManager,
-) : ViewModel(), ReddityAuthManager by redditAuthManager {
-
-    fun syncData() {
-        TODO("Not yet implemented")
-    }
-}
+) : ViewModel(), ReddityAuthManager by redditAuthManager

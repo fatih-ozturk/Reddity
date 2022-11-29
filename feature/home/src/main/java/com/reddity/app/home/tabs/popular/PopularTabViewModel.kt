@@ -15,8 +15,9 @@
  */
 package com.reddity.app.home.tabs.popular
 
-import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-@Composable
-fun PopularTabScreen() {
-}
+@HiltViewModel
+class PopularTabViewModel @Inject constructor() : ViewModel()
