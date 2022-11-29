@@ -23,6 +23,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.openid.appauth.AuthState
+import net.openid.appauth.TokenResponse
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -33,11 +34,6 @@ class AuthPersistManager @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @Named("auth") private val authPrefs: SharedPreferences
 ) {
-    init {
-        GlobalScope.launch(mainDispatcher) {
-            onNewAuthState(currentAuthState)
-        }
-    }
 
     val currentAuthState: AuthState
         get() {
@@ -68,6 +64,22 @@ class AuthPersistManager @Inject constructor(
 
     fun clearAuth() {
         clearPersistedAuthState()
+    }
+
+    fun expireAccessToken() {
+        val expiredTokenResponse =
+            TokenResponse.Builder(currentAuthState.createTokenRefreshRequest())
+                .setRefreshToken(currentAuthState.refreshToken)
+                .setAccessToken("x")
+                .setIdToken(currentAuthState.lastTokenResponse?.idToken)
+                .setScope(currentAuthState.scope)
+                .setTokenType(currentAuthState.lastTokenResponse?.tokenType)
+                .build()
+
+        val expiredAuthState = currentAuthState.apply {
+            update(expiredTokenResponse, null)
+        }
+        onNewAuthState(expiredAuthState)
     }
 
     companion object {
