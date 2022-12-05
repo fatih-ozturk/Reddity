@@ -19,6 +19,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.reddity.app.database.converters.InstantConverter
+import com.reddity.app.database.converters.ListConverter
 import com.reddity.app.database.converters.PostTypeConverter
 import com.reddity.app.database.dao.RedditPageKeysDao
 import com.reddity.app.database.dao.RedditPostsDao
@@ -26,13 +27,14 @@ import com.reddity.app.database.entity.RedditPageKeysEntity
 import com.reddity.app.database.entity.RedditPostsEntity
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [RedditPageKeysEntity::class, RedditPostsEntity::class],
     exportSchema = true,
 )
 @TypeConverters(
     InstantConverter::class,
-    PostTypeConverter::class
+    PostTypeConverter::class,
+    ListConverter::class
 )
 abstract class ReddityDatabase : RoomDatabase() {
     abstract fun pageKeysDao(): RedditPageKeysDao

@@ -51,7 +51,13 @@ dependencies {
     api(libs.compose.animation.animation)
     api(libs.compose.ui.tooling)
     api(libs.androidx.metrics)
+    api(libs.compose.runtime)
+    api(libs.compose.runtime.livedata)
 
+    implementation(libs.hilt.library)
+    kapt(libs.hilt.compiler)
+
+    implementation(libs.lottie.compose)
     implementation(libs.accompanist.pager.pager)
 
     api(libs.accompanist.navigation.animation)

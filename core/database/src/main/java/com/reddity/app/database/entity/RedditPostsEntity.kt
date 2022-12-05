@@ -23,19 +23,19 @@ import com.reddity.app.model.PostType
 @Entity(tableName = "redditPosts")
 data class RedditPostsEntity(
     @PrimaryKey val id: String,
-    val postId: String,
     val postType: PostType,
     val author: String,
     val subreddit: String,
+    val subredditIconUrl: String?,
     val title: String,
     val content: String?,
     val image: String?,
-    val linkImage: String?,
-    // val awards: List<String>?,
-    val timestamp: String,
+    val timestamp: Int,
     val videoUrl: String?,
-    val voteCount: String,
-    val commentCount: String
+    val voteCount: Int,
+    val commentCount: Int,
+    val awardsCount: Int,
+    val awardsIconList: List<String>
 )
 
 fun RedditPostsEntity.asExternalModel(): Post = Post(
@@ -43,13 +43,14 @@ fun RedditPostsEntity.asExternalModel(): Post = Post(
     postType = postType,
     author = author,
     subreddit = subreddit,
+    subredditIconUrl = subredditIconUrl,
     title = title,
     content = content,
     image = image,
-    linkImage = linkImage,
-    awards = null,
     timestamp = timestamp,
     videoUrl = videoUrl,
     voteCount = voteCount,
-    commentCount = commentCount
+    commentCount = commentCount,
+    awardsCount = awardsCount,
+    awardsIconList = awardsIconList
 )

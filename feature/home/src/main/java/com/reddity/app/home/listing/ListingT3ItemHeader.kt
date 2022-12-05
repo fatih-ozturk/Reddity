@@ -33,10 +33,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.reddity.app.home.R
+import com.reddity.app.model.Post
+import com.reddity.app.ui.commons.LocalReddityTextCreator
 
 @Composable
-fun ListingT3ItemHeader() {
+fun ListingT3ItemHeader(post: Post) {
+    val textCreator = LocalReddityTextCreator.current
+
     Row(
         modifier = Modifier
             .height(48.dp)
@@ -44,9 +49,9 @@ fun ListingT3ItemHeader() {
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painterResource(id = R.drawable.icon_user_fill),
-            contentDescription = "Profile Image",
+        AsyncImage(
+            model = post.subredditIconUrl,
+            contentDescription = "Subreddit Image",
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape),
@@ -59,11 +64,11 @@ fun ListingT3ItemHeader() {
                 .weight(1f)
         ) {
             Text(
-                text = "r/AskReddit",
+                text = post.subreddit,
                 style = MaterialTheme.typography.h5
             )
             Text(
-                text = "Posted by u/ReverseSwinging • 16h",
+                text = textCreator.postAuthor(post.author),
                 style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.onBackground
             )

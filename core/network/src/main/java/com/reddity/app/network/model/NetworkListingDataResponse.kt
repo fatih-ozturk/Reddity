@@ -21,5 +21,5 @@ import com.squareup.moshi.JsonClass
 data class NetworkListingDataResponse(
     val after: String?,
     val before: String?,
-    val children: List<NetworkListingEnveloped>?
+    val children: List<NetworkListingEnveloped>
 )
