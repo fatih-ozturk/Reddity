@@ -18,19 +18,11 @@ package com.reddity.app.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.reddity.app.model.PageKeys
 
 @Entity(tableName = "redditPageKeys")
 data class RedditPageKeysEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int,
-    val after: String?,
-    val before: String?
-)
-
-fun RedditPageKeysEntity.asExternalModel() = PageKeys(
-    id = id,
-    after = after,
-    before = before
+    val after: String?
 )

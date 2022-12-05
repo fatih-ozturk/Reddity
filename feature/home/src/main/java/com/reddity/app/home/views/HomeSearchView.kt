@@ -58,12 +58,7 @@ fun HomeSearchView(
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth(),
-        elevation = 4.dp
-    ) {
+    Surface {
         Row(
             Modifier
                 .height(56.dp)

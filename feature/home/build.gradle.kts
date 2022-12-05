@@ -46,12 +46,24 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:auth"))
+    implementation(project(":core:model"))
 
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt.gif)
+
+    implementation(libs.exoplayer)
 
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.swiperefresh)
 }

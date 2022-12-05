@@ -19,6 +19,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.reddity.app.database.entity.RedditPostsEntity
 
@@ -28,11 +29,11 @@ interface RedditPostsDao {
     @Insert
     suspend fun insert(entity: RedditPostsEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entities: List<RedditPostsEntity>)
 
-    @Query("SELECT * FROM redditPosts ORDER BY id DESC")
-    suspend fun getRedditKeys(): PagingSource<Int, RedditPostsEntity>
+    @Query("SELECT * FROM redditPosts")
+    fun getRedditPosts(): PagingSource<Int, RedditPostsEntity>
 
     @Delete
     suspend fun deleteRedditPost(entity: RedditPostsEntity): Int

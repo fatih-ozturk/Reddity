@@ -37,14 +37,19 @@ android {
 dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:network"))
+    implementation(project(":core:model"))
+    implementation(project(":core:database"))
 
-    implementation(libs.hilt.library)
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
+    implementation(libs.androidx.paging.runtime)
 
     implementation(libs.androidx.hilt.work)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(libs.room.ktx)
+
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.hilt.library)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
 }

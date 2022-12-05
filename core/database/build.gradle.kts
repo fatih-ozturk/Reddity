@@ -47,10 +47,11 @@ dependencies {
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.kotlin.datetime)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.retrofit.moshiConverter)
 
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
-
-    implementation(libs.kotlin.coroutines.android)
 }

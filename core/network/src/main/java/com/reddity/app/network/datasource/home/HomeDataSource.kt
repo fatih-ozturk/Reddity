@@ -19,5 +19,9 @@ import com.reddity.app.network.model.NetworkListingDataResponse
 
 interface HomeDataSource {
 
-    suspend fun getPopularPostList(after: String? = null, before: String? = null): NetworkListingDataResponse
+    suspend fun getPopularPostList(
+        loadSize: Int,
+        after: String? = null,
+        before: String? = null
+    ): NetworkListingDataResponse
 }

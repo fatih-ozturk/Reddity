@@ -27,7 +27,6 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,13 +45,10 @@ fun HomeTabView(
     pagerState: PagerState,
     coroutineScope: CoroutineScope
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Surface(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier,
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.Center
         ) {
             TabRow(
                 modifier = Modifier

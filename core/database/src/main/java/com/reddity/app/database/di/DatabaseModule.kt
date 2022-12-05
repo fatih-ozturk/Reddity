@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.room.Room
 import com.reddity.app.database.ReddityDatabase
 import com.reddity.app.database.dao.RedditPageKeysDao
+import com.reddity.app.database.dao.RedditPostsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +39,14 @@ object DatabaseModule {
     ).build()
 
     @Provides
+    @Singleton
     fun providePageKeysDao(
         database: ReddityDatabase
     ): RedditPageKeysDao = database.pageKeysDao()
+
+    @Provides
+    @Singleton
+    fun providePostsDao(
+        database: ReddityDatabase
+    ): RedditPostsDao = database.postsDao()
 }

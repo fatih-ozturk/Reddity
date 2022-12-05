@@ -25,6 +25,8 @@ interface HomeApi {
     suspend fun getPopularPostList(
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
-        @Query("json_raw") jsonRaw: Int = 1
+        @Query("raw_json") rawJson: Int = 1,
+        @Query("count") loadSize: Int = 0,
+        @Query("sr_detail") includeSrDetail: Boolean = true
     ): NetworkListingResponse
 }

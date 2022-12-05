@@ -27,9 +27,10 @@ class HomeDataSourceImpl @Inject constructor(
     private val homeApi: HomeApi
 ) : HomeDataSource {
     override suspend fun getPopularPostList(
+        loadSize: Int,
         after: String?,
         before: String?
     ): NetworkListingDataResponse = homeApi.getPopularPostList(
-        after = after, before = before
+        loadSize = loadSize, after = after, before = before
     ).data
 }

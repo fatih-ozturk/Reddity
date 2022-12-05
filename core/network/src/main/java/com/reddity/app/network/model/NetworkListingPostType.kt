@@ -15,21 +15,15 @@
  */
 package com.reddity.app.network.model
 
-import com.squareup.moshi.Json
+enum class NetworkListingPostType(private val type: String) {
+    IMAGE("image"),
+    LINK("link"),
+    HOSTED_VIDEO("hosted:video"),
+    RICH_VIDEO("rich:video"),
+    SELF("self");
 
-enum class NetworkListingPostType {
-    @Json(name = "image")
-    IMAGE,
-
-    @Json(name = "link")
-    LINK,
-
-    @Json(name = "hosted:video")
-    HOSTED_VIDEO,
-
-    @Json(name = "rich:video")
-    RICH_VIDEO,
-
-    @Json(name = "self")
-    SELF
+    companion object {
+        fun of(value: String): NetworkListingPostType =
+            values().firstOrNull { it.type == value } ?: SELF
+    }
 }

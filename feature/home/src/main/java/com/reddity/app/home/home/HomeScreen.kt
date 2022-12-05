@@ -16,12 +16,13 @@
 package com.reddity.app.home.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -38,38 +39,30 @@ fun HomeScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-
-    Column {
-        Surface(
-            modifier = modifier,
-            elevation = 4.dp
-        ) {
+    Scaffold(
+        topBar = {
             Column {
-                HomeToolbar()
-                HomeTabView(
-                    pagerState = pagerState,
-                    coroutineScope = coroutineScope
-                )
+                HomeSearchView()
+                HomeTabView(pagerState = pagerState, coroutineScope = coroutineScope)
+                Divider()
             }
         }
+    ) {
         HomeContent(
+            modifier = Modifier.padding(it),
             pagerState = pagerState,
         )
     }
 }
 
-@Composable
-fun HomeToolbar() {
-    HomeSearchView()
-}
-
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeContent(
+    modifier: Modifier,
     pagerState: PagerState,
 ) {
     HorizontalPager(
-        modifier = Modifier,
+        modifier = modifier,
         verticalAlignment = Alignment.Top,
         state = pagerState,
         count = 2
