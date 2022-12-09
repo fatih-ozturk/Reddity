@@ -45,7 +45,9 @@ android {
             applicationIdSuffix = ".debug"
         }
         release {
+            isMinifyEnabled = true
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
