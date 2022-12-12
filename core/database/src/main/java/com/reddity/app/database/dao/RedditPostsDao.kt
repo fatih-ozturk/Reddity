@@ -21,6 +21,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.reddity.app.database.entity.RedditPostsEntity
 
 @Dao
@@ -34,6 +35,12 @@ interface RedditPostsDao {
 
     @Query("SELECT * FROM redditPosts")
     fun getRedditPosts(): PagingSource<Int, RedditPostsEntity>
+
+    @Query("SELECT * FROM redditPosts WHERE id = :postId")
+    suspend fun getPostById(postId: String): RedditPostsEntity?
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(entity: RedditPostsEntity)
 
     @Delete
     suspend fun deleteRedditPost(entity: RedditPostsEntity): Int

@@ -39,7 +39,7 @@ import com.reddity.app.model.Post
 import com.reddity.app.ui.commons.LocalReddityTextCreator
 
 @Composable
-fun ListingT3ItemHeader(post: Post) {
+fun ListingItemHeaderView(post: Post) {
     val textCreator = LocalReddityTextCreator.current
 
     Row(

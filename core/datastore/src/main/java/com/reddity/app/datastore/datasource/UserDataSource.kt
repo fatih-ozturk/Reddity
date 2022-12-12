@@ -13,28 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.home.listing
+package com.reddity.app.datastore.datasource
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.reddity.app.model.Post
+import com.reddity.app.model.RedditUser
+import kotlinx.coroutines.flow.Flow
 
-@Composable
-fun ListingT3Item(
-    post: Post
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier
-        ) {
-            ListingT3ItemHeader(post)
-            ListingT3ItemBody(post)
-            ListingT3ItemFooter(post)
-        }
-    }
+interface UserDataSource {
+    fun getUser(): Flow<RedditUser>
+    suspend fun setUser(user: RedditUser)
 }

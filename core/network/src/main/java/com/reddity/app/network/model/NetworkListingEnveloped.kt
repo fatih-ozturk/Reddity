@@ -15,9 +15,12 @@
  */
 package com.reddity.app.network.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkListingEnveloped(
-    val data: NetworkListingPost
+    @Json(name = "data") val data: NetworkListingPost
 ) : NetworkListingKind(NetworkListingType.LINK)

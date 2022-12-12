@@ -16,20 +16,10 @@
 package com.reddity.app.network.api
 
 import com.reddity.app.network.model.NetworkMe
-import retrofit2.http.Field
 import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface AccountApi {
 
     @GET("/api/v1/me/.json")
     suspend fun me(): NetworkMe
-
-    @POST("/api/vote")
-    fun vote(
-        @Query("raw_json") rawJson: Int = 1,
-        @Field("id") id: String,
-        @Field("dir") dir: Int
-    ): Any
 }

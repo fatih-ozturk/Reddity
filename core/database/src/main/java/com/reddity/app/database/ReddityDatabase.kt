@@ -21,6 +21,7 @@ import androidx.room.TypeConverters
 import com.reddity.app.database.converters.InstantConverter
 import com.reddity.app.database.converters.ListConverter
 import com.reddity.app.database.converters.PostTypeConverter
+import com.reddity.app.database.converters.PostVoteConverter
 import com.reddity.app.database.dao.RedditPageKeysDao
 import com.reddity.app.database.dao.RedditPostsDao
 import com.reddity.app.database.entity.RedditPageKeysEntity
@@ -34,7 +35,8 @@ import com.reddity.app.database.entity.RedditPostsEntity
 @TypeConverters(
     InstantConverter::class,
     PostTypeConverter::class,
-    ListConverter::class
+    ListConverter::class,
+    PostVoteConverter::class
 )
 abstract class ReddityDatabase : RoomDatabase() {
     abstract fun pageKeysDao(): RedditPageKeysDao

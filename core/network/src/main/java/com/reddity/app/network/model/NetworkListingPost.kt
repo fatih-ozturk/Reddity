@@ -15,31 +15,38 @@
  */
 package com.reddity.app.network.model
 
+import android.os.Parcelable
+import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.network.model.image.NetworkImagePreview
 import com.reddity.app.network.model.media.NetworkMedia
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkListingPost(
     @Json(name = "created_utc") val created: Int,
     @Json(name = "downs") val downvoteCount: Int?,
     @Json(name = "num_comments") val commentCount: Int,
     @Json(name = "selftext") val content: String?,
     @Json(name = "ups") val upvoteCount: Int,
-    val author: String,
-    val id: String,
-    val name: String,
-    val kind: String?,
+    @Json(name = "author") val author: String,
+    @Json(name = "id") val id: String,
+    @Json(name = "name") val name: String,
+    @Json(name = "kind") val kind: String?,
     @Json(name = "post_hint") val postHint: String?,
     @Json(name = "is_video") val isVideo: Boolean?,
     @Json(name = "is_self") val isSelf: Boolean?,
-    val preview: NetworkImagePreview?,
-    val subreddit: String,
-    val title: String,
-    val media: NetworkMedia?,
+    @Json(name = "preview") val preview: NetworkImagePreview?,
+    @Json(name = "subreddit") val subreddit: String,
+    @Json(name = "title") val title: String,
+    @Json(name = "media") val media: NetworkMedia?,
     @Json(name = "sr_detail") val subredditDetail: NetworkSubredditDetail?,
     @Json(name = "all_awardings") val awards: List<NetworkAwards>,
-    @Json(name = "total_awards_received") val awardsCount: Int
-) {
+    @Json(name = "total_awards_received") val awardsCount: Int,
+    @Json(name = "likes") val likes: Boolean?
+) : Parcelable {
     val postType: NetworkListingPostType
         get() = when {
             postHint != null -> NetworkListingPostType.of(postHint)
@@ -50,4 +57,10 @@ data class NetworkListingPost(
 
     val awardsIconList: List<String>
         get() = awards.map { it.resizedIcons }.map { it[2].url.orEmpty() }
+
+    val postVoteStatus: PostVoteStatus = when (likes) {
+        true -> PostVoteStatus.UPVOTE
+        false -> PostVoteStatus.DOWN_VOTE
+        null -> PostVoteStatus.NONE
+    }
 }

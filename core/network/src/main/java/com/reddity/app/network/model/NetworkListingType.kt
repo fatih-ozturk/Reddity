@@ -15,7 +15,11 @@
  */
 package com.reddity.app.network.model
 
-enum class NetworkListingType(val type: String) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class NetworkListingType(val type: String) : Parcelable {
     COMMENT("t1"),
     ACCOUNT("t2"),
     LINK("t3"),

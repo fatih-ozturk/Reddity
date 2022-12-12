@@ -15,4 +15,11 @@
  */
 package com.reddity.app.network.model
 
-sealed class NetworkListingKind(val kind: NetworkListingType)
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+sealed class NetworkListingKind(
+    @Json(name = "kind") val kind: NetworkListingType
+) : Parcelable

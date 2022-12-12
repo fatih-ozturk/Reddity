@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.reddity.app.datastore.local";
+option java_multiple_files = true;
+
+message LocalRedditUser {
+  string user_id = 1;
+  string name = 2;
+  string avatar = 3;
+  int32 karma = 4;
+  int32 created = 5;
+  int32 coins = 6;
+}
+

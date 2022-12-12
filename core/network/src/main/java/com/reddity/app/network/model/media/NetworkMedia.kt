@@ -15,8 +15,13 @@
  */
 package com.reddity.app.network.model.media
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkMedia(
     @Json(name = "reddit_video") val redditVideo: NetworkVideo?
-)
+) : Parcelable
