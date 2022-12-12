@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d35ec5a34e639056c2ca262f17f3b79f",
+    "identityHash": "4450506ba48ab76ddd97a114dca9804a",
     "entities": [
       {
         "tableName": "redditPageKeys",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "redditPosts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `postType` TEXT NOT NULL, `author` TEXT NOT NULL, `subreddit` TEXT NOT NULL, `subredditIconUrl` TEXT, `title` TEXT NOT NULL, `content` TEXT, `image` TEXT, `timestamp` INTEGER NOT NULL, `videoUrl` TEXT, `voteCount` INTEGER NOT NULL, `commentCount` INTEGER NOT NULL, `awardsCount` INTEGER NOT NULL, `awardsIconList` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `postType` TEXT NOT NULL, `author` TEXT NOT NULL, `subreddit` TEXT NOT NULL, `subredditIconUrl` TEXT, `title` TEXT NOT NULL, `content` TEXT, `image` TEXT, `timestamp` INTEGER NOT NULL, `videoUrl` TEXT, `voteCount` INTEGER NOT NULL, `commentCount` INTEGER NOT NULL, `awardsCount` INTEGER NOT NULL, `awardsIconList` TEXT NOT NULL, `postVoteStatus` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -117,6 +117,12 @@
             "columnName": "awardsIconList",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "postVoteStatus",
+            "columnName": "postVoteStatus",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -132,7 +138,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd35ec5a34e639056c2ca262f17f3b79f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4450506ba48ab76ddd97a114dca9804a')"
     ]
   }
 }

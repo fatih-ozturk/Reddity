@@ -17,9 +17,11 @@ package com.reddity.app.network.api
 
 import com.reddity.app.network.model.NetworkListingResponse
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface HomeApi {
+interface PostApi {
 
     @GET("/hot.json")
     suspend fun getPopularPostList(
@@ -29,4 +31,18 @@ interface HomeApi {
         @Query("count") loadSize: Int = 0,
         @Query("sr_detail") includeSrDetail: Boolean = true
     ): NetworkListingResponse
+
+    @GET("/by_id/{postId}")
+    suspend fun getRedditPostById(
+        @Path("postId") postId: String,
+        @Query("raw_json") rawJson: Int = 1,
+        @Query("sr_detail") includeSrDetail: Boolean = true
+    ): NetworkListingResponse
+
+    @POST("/api/vote")
+    suspend fun vote(
+        @Query("raw_json") rawJson: Int = 1,
+        @Query("id") postId: String,
+        @Query("dir") dir: Int
+    ): Any
 }

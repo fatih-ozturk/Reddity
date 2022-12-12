@@ -15,9 +15,14 @@
  */
 package com.reddity.app.network.model
 
+import android.os.Parcelable
 import com.reddity.app.network.model.image.NetworkImageSource
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkAwards(
     @Json(name = "resized_icons") val resizedIcons: List<NetworkImageSource>
-)
+) : Parcelable

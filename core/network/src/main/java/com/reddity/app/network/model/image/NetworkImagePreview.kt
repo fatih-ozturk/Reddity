@@ -15,7 +15,14 @@
  */
 package com.reddity.app.network.model.image
 
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkImagePreview(
-    val enabled: Boolean?,
-    val images: List<NetworkImageList>?
-)
+    @Json(name = "enabled") val enabled: Boolean?,
+    @Json(name = "images") val images: List<NetworkImageList>?
+) : Parcelable

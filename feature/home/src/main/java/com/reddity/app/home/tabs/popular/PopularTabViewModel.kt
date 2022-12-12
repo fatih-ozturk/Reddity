@@ -20,20 +20,28 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.reddity.app.base.IoDispatcher
+import com.reddity.app.domain.usecase.ChangePostVoteStatusUseCase
 import com.reddity.app.domain.usecase.GetPopularPostsUseCase
 import com.reddity.app.model.Post
+import com.reddity.app.model.PostVoteStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PopularTabViewModel @Inject constructor(
     private val getPopularPostsUseCase: GetPopularPostsUseCase,
+    private val changePostVoteStatusUseCase: ChangePostVoteStatusUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     val feed: Flow<PagingData<Post>> =
         getPopularPostsUseCase().flowOn(dispatcher).cachedIn(viewModelScope)
+
+    fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
+        changePostVoteStatusUseCase(postId, vote)
+    }
 }

@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -38,6 +40,7 @@ android {
 dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:auth"))
+    implementation(project(":core:model"))
 
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
@@ -55,7 +58,7 @@ dependencies {
     implementation(libs.moshi.core)
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.adapter)
-
+    ksp(libs.moshi.codegen)
     implementation(libs.okhttp.okhttp)
     implementation(libs.okhttp.loggingInterceptor)
 }

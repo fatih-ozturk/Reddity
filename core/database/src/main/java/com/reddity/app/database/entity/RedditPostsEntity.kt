@@ -19,6 +19,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostType
+import com.reddity.app.model.PostVoteStatus
 
 @Entity(tableName = "redditPosts")
 data class RedditPostsEntity(
@@ -35,7 +36,8 @@ data class RedditPostsEntity(
     val voteCount: Int,
     val commentCount: Int,
     val awardsCount: Int,
-    val awardsIconList: List<String>
+    val awardsIconList: List<String>,
+    val postVoteStatus: PostVoteStatus
 )
 
 fun RedditPostsEntity.asExternalModel(): Post = Post(
@@ -52,5 +54,6 @@ fun RedditPostsEntity.asExternalModel(): Post = Post(
     voteCount = voteCount,
     commentCount = commentCount,
     awardsCount = awardsCount,
-    awardsIconList = awardsIconList
+    awardsIconList = awardsIconList,
+    postVoteStatus = postVoteStatus
 )

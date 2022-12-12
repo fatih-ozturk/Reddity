@@ -18,7 +18,7 @@ package com.reddity.app.network.di
 import com.reddity.app.auth.AuthPersistManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.api.HomeApi
+import com.reddity.app.network.api.PostApi
 import com.reddity.app.network.model.NetworkListingEnveloped
 import com.reddity.app.network.model.NetworkListingKind
 import com.reddity.app.network.model.NetworkListingType
@@ -26,7 +26,6 @@ import com.reddity.app.network.utils.ReddityAuthInterceptor
 import com.reddity.app.network.utils.ReddityAuthenticator
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,7 +69,7 @@ object NetworkModule {
         ).withSubtype(
             NetworkListingEnveloped::class.java, NetworkListingType.LINK.name
         )
-    ).addLast(KotlinJsonAdapterFactory()).build()
+    ).build()
 
     @Provides
     @Singleton
@@ -103,5 +102,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHomeApi(retrofit: Retrofit): HomeApi = retrofit.create(HomeApi::class.java)
+    fun provideHomeApi(retrofit: Retrofit): PostApi = retrofit.create(PostApi::class.java)
 }

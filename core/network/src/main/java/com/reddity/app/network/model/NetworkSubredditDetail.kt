@@ -15,12 +15,17 @@
  */
 package com.reddity.app.network.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkSubredditDetail(
     @Json(name = "icon_img") val iconImage: String?,
     @Json(name = "community_icon") val communityIcon: String?,
-) {
+) : Parcelable {
     val subredditIconUrl: String?
         get() {
             return when {

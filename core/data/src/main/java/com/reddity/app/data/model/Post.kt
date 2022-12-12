@@ -32,5 +32,6 @@ fun NetworkListingPost.asEntity(): RedditPostsEntity = RedditPostsEntity(
     voteCount = upvoteCount,
     commentCount = commentCount,
     awardsCount = awardsCount,
-    awardsIconList = awardsIconList
+    awardsIconList = awardsIconList,
+    postVoteStatus = postVoteStatus
 )

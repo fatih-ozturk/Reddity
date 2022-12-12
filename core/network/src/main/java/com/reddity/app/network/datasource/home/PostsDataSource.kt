@@ -15,22 +15,17 @@
  */
 package com.reddity.app.network.datasource.home
 
-import com.reddity.app.network.api.HomeApi
 import com.reddity.app.network.model.NetworkListingDataResponse
-import it.czerwinski.android.hilt.annotations.Bound
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.reddity.app.network.model.request.NetworkVoteRequest
 
-@Bound
-@Singleton
-class HomeDataSourceImpl @Inject constructor(
-    private val homeApi: HomeApi
-) : HomeDataSource {
-    override suspend fun getPopularPostList(
+interface PostsDataSource {
+
+    suspend fun getPopularPostList(
         loadSize: Int,
-        after: String?,
-        before: String?
-    ): NetworkListingDataResponse = homeApi.getPopularPostList(
-        loadSize = loadSize, after = after, before = before
-    ).data
+        after: String? = null,
+        before: String? = null
+    ): NetworkListingDataResponse
+
+    suspend fun postVote(postId: String, request: NetworkVoteRequest): Any
+    suspend fun getPostById(postId: String): NetworkListingDataResponse
 }

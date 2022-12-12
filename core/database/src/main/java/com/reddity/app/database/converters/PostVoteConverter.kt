@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.home
+package com.reddity.app.database.converters
 
-import com.reddity.app.network.model.NetworkListingDataResponse
+import androidx.room.TypeConverter
+import com.reddity.app.model.PostVoteStatus
 
-interface HomeDataSource {
+class PostVoteConverter {
+    @TypeConverter
+    fun stringToPostVote(value: String): PostVoteStatus = enumValueOf(value)
 
-    suspend fun getPopularPostList(
-        loadSize: Int,
-        after: String? = null,
-        before: String? = null
-    ): NetworkListingDataResponse
+    @TypeConverter
+    fun postVoteToString(postVote: PostVoteStatus): String = postVote.name
 }

@@ -26,14 +26,14 @@ import com.reddity.app.database.dao.RedditPageKeysDao
 import com.reddity.app.database.dao.RedditPostsDao
 import com.reddity.app.database.entity.RedditPageKeysEntity
 import com.reddity.app.database.entity.RedditPostsEntity
-import com.reddity.app.network.datasource.home.HomeDataSource
+import com.reddity.app.network.datasource.home.PostsDataSource
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class PostsPageKeyedRemoteMediator @Inject constructor(
     private val redditPageKeysDao: RedditPageKeysDao,
     private val redditPostsDao: RedditPostsDao,
-    private val homeDataSource: HomeDataSource,
+    private val postsDataSource: PostsDataSource,
     private val reddityDatabase: ReddityDatabase
 ) : RemoteMediator<Int, RedditPostsEntity>() {
 
@@ -59,7 +59,7 @@ class PostsPageKeyedRemoteMediator @Inject constructor(
                 }
             }
 
-            val response = homeDataSource.getPopularPostList(
+            val response = postsDataSource.getPopularPostList(
                 loadSize = state.config.pageSize,
                 after = loadKey?.after
             )

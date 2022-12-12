@@ -29,5 +29,6 @@ data class Post(
     val voteCount: Int,
     val commentCount: Int,
     val awardsCount: Int,
-    val awardsIconList: List<String>
+    val awardsIconList: List<String>,
+    val postVoteStatus: PostVoteStatus
 )

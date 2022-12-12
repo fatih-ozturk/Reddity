@@ -15,11 +15,14 @@
  */
 package com.reddity.app.network.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkListingResponse(
     @Json(name = "kind") val kind: String,
     @Json(name = "data") val data: NetworkListingDataResponse
-)
+) : Parcelable

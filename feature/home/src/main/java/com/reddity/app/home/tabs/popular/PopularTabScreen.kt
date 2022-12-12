@@ -37,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.reddity.app.home.listing.ListingT3Item
+import com.reddity.app.home.listing.ListingItemView
 import com.reddity.app.ui.widget.FeedLoadingIcon
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -63,7 +63,12 @@ fun PopularTabScreen(
                 }
             ) { index, item ->
                 if (item == null) return@itemsIndexed
-                ListingT3Item(post = item)
+                ListingItemView(
+                    post = item,
+                    onVoteClicked = {
+                        viewModel.onVoteClicked(item.id, it)
+                    }
+                )
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()

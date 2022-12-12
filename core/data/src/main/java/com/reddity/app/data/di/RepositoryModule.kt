@@ -19,6 +19,7 @@ import com.reddity.app.data.mediators.PostsPageKeyedRemoteMediator
 import com.reddity.app.data.repository.RedditPostsRepository
 import com.reddity.app.data.repository.RedditPostsRepositoryImpl
 import com.reddity.app.database.dao.RedditPostsDao
+import com.reddity.app.network.datasource.home.PostsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +32,8 @@ object RepositoryModule {
     @Provides
     fun providePostsRepository(
         postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
-        redditPostsDao: RedditPostsDao
-    ): RedditPostsRepository = RedditPostsRepositoryImpl(postsPageKeyedRemoteMediator, redditPostsDao)
+        redditPostsDao: RedditPostsDao,
+        postsDataSource: PostsDataSource
+    ): RedditPostsRepository =
+        RedditPostsRepositoryImpl(postsPageKeyedRemoteMediator, redditPostsDao, postsDataSource)
 }

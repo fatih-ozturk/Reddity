@@ -21,10 +21,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.reddity.app.data.mediators.PostsPageKeyedRemoteMediator
+import com.reddity.app.data.model.asEntity
 import com.reddity.app.database.dao.RedditPostsDao
 import com.reddity.app.database.entity.RedditPostsEntity
 import com.reddity.app.database.entity.asExternalModel
 import com.reddity.app.model.Post
+import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.network.datasource.home.PostsDataSource
+import com.reddity.app.network.model.request.NetworkVoteRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -32,12 +36,13 @@ import javax.inject.Inject
 @OptIn(ExperimentalPagingApi::class)
 class RedditPostsRepositoryImpl @Inject constructor(
     private val postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
-    private val redditPostsDao: RedditPostsDao
+    private val redditPostsDao: RedditPostsDao,
+    private val postsDataSource: PostsDataSource
 ) : RedditPostsRepository {
 
     override fun getHomePopularPagingData(): Flow<PagingData<Post>> =
         Pager(
-            config = PagingConfig(pageSize = 25, enablePlaceholders = true, prefetchDistance = 1),
+            config = PagingConfig(pageSize = 25, enablePlaceholders = true),
             remoteMediator = postsPageKeyedRemoteMediator,
             pagingSourceFactory = {
                 redditPostsDao.getRedditPosts()
@@ -45,4 +50,15 @@ class RedditPostsRepositoryImpl @Inject constructor(
         ).flow.map { pagingData ->
             pagingData.map(RedditPostsEntity::asExternalModel)
         }
+
+    override suspend fun postVote(
+        postId: String,
+        request: PostVoteStatus
+    ) {
+
+        postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
+
+        val post = postsDataSource.getPostById(postId = postId).children.first().data.asEntity()
+        redditPostsDao.update(post)
+    }
 }

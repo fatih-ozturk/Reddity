@@ -15,9 +15,14 @@
  */
 package com.reddity.app.network.model.media
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class NetworkVideo(
     @Json(name = "is_gif") val isGif: Boolean?,
     @Json(name = "fallback_url") val videoUrl: String?
-)
+) : Parcelable
