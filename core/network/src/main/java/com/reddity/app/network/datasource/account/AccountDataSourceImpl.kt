@@ -17,12 +17,8 @@ package com.reddity.app.network.datasource.account
 
 import com.reddity.app.network.api.AccountApi
 import com.reddity.app.network.model.NetworkMe
-import it.czerwinski.android.hilt.annotations.Bound
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Bound
-@Singleton
 class AccountDataSourceImpl @Inject constructor(
     private val accountApi: AccountApi
 ) : AccountDataSource {

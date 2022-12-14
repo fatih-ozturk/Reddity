@@ -14,31 +14,12 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.feature")
+    id("reddity.android.library.compose")
 }
 
 android {
     namespace = "com.reddity.app.home"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -51,17 +32,9 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    implementation(libs.coil.kt)
-    implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt.gif)
 
     implementation(libs.exoplayer)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
 
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)

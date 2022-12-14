@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.hilt")
 }
 
 android {
     namespace = "com.reddity.app.base"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -38,13 +27,5 @@ dependencies {
     api(libs.kotlin.coroutines.core)
 
     implementation(libs.androidx.core.ktx)
-    api(libs.kotlin.coroutines.core)
-
     api(libs.timber)
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.czerwinski.android.hilt.extension)
-    kapt(libs.czerwinski.android.hilt.processor)
 }

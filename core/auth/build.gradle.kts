@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.hilt")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
     namespace = "com.reddity.app.auth"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
 
     buildFeatures {
         buildConfig = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
@@ -44,13 +33,7 @@ secrets {
 
 dependencies {
     implementation(project(":core:base"))
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)
-
-    implementation(libs.czerwinski.android.hilt.extension)
-    kapt(libs.czerwinski.android.hilt.processor)
-
     api(libs.appauth)
 }

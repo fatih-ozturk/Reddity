@@ -15,35 +15,23 @@
  */
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.hilt")
     id("kotlin-parcelize")
     alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.reddity.app.database"
-    compileSdk = 33
-
     defaultConfig {
-        minSdk = 24
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation(project(":core:model"))
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.kotlin.datetime)

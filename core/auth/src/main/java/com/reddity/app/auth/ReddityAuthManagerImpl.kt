@@ -19,16 +19,12 @@ import android.content.Context
 import android.content.Intent
 import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
-import it.czerwinski.android.hilt.annotations.Bound
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Bound
-@Singleton
 internal class ReddityAuthManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authPersistManager: AuthPersistManager,

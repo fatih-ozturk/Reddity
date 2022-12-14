@@ -24,16 +24,18 @@ import com.reddity.app.domain.usecase.ChangePostVoteStatusUseCase
 import com.reddity.app.domain.usecase.GetPopularPostsUseCase
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class PopularTabViewModel @Inject constructor(
-    private val getPopularPostsUseCase: GetPopularPostsUseCase,
+    getPopularPostsUseCase: GetPopularPostsUseCase,
     private val changePostVoteStatusUseCase: ChangePostVoteStatusUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -42,6 +44,14 @@ class PopularTabViewModel @Inject constructor(
         getPopularPostsUseCase().flowOn(dispatcher).cachedIn(viewModelScope)
 
     fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
-        changePostVoteStatusUseCase(postId, vote)
+        when (val result = changePostVoteStatusUseCase(postId, vote)) {
+            is Result.Success -> {
+            }
+            is Result.Error -> {
+                Timber.e(result.exception)
+            }
+            Result.Loading -> {
+            }
+        }
     }
 }

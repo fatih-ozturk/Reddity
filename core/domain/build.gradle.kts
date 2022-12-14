@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.hilt")
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.reddity.app.domain"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -39,11 +29,5 @@ dependencies {
     implementation(project(":core:model"))
 
     implementation(libs.androidx.paging.runtime)
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
-    implementation(libs.czerwinski.android.hilt.extension)
-    kapt(libs.czerwinski.android.hilt.processor)
-
     implementation(libs.room.ktx)
 }

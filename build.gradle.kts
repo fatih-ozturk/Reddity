@@ -1,6 +1,4 @@
-import com.android.build.gradle.BaseExtension
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Without these suppressions version catalog usage here and in other build
 // files is marked red by IntelliJ:
@@ -10,12 +8,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
     "MISSING_DEPENDENCY_CLASS",
     "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
     "FUNCTION_CALL_EXPECTED"
-) plugins {
+)
+plugins {
     alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
     alias(libs.plugins.hilt.plugin) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.secrets) apply false
     alias(libs.plugins.gradleDependencyUpdate)
@@ -24,42 +21,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 subprojects {
     apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
-    tasks {
-        withType<Test> {
-            testLogging {
-                // set options for log level LIFECYCLE
-                events = setOf(
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT
-                )
-                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-                showExceptions = true
-                showCauses = true
-                showStackTraces = true
-            }
-
-            maxParallelForks =
-                (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
-        }
-        withType<KotlinCompile>().configureEach {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
-                kotlinOptions.allWarningsAsErrors = shouldTreatCompilerWarningsAsErrors()
-                kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-            }
-        }
-        extensions.findByType<BaseExtension>() ?: return@tasks
-        configure<BaseExtension> {
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_1_8
-                targetCompatibility = JavaVersion.VERSION_1_8
-            }
-        }
-    }
-
     spotless {
         val ktlintVersion = "0.43.2"
         kotlin {

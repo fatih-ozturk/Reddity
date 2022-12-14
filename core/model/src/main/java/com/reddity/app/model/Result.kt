@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.domain.usecase
+package com.reddity.app.model
 
-import com.reddity.app.data.repository.RedditPostsRepository
-import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.model.Result
-import javax.inject.Inject
+sealed class Result<out T> {
+    data class Success<T>(
+        val data: T,
+    ) : Result<T>()
 
-class ChangePostVoteStatusUseCase @Inject constructor(
-    private val redditPostsRepository: RedditPostsRepository
-) {
-    suspend operator fun invoke(postId: String, vote: PostVoteStatus): Result<Unit> =
-        redditPostsRepository.postVote(postId = postId, request = vote)
+    data class Error(
+        val exception: Exception,
+    ) : Result<Nothing>()
+
+    object Loading : Result<Nothing>()
 }
