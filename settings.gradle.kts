@@ -16,6 +16,7 @@ dependencyResolutionManagement {
         maven("https://jitpack.io")
     }
 }
+rootProject.name = "Reddity"
 
 include(":app")
 include(":core:auth")
