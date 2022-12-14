@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.application")
-    id("dagger.hilt.android.plugin")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.application")
+    id("reddity.android.application.compose")
+    id("reddity.android.hilt")
 }
 
 android {
     namespace = "com.reddity.app"
-    compileSdk = 33
-    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.reddity.app"
-        minSdk = 24
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.reddity.app.testing.ReddityTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.reddity.app"
     }
 
     buildTypes {
@@ -51,29 +47,10 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-        }
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 
     testOptions {
@@ -105,10 +82,4 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
-    implementation(libs.hilt.library)
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.androidx.hilt.work)
-    kapt(libs.androidx.hilt.compiler)
 }

@@ -14,36 +14,16 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.library.compose")
+    id("reddity.android.hilt")
 }
 
 android {
     namespace = "com.reddity.app.ui"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
-
-    api(platform(libs.compose.bom))
     api(libs.compose.foundation.foundation)
     api(libs.compose.foundation.layout)
     api(libs.compose.material.material)
@@ -53,9 +33,6 @@ dependencies {
     api(libs.androidx.metrics)
     api(libs.compose.runtime)
     api(libs.compose.runtime.livedata)
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
 
     implementation(libs.lottie.compose)
     implementation(libs.accompanist.pager.pager)

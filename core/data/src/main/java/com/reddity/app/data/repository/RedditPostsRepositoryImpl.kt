@@ -27,6 +27,7 @@ import com.reddity.app.database.entity.RedditPostsEntity
 import com.reddity.app.database.entity.asExternalModel
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.Result
 import com.reddity.app.network.datasource.home.PostsDataSource
 import com.reddity.app.network.model.request.NetworkVoteRequest
 import kotlinx.coroutines.flow.Flow
@@ -54,11 +55,15 @@ class RedditPostsRepositoryImpl @Inject constructor(
     override suspend fun postVote(
         postId: String,
         request: PostVoteStatus
-    ) {
+    ): Result<Unit> {
+        return try {
+            postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
 
-        postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
-
-        val post = postsDataSource.getPostById(postId = postId).children.first().data.asEntity()
-        redditPostsDao.update(post)
+            val post = postsDataSource.getPostById(postId = postId).children.first().data.asEntity()
+            redditPostsDao.update(post)
+            Result.Success(Unit)
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
     }
 }

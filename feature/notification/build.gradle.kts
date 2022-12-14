@@ -14,40 +14,16 @@
  * limitations under the License.
  */
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.feature")
+    id("reddity.android.library.compose")
 }
 
 android {
     namespace = "com.reddity.app.notification"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
-
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
 }

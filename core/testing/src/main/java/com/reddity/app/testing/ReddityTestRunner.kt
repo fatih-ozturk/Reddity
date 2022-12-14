@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.utils
+package com.reddity.app.testing
 
-sealed class Result<out T> {
-    data class Success<T>(
-        val data: T,
-    ) : Result<T>()
+import android.app.Application
+import android.content.Context
+import androidx.test.runner.AndroidJUnitRunner
+import dagger.hilt.android.testing.HiltTestApplication
 
-    data class Error(
-        val exception: Exception,
-    ) : Result<Nothing>()
-
-    object Loading : Result<Nothing>()
+class ReddityTestRunner : AndroidJUnitRunner() {
+    override fun newApplication(cl: ClassLoader?, name: String?, context: Context?): Application {
+        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
+    }
 }

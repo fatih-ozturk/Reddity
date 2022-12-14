@@ -44,6 +44,7 @@ secrets = "2.0.1"
 exoplayerVersion = "2.18.1"
 lottieVersion = "5.2.0"
 turbine = "0.12.1"
+androidDesugarJdkLibs = "1.2.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
@@ -53,6 +54,7 @@ hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltplugin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
@@ -91,6 +93,7 @@ androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", versio
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 appauth = { group = "net.openid", name = "appauth", version.ref = "appauthVersion" }
 coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }

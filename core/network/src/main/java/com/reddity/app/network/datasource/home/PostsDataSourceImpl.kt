@@ -18,12 +18,8 @@ package com.reddity.app.network.datasource.home
 import com.reddity.app.network.api.PostApi
 import com.reddity.app.network.model.NetworkListingDataResponse
 import com.reddity.app.network.model.request.NetworkVoteRequest
-import it.czerwinski.android.hilt.annotations.Bound
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Bound
-@Singleton
 class PostsDataSourceImpl @Inject constructor(
     private val postApi: PostApi
 ) : PostsDataSource {

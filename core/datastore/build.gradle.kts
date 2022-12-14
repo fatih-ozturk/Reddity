@@ -35,25 +35,14 @@ import com.google.protobuf.gradle.protoc
  */
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("reddity.android.library")
+    id("reddity.android.hilt")
     id("kotlin-parcelize")
     alias(libs.plugins.protobuf)
 }
 
 android {
     namespace = "com.reddity.app.datastore"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 protobuf {
@@ -79,9 +68,6 @@ dependencies {
     implementation(project(":core:model"))
 
     testImplementation(project(":core:testing"))
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.datastore)
     implementation(libs.kotlin.coroutines.android)

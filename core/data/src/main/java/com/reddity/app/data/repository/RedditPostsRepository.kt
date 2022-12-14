@@ -18,9 +18,10 @@ package com.reddity.app.data.repository
 import androidx.paging.PagingData
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.Result
 import kotlinx.coroutines.flow.Flow
 
 interface RedditPostsRepository {
     fun getHomePopularPagingData(): Flow<PagingData<Post>>
-    suspend fun postVote(postId: String, request: PostVoteStatus)
+    suspend fun postVote(postId: String, request: PostVoteStatus): Result<Unit>
 }
