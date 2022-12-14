@@ -67,7 +67,6 @@ fun RedditApp(
         ) { padding ->
             RedditNavHost(
                 navController = appState.navController,
-                onBackClick = appState::onBackClick,
                 modifier = Modifier
                     .padding(padding)
                     .consumedWindowInsets(padding)
@@ -79,7 +78,6 @@ fun RedditApp(
 @Composable
 fun RedditNavHost(
     navController: NavHostController,
-    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = homeNavigationRoute
 ) {

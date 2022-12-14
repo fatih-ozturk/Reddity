@@ -30,7 +30,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.reddity.app"
     }
 
     buildTypes {
@@ -50,6 +49,8 @@ android {
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // JUnit 5 will bundle in files with identical paths; exclude them
+            excludes += "/META-INF/LICENSE*"
         }
     }
 

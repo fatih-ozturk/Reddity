@@ -21,7 +21,6 @@ plugins {
 
 android {
     namespace = "com.reddity.app.auth"
-
     buildFeatures {
         buildConfig = true
     }

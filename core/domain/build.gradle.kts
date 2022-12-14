@@ -16,7 +16,6 @@
 plugins {
     id("reddity.android.library")
     id("reddity.android.hilt")
-    kotlin("kapt")
 }
 
 android {
