@@ -16,6 +16,7 @@
 package com.reddity.app.network.model
 
 import android.os.Parcelable
+import com.reddity.app.model.RedditUser
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
@@ -27,7 +28,9 @@ data class NetworkMe(
     @Json(name = "name") val fullname: String,
     @Json(name = "coins") val coins: Int,
     @Json(name = "comment_karma") val commentKarma: Int,
-    @Json(name = "created") val created: Long,
+    @Json(name = "snoovatar_img") val avatarUrl: String,
+    @Json(name = "created") val created: Int,
+    @Json(name = "total_karma") val karmaCount: Int,
     @Json(name = "has_mail") val hasMail: Boolean,
     @Json(name = "has_mod_mail") val hasModMail: Boolean,
     @Json(name = "has_verified_email") val hasVerifiedEmail: Boolean,
@@ -37,3 +40,12 @@ data class NetworkMe(
     @Json(name = "over_18") val over18: Boolean,
     @Json(name = "verified") val verified: Boolean,
 ) : Parcelable
+
+fun NetworkMe.asExternalModel(): RedditUser = RedditUser(
+    id = id,
+    name = fullname,
+    avatarUrl = avatarUrl,
+    karmaCount = karmaCount,
+    createdAt = created,
+    coinCount = coins
+)

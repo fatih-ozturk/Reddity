@@ -15,7 +15,7 @@
  */
 package com.reddity.app.domain.usecase
 
-import com.reddity.app.data.repository.RedditPostsRepository
+import com.reddity.app.data.repository.post.RedditPostsRepository
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.model.Result
 import javax.inject.Inject

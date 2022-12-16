@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.domain.usecase
 
-import com.reddity.app.network.model.NetworkMe
+import com.reddity.app.data.repository.account.RedditAccountRepository
+import com.reddity.app.model.Result
+import javax.inject.Inject
 
-interface AccountDataSource {
-    suspend fun getMe(): NetworkMe
+class SyncAccountDetailUseCase @Inject constructor(
+    private val redditAccountRepository: RedditAccountRepository
+) {
+    suspend operator fun invoke(): Result<Unit> = redditAccountRepository.syncAccountDetails()
 }

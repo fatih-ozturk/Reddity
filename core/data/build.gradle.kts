@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:model"))
     implementation(project(":core:database"))
+    implementation(project(":core:datastore"))
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.room.ktx)

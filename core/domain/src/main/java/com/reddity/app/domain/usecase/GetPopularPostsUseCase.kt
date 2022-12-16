@@ -16,7 +16,7 @@
 package com.reddity.app.domain.usecase
 
 import androidx.paging.PagingData
-import com.reddity.app.data.repository.RedditPostsRepository
+import com.reddity.app.data.repository.post.RedditPostsRepository
 import com.reddity.app.model.Post
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
