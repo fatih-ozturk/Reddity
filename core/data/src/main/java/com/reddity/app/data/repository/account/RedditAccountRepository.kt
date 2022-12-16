@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.data.repository.account
 
-import com.reddity.app.network.model.NetworkMe
+import com.reddity.app.model.RedditUser
+import com.reddity.app.model.Result
+import kotlinx.coroutines.flow.Flow
 
-interface AccountDataSource {
-    suspend fun getMe(): NetworkMe
+interface RedditAccountRepository {
+    suspend fun syncAccountDetails(): Result<Unit>
+    fun getAccount(): Flow<RedditUser>
 }

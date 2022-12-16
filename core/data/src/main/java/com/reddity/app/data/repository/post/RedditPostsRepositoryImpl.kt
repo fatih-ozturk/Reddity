@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.repository
+package com.reddity.app.data.repository.post
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class RedditPostsRepositoryImpl @Inject constructor(
+internal class RedditPostsRepositoryImpl @Inject constructor(
     private val postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
     private val redditPostsDao: RedditPostsDao,
     private val postsDataSource: PostsDataSource

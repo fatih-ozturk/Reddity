@@ -16,24 +16,37 @@
 package com.reddity.app.data.di
 
 import com.reddity.app.data.mediators.PostsPageKeyedRemoteMediator
-import com.reddity.app.data.repository.RedditPostsRepository
-import com.reddity.app.data.repository.RedditPostsRepositoryImpl
+import com.reddity.app.data.repository.account.RedditAccountRepository
+import com.reddity.app.data.repository.account.RedditAccountRepositoryImpl
+import com.reddity.app.data.repository.post.RedditPostsRepository
+import com.reddity.app.data.repository.post.RedditPostsRepositoryImpl
 import com.reddity.app.database.dao.RedditPostsDao
+import com.reddity.app.datastore.datasource.UserDataSource
+import com.reddity.app.network.datasource.account.AccountDataSource
 import com.reddity.app.network.datasource.home.PostsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides
+    @Singleton
     fun providePostsRepository(
         postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
         redditPostsDao: RedditPostsDao,
         postsDataSource: PostsDataSource
     ): RedditPostsRepository =
         RedditPostsRepositoryImpl(postsPageKeyedRemoteMediator, redditPostsDao, postsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(
+        accountDataSource: AccountDataSource,
+        userDataSource: UserDataSource
+    ): RedditAccountRepository = RedditAccountRepositoryImpl(accountDataSource, userDataSource)
 }
