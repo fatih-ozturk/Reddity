@@ -26,7 +26,6 @@ import javax.inject.Inject
 /**
  * Serializer for [LocalRedditUser] defined in local_reddit_user.proto.
  */
-@Suppress("BlockingMethodInNonBlockingContext")
 class RedditUserSerializer @Inject constructor() : Serializer<LocalRedditUser> {
     override val defaultValue: LocalRedditUser = LocalRedditUser.getDefaultInstance()
 

@@ -15,6 +15,7 @@
  */
 plugins {
     id("reddity.android.library")
+    id("reddity.android.library.jacoco")
     id("reddity.android.hilt")
     id("kotlin-parcelize")
 }

@@ -22,5 +22,5 @@ import javax.inject.Inject
 class SyncAccountDetailUseCase @Inject constructor(
     private val redditAccountRepository: RedditAccountRepository
 ) {
-    suspend operator fun invoke(): Result<Unit> = redditAccountRepository.syncAccountDetails()
+    suspend operator fun invoke(): Result<Unit> = redditAccountRepository.syncAccount()
 }

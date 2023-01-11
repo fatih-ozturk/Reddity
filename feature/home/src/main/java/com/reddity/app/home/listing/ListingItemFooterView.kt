@@ -47,8 +47,8 @@ fun ListingItemFooterView(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ItemVoteView(
-            voteCount = post.voteCount,
-            voteStatus = post.postVoteStatus,
+            postVoteCount = post.voteCount,
+            postVoteStatus = post.postVoteStatus,
             onVoteClicked = onVoteClicked,
         )
         ItemCommentView(

@@ -54,7 +54,7 @@ fun PopularTabScreen(
         }
     )
 
-    Box(Modifier.pullRefresh(state)) {
+    Box(Modifier.pullRefresh(state).fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             itemsIndexed(
                 items = items,

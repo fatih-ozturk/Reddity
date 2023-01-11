@@ -16,6 +16,8 @@
 plugins {
     id("reddity.android.application")
     id("reddity.android.application.compose")
+    id("reddity.android.application.jacoco")
+    id("jacoco")
     id("reddity.android.hilt")
 }
 

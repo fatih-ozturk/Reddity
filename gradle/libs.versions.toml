@@ -15,6 +15,7 @@ androidxlifecycle = "2.6.0-alpha03"
 androidxtest = "1.5.0"
 kotlinxDatetime = "0.4.0"
 appauthVersion = "0.11.1"
+casaAndroid = "0.2.0"
 coil = "2.2.2"
 compose-bom = "2022.11.00"
 composecompiler = "1.3.2"
@@ -30,6 +31,7 @@ ktlint = "11.0.0"
 ksp = "1.7.20-1.0.8"
 mockkVersion = "1.13.2"
 moshi = "1.14.0"
+jacoco = "0.8.7"
 okhttp = "4.10.0"
 paging = "3.1.1"
 pagingCompose = "1.0.0-alpha17"
@@ -95,6 +97,9 @@ androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", 
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 appauth = { group = "net.openid", name = "appauth", version.ref = "appauthVersion" }
+casa-android-base = { group = "com.google.android.catalog.framework", name = "casa-base", version.ref = "casaAndroid" }
+casa-android-processor = { group = "com.google.android.catalog.framework", name = "casa-processor", version.ref = "casaAndroid" }
+casa-android-ui = { group = "com.google.android.catalog.framework", name = "casa-ui", version.ref = "casaAndroid" }
 coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coil-kt-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
