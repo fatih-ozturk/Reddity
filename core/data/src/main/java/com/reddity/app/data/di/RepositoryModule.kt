@@ -15,12 +15,10 @@
  */
 package com.reddity.app.data.di
 
-import com.reddity.app.data.mediators.PostsPageKeyedRemoteMediator
 import com.reddity.app.data.repository.account.RedditAccountRepository
 import com.reddity.app.data.repository.account.RedditAccountRepositoryImpl
 import com.reddity.app.data.repository.post.RedditPostsRepository
 import com.reddity.app.data.repository.post.RedditPostsRepositoryImpl
-import com.reddity.app.database.dao.RedditPostsDao
 import com.reddity.app.datastore.datasource.UserDataSource
 import com.reddity.app.network.datasource.account.AccountDataSource
 import com.reddity.app.network.datasource.home.PostsDataSource
@@ -37,11 +35,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun providePostsRepository(
-        postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
-        redditPostsDao: RedditPostsDao,
         postsDataSource: PostsDataSource
     ): RedditPostsRepository =
-        RedditPostsRepositoryImpl(postsPageKeyedRemoteMediator, redditPostsDao, postsDataSource)
+        RedditPostsRepositoryImpl(postsDataSource)
 
     @Provides
     @Singleton

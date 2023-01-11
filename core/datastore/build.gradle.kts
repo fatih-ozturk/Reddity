@@ -36,6 +36,7 @@ import com.google.protobuf.gradle.protoc
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("reddity.android.library")
+    id("reddity.android.library.jacoco")
     id("reddity.android.hilt")
     id("kotlin-parcelize")
     alias(libs.plugins.protobuf)

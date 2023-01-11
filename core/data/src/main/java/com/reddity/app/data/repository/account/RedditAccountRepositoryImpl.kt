@@ -27,7 +27,7 @@ internal class RedditAccountRepositoryImpl @Inject constructor(
     private val accountDataSource: AccountDataSource,
     private val userDataSource: UserDataSource
 ) : RedditAccountRepository {
-    override suspend fun syncAccountDetails(): Result<Unit> {
+    override suspend fun syncAccount(): Result<Unit> {
         return try {
             val account = accountDataSource.getMe()
 
