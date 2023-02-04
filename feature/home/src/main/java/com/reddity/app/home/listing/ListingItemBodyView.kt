@@ -25,7 +25,6 @@ import com.reddity.app.model.PostType
 
 @Composable
 fun ListingItemBodyView(post: Post) {
-
     when (post.postType) {
         PostType.IMAGE -> {
             ItemBodyImageView(

@@ -53,7 +53,7 @@ fun FeedLoadingIcon(
             .offset(y = (-4).dp) // https://issuetracker.google.com/issues/110463864
             .pullRefreshIndicatorTransform(state),
         shape = CircleShape,
-        elevation = 6.dp,
+        elevation = 6.dp
     ) {
         LottieAnimation(
             modifier = Modifier.padding(4.dp),

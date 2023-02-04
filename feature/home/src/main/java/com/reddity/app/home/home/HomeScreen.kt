@@ -64,7 +64,7 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier,
     pagerState: PagerState,
-    onLoginRequired: () -> Unit = {},
+    onLoginRequired: () -> Unit = {}
 ) {
     HorizontalPager(
         modifier = modifier,

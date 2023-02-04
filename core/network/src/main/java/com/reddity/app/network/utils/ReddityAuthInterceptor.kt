@@ -41,5 +41,4 @@ class ReddityAuthInterceptor @Inject constructor(
         Timber.e(request.headers["Authorization"].toString())
         return chain.proceed(request)
     }
-
 }

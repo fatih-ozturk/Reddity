@@ -24,7 +24,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NetworkSubredditDetail(
     @Json(name = "icon_img") val iconImage: String?,
-    @Json(name = "community_icon") val communityIcon: String?,
+    @Json(name = "community_icon") val communityIcon: String?
 ) : Parcelable {
     val subredditIconUrl: String?
         get() {

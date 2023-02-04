@@ -54,7 +54,7 @@ import com.reddity.app.home.R
 @Composable
 fun HomeSearchView(
     onMenuClicked: (() -> Unit)? = {},
-    onProfileClicked: (() -> Unit)? = {},
+    onProfileClicked: (() -> Unit)? = {}
 ) {
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }

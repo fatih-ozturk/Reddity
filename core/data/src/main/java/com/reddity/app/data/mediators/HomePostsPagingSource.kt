@@ -28,7 +28,7 @@ class HomePostsPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
         return try {
-            //TODO next page not loading properly
+            // TODO next page not loading properly
             val response = postsDataSource.getHomePostList(
                 loadSize = params.loadSize,
                 before = if (params is LoadParams.Prepend) params.key else null,
@@ -42,7 +42,7 @@ class HomePostsPagingSource @Inject constructor(
                 prevKey = response.before,
                 nextKey = response.after
             )
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

@@ -107,7 +107,7 @@ object ReddityAuthModule {
         @ApplicationContext context: Context,
         authManager: AuthManager,
         clientAuth: ClientAuthentication,
-        requestProvider: AuthorizationRequest,
+        requestProvider: AuthorizationRequest
     ): ReddityAuthManager {
         return ReddityAuthManagerImpl(context, authManager, clientAuth, requestProvider)
     }

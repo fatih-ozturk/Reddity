@@ -28,7 +28,7 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authManager: AuthManager,
     private val clientAuth: ClientAuthentication,
-    private val requestProvider: AuthorizationRequest,
+    private val requestProvider: AuthorizationRequest
 ) : ReddityAuthManager {
     private val authService = AuthorizationService(context)
 
@@ -40,7 +40,8 @@ internal class ReddityAuthManagerImpl @Inject constructor(
         when {
             response != null -> {
                 authService.performTokenRequest(
-                    response.createTokenExchangeRequest(), clientAuth
+                    response.createTokenExchangeRequest(),
+                    clientAuth
                 ) { token, ex ->
                     val state = authManager.currentAuthState.apply {
                         update(response, ex)
@@ -60,7 +61,8 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     override fun refreshAccessToken() {
         try {
             authService.performTokenRequest(
-                authManager.currentAuthState.createTokenRefreshRequest(), clientAuth
+                authManager.currentAuthState.createTokenRefreshRequest(),
+                clientAuth
             ) { token, ex ->
                 val state = authManager.currentAuthState.apply {
                     update(token, ex)

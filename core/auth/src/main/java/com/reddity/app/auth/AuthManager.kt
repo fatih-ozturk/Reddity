@@ -36,8 +36,8 @@ import javax.inject.Singleton
 class AuthManager @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @Named("auth") private val authPrefs: SharedPreferences,
-    @ApplicationContext private val context: Context,
-    ) {
+    @ApplicationContext private val context: Context
+) {
 
     val currentAuthState: AuthState
         get() {
@@ -58,7 +58,7 @@ class AuthManager @Inject constructor(
         authPrefs.edit(commit = true) {
             putString(PreferenceAuthKey, state.jsonSerializeString())
         }.also {
-            //temp
+            // temp
             context.restartApp()
         }
     }
