@@ -15,6 +15,7 @@
  */
 package com.reddity.app.ui.widget
 
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -49,6 +50,7 @@ fun FeedLoadingIcon(
     Surface(
         modifier = modifier
             .size(40.dp)
+            .offset(y = (-4).dp) // https://issuetracker.google.com/issues/110463864
             .pullRefreshIndicatorTransform(state),
         shape = CircleShape,
         elevation = 6.dp,

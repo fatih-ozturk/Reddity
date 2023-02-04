@@ -46,6 +46,12 @@ class UserDataSourceImpl(
             Timber.e(exception)
         }
     }
+
+    override suspend fun clearUser() {
+        redditUserDataStore.updateData {
+            it.toBuilder().clear().build()
+        }
+    }
 }
 
 fun LocalRedditUser.asExternal(): RedditUser = RedditUser(

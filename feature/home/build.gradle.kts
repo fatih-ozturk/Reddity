@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.coil.kt.gif)
 
     implementation(libs.exoplayer)
+    implementation(libs.accompanist.navigation)
 
     implementation(libs.accompanist.pager.pager)
     implementation(libs.accompanist.pager.indicators)

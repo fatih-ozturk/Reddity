@@ -20,11 +20,22 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface PostApi {
 
-    @GET("/hot.json")
+    @GET
     suspend fun getPopularPostList(
+        @Url url: String = "https://reddit.com/hot.json",
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null,
+        @Query("raw_json") rawJson: Int = 1,
+        @Query("count") loadSize: Int = 0,
+        @Query("sr_detail") includeSrDetail: Boolean = true
+    ): NetworkListingResponse
+
+    @GET("/.json")
+    suspend fun getHomePostList(
         @Query("after") after: String? = null,
         @Query("before") before: String? = null,
         @Query("raw_json") rawJson: Int = 1,

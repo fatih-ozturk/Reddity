@@ -48,12 +48,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.reddity.app.home.R
 
 @Composable
 fun HomeSearchView(
-    onMenuClicked: (() -> Unit)? = null,
-    onProfileClicked: (() -> Unit)? = null
+    onMenuClicked: (() -> Unit)? = {},
+    onProfileClicked: (() -> Unit)? = {},
 ) {
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }
@@ -97,10 +98,12 @@ fun HomeSearchView(
                 onSearchFocused = onSearchFocused
             )
             AnimatedVisibility(visible = !onSearchFocused) {
-                Image(
-                    painterResource(id = R.drawable.icon_user_fill),
+                AsyncImage(
+                    model = null,
+                    placeholder = painterResource(id = R.drawable.icon_user_fill),
                     contentDescription = "Profile",
                     modifier = Modifier
+                        .size(36.dp)
                         .padding(start = 16.dp)
                         .clickable {
                             onProfileClicked?.invoke()

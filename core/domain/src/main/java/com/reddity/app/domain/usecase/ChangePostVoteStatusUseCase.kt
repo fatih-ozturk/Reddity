@@ -17,12 +17,11 @@ package com.reddity.app.domain.usecase
 
 import com.reddity.app.data.repository.post.RedditPostsRepository
 import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.model.Result
 import javax.inject.Inject
 
 class ChangePostVoteStatusUseCase @Inject constructor(
     private val redditPostsRepository: RedditPostsRepository
 ) {
-    suspend operator fun invoke(postId: String, vote: PostVoteStatus): Result<Unit> =
+    suspend operator fun invoke(postId: String, vote: PostVoteStatus) =
         redditPostsRepository.postVote(postId = postId, request = vote)
 }

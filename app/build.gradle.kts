@@ -66,12 +66,14 @@ dependencies {
     implementation(project(":core:auth"))
     implementation(project(":core:database"))
     implementation(project(":core:domain"))
+    implementation(project(":core:model"))
 
     implementation(project(":feature:home"))
     implementation(project(":feature:explore"))
     implementation(project(":feature:createpost"))
     implementation(project(":feature:chat"))
     implementation(project(":feature:notification"))
+    implementation(project(":feature:login"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)

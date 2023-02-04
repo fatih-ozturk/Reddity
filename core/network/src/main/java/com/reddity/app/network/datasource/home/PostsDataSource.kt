@@ -26,6 +26,12 @@ interface PostsDataSource {
         before: String? = null
     ): NetworkListingDataResponse
 
+    suspend fun getHomePostList(
+        loadSize: Int,
+        after: String? = null,
+        before: String? = null
+    ): NetworkListingDataResponse
+
     suspend fun postVote(postId: String, request: NetworkVoteRequest): Any
     suspend fun getPostById(postId: String): NetworkListingDataResponse
 }

@@ -15,9 +15,12 @@
  */
 package com.reddity.app.auth
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.reddity.app.base.MainDispatcher
+import com.reddity.app.base.restartApp
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -30,10 +33,11 @@ import javax.inject.Singleton
 
 @OptIn(DelicateCoroutinesApi::class)
 @Singleton
-class AuthPersistManager @Inject constructor(
+class AuthManager @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
-    @Named("auth") private val authPrefs: SharedPreferences
-) {
+    @Named("auth") private val authPrefs: SharedPreferences,
+    @ApplicationContext private val context: Context,
+    ) {
 
     val currentAuthState: AuthState
         get() {
@@ -53,6 +57,9 @@ class AuthPersistManager @Inject constructor(
     private fun persistAuthState(state: AuthState) {
         authPrefs.edit(commit = true) {
             putString(PreferenceAuthKey, state.jsonSerializeString())
+        }.also {
+            //temp
+            context.restartApp()
         }
     }
 

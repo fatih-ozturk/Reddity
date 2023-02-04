@@ -34,13 +34,16 @@ import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.model.PostVoteStatus.DOWN_VOTE
 import com.reddity.app.model.PostVoteStatus.NONE
 import com.reddity.app.model.PostVoteStatus.UPVOTE
+import com.reddity.app.model.ReddityAuthState
 import com.reddity.app.ui.commons.LocalReddityTextCreator
 
 @Composable
 fun ItemVoteView(
     onVoteClicked: (PostVoteStatus) -> Unit = {},
+    onLoginRequired: () -> Unit = {},
     postVoteCount: Int,
-    postVoteStatus: PostVoteStatus
+    postVoteStatus: PostVoteStatus,
+    authState: ReddityAuthState
 ) {
     val textCreator = LocalReddityTextCreator.current
 
@@ -66,14 +69,18 @@ fun ItemVoteView(
                 )
             },
             onVoteClicked = {
-                if (voteStatus.value == UPVOTE) {
-                    onVoteClicked.invoke(NONE)
-                    voteStatus.value = NONE
-                    voteCount.value -= 1
+                if (authState == ReddityAuthState.LOGGED_OUT) {
+                    onLoginRequired()
                 } else {
-                    onVoteClicked.invoke(UPVOTE)
-                    voteStatus.value = UPVOTE
-                    voteCount.value += 1
+                    if (voteStatus.value == UPVOTE) {
+                        onVoteClicked.invoke(NONE)
+                        voteStatus.value = NONE
+                        voteCount.value -= 1
+                    } else {
+                        onVoteClicked.invoke(UPVOTE)
+                        voteStatus.value = UPVOTE
+                        voteCount.value += 1
+                    }
                 }
             }
         )
@@ -101,14 +108,18 @@ fun ItemVoteView(
                 )
             },
             onVoteClicked = {
-                if (voteStatus.value == DOWN_VOTE) {
-                    onVoteClicked.invoke(NONE)
-                    voteStatus.value = NONE
-                    voteCount.value += 1
+                if (authState == ReddityAuthState.LOGGED_OUT) {
+                    onLoginRequired()
                 } else {
-                    onVoteClicked.invoke(DOWN_VOTE)
-                    voteStatus.value = DOWN_VOTE
-                    voteCount.value -= 1
+                    if (voteStatus.value == DOWN_VOTE) {
+                        onVoteClicked.invoke(NONE)
+                        voteStatus.value = NONE
+                        voteCount.value += 1
+                    } else {
+                        onVoteClicked.invoke(DOWN_VOTE)
+                        voteStatus.value = DOWN_VOTE
+                        voteCount.value -= 1
+                    }
                 }
             }
         )

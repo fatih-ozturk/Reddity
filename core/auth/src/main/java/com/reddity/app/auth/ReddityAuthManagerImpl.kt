@@ -17,7 +17,6 @@ package com.reddity.app.auth
 
 import android.content.Context
 import android.content.Intent
-import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
@@ -27,28 +26,28 @@ import javax.inject.Inject
 
 internal class ReddityAuthManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val authPersistManager: AuthPersistManager,
-    private val clientAuth: Lazy<ClientAuthentication>,
-    private val requestProvider: Lazy<AuthorizationRequest>,
+    private val authManager: AuthManager,
+    private val clientAuth: ClientAuthentication,
+    private val requestProvider: AuthorizationRequest,
 ) : ReddityAuthManager {
     private val authService = AuthorizationService(context)
 
     override fun buildLoginIntent(): Intent =
-        authService.getAuthorizationRequestIntent(requestProvider.get())
+        authService.getAuthorizationRequestIntent(requestProvider)
 
     override fun onLoginResult(authorizationResult: LoginRedditContract.AuthorizationResult) {
         val (response, error) = authorizationResult
         when {
             response != null -> {
                 authService.performTokenRequest(
-                    response.createTokenExchangeRequest(), clientAuth.get()
+                    response.createTokenExchangeRequest(), clientAuth
                 ) { token, ex ->
-                    val state = authPersistManager.currentAuthState.apply {
+                    val state = authManager.currentAuthState.apply {
                         update(response, ex)
                         update(token, ex)
                     }
                     Timber.e("accessToken = %s", state.accessToken.toString())
-                    authPersistManager.onNewAuthState(state)
+                    authManager.onNewAuthState(state)
                 }
             }
 
@@ -59,14 +58,18 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     }
 
     override fun refreshAccessToken() {
-        authService.performTokenRequest(
-            authPersistManager.currentAuthState.createTokenRefreshRequest(), clientAuth.get()
-        ) { token, ex ->
-            val state = authPersistManager.currentAuthState.apply {
-                update(token, ex)
+        try {
+            authService.performTokenRequest(
+                authManager.currentAuthState.createTokenRefreshRequest(), clientAuth
+            ) { token, ex ->
+                val state = authManager.currentAuthState.apply {
+                    update(token, ex)
+                }
+                Timber.e("refreshAccessToken = %s", state.accessToken.toString())
+                authManager.onNewAuthState(state)
             }
-            Timber.e("refreshAccessToken = %s", state.accessToken.toString())
-            authPersistManager.onNewAuthState(state)
+        } catch (exception: IllegalStateException) {
+            authManager.clearAuth()
         }
     }
 }

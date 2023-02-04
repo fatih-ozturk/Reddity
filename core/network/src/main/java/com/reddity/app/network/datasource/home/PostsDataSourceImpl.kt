@@ -31,6 +31,14 @@ class PostsDataSourceImpl @Inject constructor(
         loadSize = loadSize, after = after, before = before
     ).data
 
+    override suspend fun getHomePostList(
+        loadSize: Int,
+        after: String?,
+        before: String?
+    ): NetworkListingDataResponse = postApi.getHomePostList(
+        loadSize = loadSize, after = after, before = before
+    ).data
+
     override suspend fun postVote(
         postId: String,
         request: NetworkVoteRequest

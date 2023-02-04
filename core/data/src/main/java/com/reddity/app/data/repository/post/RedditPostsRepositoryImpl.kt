@@ -18,34 +18,40 @@ package com.reddity.app.data.repository.post
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.reddity.app.data.mediators.PostsPageKeyedRemotePagingSource
+import com.reddity.app.data.mediators.HomePostsPagingSource
+import com.reddity.app.data.mediators.PopularPostsPagingSource
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.model.Result
 import com.reddity.app.network.datasource.home.PostsDataSource
 import com.reddity.app.network.model.request.NetworkVoteRequest
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class RedditPostsRepositoryImpl @Inject constructor(
     private val postsDataSource: PostsDataSource
 ) : RedditPostsRepository {
 
-    override fun getHomePopularPagingData(): Flow<PagingData<Post>> =
+    override fun getPopularPagingData(): Flow<PagingData<Post>> =
         Pager(
             config = PagingConfig(pageSize = 25, enablePlaceholders = true),
-            pagingSourceFactory = { PostsPageKeyedRemotePagingSource(postsDataSource) }
+            pagingSourceFactory = { PopularPostsPagingSource(postsDataSource) }
+        ).flow
+
+    override fun getHomePagingData(): Flow<PagingData<Post>> =
+        Pager(
+            config = PagingConfig(pageSize = 25, enablePlaceholders = true),
+            pagingSourceFactory = { HomePostsPagingSource(postsDataSource) }
         ).flow
 
     override suspend fun postVote(
         postId: String,
         request: PostVoteStatus
-    ): Result<Unit> {
-        return try {
+    ) {
+        try {
             postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
-            Result.Success(Unit)
         } catch (exception: Exception) {
-            Result.Error(exception)
+            Timber.e(exception)
         }
     }
 }
