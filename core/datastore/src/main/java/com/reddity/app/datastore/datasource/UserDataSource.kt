@@ -21,4 +21,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserDataSource {
     fun getUser(): Flow<RedditUser>
     suspend fun setUser(user: RedditUser)
+    suspend fun clearUser()
 }

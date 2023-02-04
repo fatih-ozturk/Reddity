@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.ReddityAuthState
 
 @Composable
 fun ListingItemView(
@@ -30,6 +31,8 @@ fun ListingItemView(
     onCommentClicked: () -> Unit = {},
     onShareClicked: () -> Unit = {},
     onGiveAwardClicked: () -> Unit = {},
+    onLoginRequired: () -> Unit = {},
+    authState: ReddityAuthState,
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth()
@@ -44,7 +47,9 @@ fun ListingItemView(
                 onVoteClicked = onVoteClicked,
                 onShareClicked = onShareClicked,
                 onCommentClicked = onCommentClicked,
-                onGiveAwardClicked = onGiveAwardClicked
+                onGiveAwardClicked = onGiveAwardClicked,
+                onLoginRequired = onLoginRequired,
+                authState = authState
             )
         }
     }

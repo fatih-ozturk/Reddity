@@ -24,6 +24,10 @@ gradlePlugin {
             id = "reddity.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidApplicationJacoco") {
+            id = "reddity.android.application.jacoco"
+            implementationClass = "AndroidApplicationJacocoConventionPlugin"
+        }
         register("androidLibraryCompose") {
             id = "reddity.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
@@ -31,6 +35,10 @@ gradlePlugin {
         register("androidLibrary") {
             id = "reddity.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidLibraryJacoco") {
+            id = "reddity.android.library.jacoco"
+            implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
         register("androidFeature") {
             id = "reddity.android.feature"

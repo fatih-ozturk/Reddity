@@ -21,34 +21,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.reddity.app.home.R
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.model.PostVoteStatus.DOWN_VOTE
 import com.reddity.app.model.PostVoteStatus.NONE
 import com.reddity.app.model.PostVoteStatus.UPVOTE
+import com.reddity.app.model.ReddityAuthState
 import com.reddity.app.ui.commons.LocalReddityTextCreator
-import com.reddity.app.ui.theme.ReddityTheme
 
 @Composable
 fun ItemVoteView(
     onVoteClicked: (PostVoteStatus) -> Unit = {},
-    voteCount: Int,
-    voteStatus: PostVoteStatus
+    onLoginRequired: () -> Unit = {},
+    postVoteCount: Int,
+    postVoteStatus: PostVoteStatus,
+    authState: ReddityAuthState
 ) {
     val textCreator = LocalReddityTextCreator.current
+
+    val voteStatus = remember { mutableStateOf(postVoteStatus) }
+    val voteCount = remember { mutableStateOf(postVoteCount) }
 
     Row {
         RedditVoteButton(
             modifier = Modifier.size(20.dp),
-            isVoted = voteStatus == UPVOTE,
+            isVoted = voteStatus.value == UPVOTE,
             icon = {
                 Image(
                     painter = painterResource(id = R.drawable.icon_upvote),
@@ -64,22 +69,30 @@ fun ItemVoteView(
                 )
             },
             onVoteClicked = {
-                if (voteStatus == UPVOTE) {
-                    onVoteClicked.invoke(NONE)
+                if (authState == ReddityAuthState.LOGGED_OUT) {
+                    onLoginRequired()
                 } else {
-                    onVoteClicked.invoke(UPVOTE)
+                    if (voteStatus.value == UPVOTE) {
+                        onVoteClicked.invoke(NONE)
+                        voteStatus.value = NONE
+                        voteCount.value -= 1
+                    } else {
+                        onVoteClicked.invoke(UPVOTE)
+                        voteStatus.value = UPVOTE
+                        voteCount.value += 1
+                    }
                 }
             }
         )
         Text(
-            text = textCreator.postFormattedCountText(voteCount),
+            text = textCreator.postFormattedCountText(voteCount.value),
             style = MaterialTheme.typography.subtitle2,
             modifier = Modifier.padding(horizontal = 8.dp),
             color = MaterialTheme.colors.onBackground
         )
         RedditVoteButton(
             modifier = Modifier.size(20.dp),
-            isVoted = voteStatus == DOWN_VOTE,
+            isVoted = voteStatus.value == DOWN_VOTE,
             icon = {
                 Image(
                     painter = painterResource(id = R.drawable.icon_downvote),
@@ -95,10 +108,18 @@ fun ItemVoteView(
                 )
             },
             onVoteClicked = {
-                if (voteStatus == DOWN_VOTE) {
-                    onVoteClicked.invoke(NONE)
+                if (authState == ReddityAuthState.LOGGED_OUT) {
+                    onLoginRequired()
                 } else {
-                    onVoteClicked.invoke(DOWN_VOTE)
+                    if (voteStatus.value == DOWN_VOTE) {
+                        onVoteClicked.invoke(NONE)
+                        voteStatus.value = NONE
+                        voteCount.value += 1
+                    } else {
+                        onVoteClicked.invoke(DOWN_VOTE)
+                        voteStatus.value = DOWN_VOTE
+                        voteCount.value -= 1
+                    }
                 }
             }
         )
@@ -115,15 +136,5 @@ fun RedditVoteButton(
 ) {
     IconButton(modifier = modifier, onClick = onVoteClicked) {
         if (isVoted) selectedIcon() else icon()
-    }
-}
-
-@Preview
-@Composable
-fun VoteViewPreview() {
-    ReddityTheme {
-        Surface {
-            ItemVoteView(voteCount = 2000, voteStatus = NONE)
-        }
     }
 }

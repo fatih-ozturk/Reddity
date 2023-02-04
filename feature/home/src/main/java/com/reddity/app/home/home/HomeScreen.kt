@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -35,10 +36,12 @@ import com.reddity.app.home.views.HomeTabView
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    onLoginRequired: () -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
+
     Scaffold(
         topBar = {
             Column {
@@ -51,6 +54,7 @@ fun HomeScreen(
         HomeContent(
             modifier = Modifier.padding(it),
             pagerState = pagerState,
+            onLoginRequired = onLoginRequired
         )
     }
 }
@@ -60,6 +64,7 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier,
     pagerState: PagerState,
+    onLoginRequired: () -> Unit = {},
 ) {
     HorizontalPager(
         modifier = modifier,
@@ -68,8 +73,12 @@ fun HomeContent(
         count = 2
     ) { page ->
         when (page) {
-            0 -> HomeTabScreen()
-            1 -> PopularTabScreen()
+            0 -> HomeTabScreen(
+                onLoginRequired = onLoginRequired
+            )
+            1 -> PopularTabScreen(
+                onLoginRequired = onLoginRequired
+            )
         }
     }
 }

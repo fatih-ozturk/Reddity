@@ -29,6 +29,7 @@ import com.reddity.app.home.listing.footer.ItemShareView
 import com.reddity.app.home.listing.footer.ItemVoteView
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.ReddityAuthState
 
 @Composable
 fun ListingItemFooterView(
@@ -37,6 +38,8 @@ fun ListingItemFooterView(
     onCommentClicked: () -> Unit = {},
     onShareClicked: () -> Unit = {},
     onGiveAwardClicked: () -> Unit = {},
+    onLoginRequired: () -> Unit = {},
+    authState: ReddityAuthState,
 ) {
     Row(
         modifier = Modifier
@@ -47,9 +50,11 @@ fun ListingItemFooterView(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ItemVoteView(
-            voteCount = post.voteCount,
-            voteStatus = post.postVoteStatus,
+            postVoteCount = post.voteCount,
+            postVoteStatus = post.postVoteStatus,
             onVoteClicked = onVoteClicked,
+            onLoginRequired = onLoginRequired,
+            authState = authState
         )
         ItemCommentView(
             commentCount = post.commentCount,

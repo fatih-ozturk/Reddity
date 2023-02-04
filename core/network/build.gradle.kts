@@ -23,6 +23,12 @@ plugins {
 
 android {
     namespace = "com.reddity.app.network"
+
+    defaultConfig {
+        manifestPlaceholders += mapOf(
+            "appAuthRedirectScheme" to "empty",
+        )
+    }
 }
 
 dependencies {
@@ -32,6 +38,7 @@ dependencies {
 
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.appauth)
 
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.gsonConverter)
