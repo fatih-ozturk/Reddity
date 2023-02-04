@@ -38,7 +38,7 @@ data class NetworkMe(
     @Json(name = "link_karma") val linkKarma: Int,
     @Json(name = "num_friends") val numFriends: Int,
     @Json(name = "over_18") val over18: Boolean,
-    @Json(name = "verified") val verified: Boolean,
+    @Json(name = "verified") val verified: Boolean
 ) : Parcelable
 
 fun NetworkMe.asExternalModel(): RedditUser = RedditUser(

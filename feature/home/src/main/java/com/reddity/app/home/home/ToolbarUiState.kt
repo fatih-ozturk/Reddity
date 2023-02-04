@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.datastore.datasource
+package com.reddity.app.home.home
 
 import com.reddity.app.model.RedditUser
-import kotlinx.coroutines.flow.Flow
 
-interface UserDataSource {
-    fun getUser(): Flow<RedditUser>
-    suspend fun setUser(user: RedditUser)
-    suspend fun clearUser()
+data class ToolbarUiState(
+    val redditUser: RedditUser? = null
+) {
+    companion object {
+        val Empty = ToolbarUiState()
+    }
 }

@@ -17,15 +17,10 @@ package com.reddity.app.domain.usecase
 
 import com.reddity.app.data.repository.account.RedditAccountRepository
 import com.reddity.app.model.RedditUser
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetUserDetailUseCase @Inject constructor(
     private val redditAccountRepository: RedditAccountRepository
 ) {
-    operator fun invoke(): Flow<RedditUser> = flow {
-        val user = redditAccountRepository.getUser()
-        emit(user)
-    }
+    suspend operator fun invoke(): RedditUser = redditAccountRepository.getUser()
 }

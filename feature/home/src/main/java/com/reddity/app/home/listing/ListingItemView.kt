@@ -32,7 +32,7 @@ fun ListingItemView(
     onShareClicked: () -> Unit = {},
     onGiveAwardClicked: () -> Unit = {},
     onLoginRequired: () -> Unit = {},
-    authState: ReddityAuthState,
+    authState: ReddityAuthState
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth()

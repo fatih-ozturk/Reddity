@@ -20,6 +20,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -57,7 +58,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -72,11 +72,10 @@ import com.reddity.app.model.ReddityAuthState
 import com.reddity.app.ui.theme.ReddityTheme
 import com.reddity.app.ui.widget.FeedLoadingIcon
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun HomeTabScreen(
     viewModel: HomeTabViewModel = hiltViewModel(),
-    onLoginRequired: () -> Unit = {},
+    onLoginRequired: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -116,7 +115,7 @@ fun HomePostsScreen(
     items: LazyPagingItems<Post>,
     onVoteClicked: (postId: String, vote: PostVoteStatus) -> Unit,
     onLoginRequired: () -> Unit = {},
-    authState: ReddityAuthState,
+    authState: ReddityAuthState
 ) {
     val isRefreshing by remember { derivedStateOf { items.loadState.refresh is LoadState.Loading } }
     val listState = rememberLazyListState()
@@ -125,7 +124,8 @@ fun HomePostsScreen(
         refreshing = items.loadState.refresh is LoadState.Loading,
         onRefresh = {
             items.refresh()
-        })
+        }
+    )
 
     Box(
         Modifier
@@ -177,7 +177,8 @@ fun HomeUnauthorizedScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = Modifier, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     modifier = Modifier
@@ -269,7 +270,7 @@ fun HomeUnauthorizedScreen(
         ) {
             Button(
                 onClick = {
-                    loginLauncher.launch(Unit)
+                    loginLauncher.launch()
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -20,26 +20,26 @@ import com.reddity.app.R
 
 enum class TopLevelDestination(
     @DrawableRes val selectedIcon: Int,
-    @DrawableRes val unselectedIcon: Int,
+    @DrawableRes val unselectedIcon: Int
 ) {
     HOME(
         selectedIcon = R.drawable.icon_home_fill,
-        unselectedIcon = R.drawable.icon_home,
+        unselectedIcon = R.drawable.icon_home
     ),
     EXPLORE(
         selectedIcon = R.drawable.icon_discover_fill,
-        unselectedIcon = R.drawable.icon_discover,
+        unselectedIcon = R.drawable.icon_discover
     ),
     CREATE_POST(
         selectedIcon = R.drawable.icon_add,
-        unselectedIcon = R.drawable.icon_add,
+        unselectedIcon = R.drawable.icon_add
     ),
     CHAT(
         selectedIcon = R.drawable.icon_chat_fill,
-        unselectedIcon = R.drawable.icon_chat,
+        unselectedIcon = R.drawable.icon_chat
     ),
     NOTIFICATION(
         selectedIcon = R.drawable.icon_notification_fill,
-        unselectedIcon = R.drawable.icon_notification,
+        unselectedIcon = R.drawable.icon_notification
     )
 }

@@ -21,6 +21,7 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import timber.log.Timber
 import javax.inject.Inject
 
 class ReddityAuthenticator @Inject constructor(
@@ -28,12 +29,14 @@ class ReddityAuthenticator @Inject constructor(
     private val authManager: AuthManager
 ) : Authenticator {
 
-    override fun authenticate(route: Route?, response: Response): Request {
+    override fun authenticate(route: Route?, response: Response): Request = synchronized(this) {
         reddityAuthManager.refreshAccessToken()
 
-        return response.request.newBuilder().header(
+        Timber.e("Refresh access token %s", authManager.state.accessToken)
+
+        response.request.newBuilder().header(
             "Authorization",
-            "Bearer " + authManager.currentAuthState.accessToken
+            "Bearer " + authManager.state.accessToken
         ).build()
     }
 }

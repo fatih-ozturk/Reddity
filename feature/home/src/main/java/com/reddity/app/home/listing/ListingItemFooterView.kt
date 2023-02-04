@@ -39,7 +39,7 @@ fun ListingItemFooterView(
     onShareClicked: () -> Unit = {},
     onGiveAwardClicked: () -> Unit = {},
     onLoginRequired: () -> Unit = {},
-    authState: ReddityAuthState,
+    authState: ReddityAuthState
 ) {
     Row(
         modifier = Modifier

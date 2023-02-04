@@ -132,7 +132,7 @@ fun RedditVoteButton(
     isVoted: Boolean = false,
     onVoteClicked: () -> Unit = {},
     icon: @Composable () -> Unit,
-    selectedIcon: @Composable () -> Unit,
+    selectedIcon: @Composable () -> Unit
 ) {
     IconButton(modifier = modifier, onClick = onVoteClicked) {
         if (isVoted) selectedIcon() else icon()
