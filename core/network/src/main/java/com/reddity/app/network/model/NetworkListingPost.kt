@@ -16,6 +16,7 @@
 package com.reddity.app.network.model
 
 import android.os.Parcelable
+import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.network.model.image.NetworkImagePreview
 import com.reddity.app.network.model.media.NetworkMedia
@@ -58,9 +59,28 @@ data class NetworkListingPost(
     val awardsIconList: List<String>
         get() = awards.map { it.resizedIcons }.map { it[2].url.orEmpty() }
 
-    val postVoteStatus: PostVoteStatus = when (likes) {
-        true -> PostVoteStatus.UPVOTE
-        false -> PostVoteStatus.DOWN_VOTE
-        null -> PostVoteStatus.NONE
-    }
+    val postVoteStatus: PostVoteStatus
+        get() = when (likes) {
+            true -> PostVoteStatus.UPVOTE
+            false -> PostVoteStatus.DOWN_VOTE
+            null -> PostVoteStatus.NONE
+        }
 }
+
+fun NetworkListingPost.asExternal(): Post = Post(
+    id = name,
+    postType = enumValueOf(postType.name),
+    author = author,
+    subreddit = subreddit,
+    subredditIconUrl = subredditDetail?.subredditIconUrl,
+    title = title,
+    content = content,
+    image = preview?.images?.firstOrNull()?.source?.url,
+    timestamp = created,
+    videoUrl = media?.redditVideo?.videoUrl,
+    voteCount = upvoteCount,
+    commentCount = commentCount,
+    awardsCount = awardsCount,
+    awardsIconList = awardsIconList,
+    postVoteStatus = postVoteStatus
+)

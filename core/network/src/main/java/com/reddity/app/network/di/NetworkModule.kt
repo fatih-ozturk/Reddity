@@ -15,7 +15,7 @@
  */
 package com.reddity.app.network.di
 
-import com.reddity.app.auth.AuthPersistManager
+import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.network.api.AccountApi
 import com.reddity.app.network.api.PostApi
@@ -46,7 +46,7 @@ object NetworkModule {
         okHttp: OkHttpClient,
         moshi: Moshi
     ): Retrofit {
-        return Retrofit.Builder().client(okHttp).baseUrl("https://reddit.com/")
+        return Retrofit.Builder().client(okHttp).baseUrl("https://oauth.reddit.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
     }
 
@@ -80,19 +80,19 @@ object NetworkModule {
     @Provides
     @Singleton
     internal fun provideReddityAuthInterceptor(
-        authPersistManager: AuthPersistManager,
+        authManager: AuthManager,
     ): ReddityAuthInterceptor {
-        return ReddityAuthInterceptor(authPersistManager)
+        return ReddityAuthInterceptor(authManager)
     }
 
     @Provides
     @Singleton
     internal fun provideReddityAuthenticator(
         reddityAuthManager: ReddityAuthManager,
-        authPersistManager: AuthPersistManager
+        authManager: AuthManager
     ): ReddityAuthenticator {
         return ReddityAuthenticator(
-            reddityAuthManager, authPersistManager
+            reddityAuthManager, authManager
         )
     }
 

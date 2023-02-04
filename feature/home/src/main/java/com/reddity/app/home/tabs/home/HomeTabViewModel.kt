@@ -16,11 +16,58 @@
 package com.reddity.app.home.tabs.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.reddity.app.auth.ReddityAuthManager
+import com.reddity.app.base.IoDispatcher
+import com.reddity.app.domain.usecase.ChangePostVoteStatusUseCase
+import com.reddity.app.domain.usecase.GetAuthStateUseCase
+import com.reddity.app.domain.usecase.GetHomePostsUseCase
+import com.reddity.app.model.Post
+import com.reddity.app.model.PostVoteStatus
+import com.reddity.app.model.ReddityAuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeTabViewModel @Inject constructor(
     private val redditAuthManager: ReddityAuthManager,
-) : ViewModel(), ReddityAuthManager by redditAuthManager
+    getHomePostsUseCase: GetHomePostsUseCase,
+    getAuthStateUseCase: GetAuthStateUseCase,
+    private val changePostVoteStatusUseCase: ChangePostVoteStatusUseCase,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
+) : ViewModel(), ReddityAuthManager by redditAuthManager {
+
+    val feed: Flow<PagingData<Post>> =
+        getHomePostsUseCase().flowOn(dispatcher).cachedIn(viewModelScope)
+
+    val uiState: StateFlow<HomeTabUiState> = getAuthStateUseCase().map { authState ->
+        when (authState) {
+            ReddityAuthState.LOGGED_IN -> HomeTabUiState.Home
+            ReddityAuthState.LOGGED_OUT -> HomeTabUiState.Login
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = HomeTabUiState.Loading
+    )
+
+    fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
+        changePostVoteStatusUseCase(postId, vote)
+    }
+}
+
+sealed interface HomeTabUiState {
+    object Loading : HomeTabUiState
+    object Home : HomeTabUiState
+    object Login : HomeTabUiState
+}

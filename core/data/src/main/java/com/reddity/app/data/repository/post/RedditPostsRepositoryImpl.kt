@@ -15,55 +15,43 @@
  */
 package com.reddity.app.data.repository.post
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
-import com.reddity.app.data.mediators.PostsPageKeyedRemoteMediator
-import com.reddity.app.data.model.asEntity
-import com.reddity.app.database.dao.RedditPostsDao
-import com.reddity.app.database.entity.RedditPostsEntity
-import com.reddity.app.database.entity.asExternalModel
+import com.reddity.app.data.mediators.HomePostsPagingSource
+import com.reddity.app.data.mediators.PopularPostsPagingSource
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.model.Result
 import com.reddity.app.network.datasource.home.PostsDataSource
 import com.reddity.app.network.model.request.NetworkVoteRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
-@OptIn(ExperimentalPagingApi::class)
 internal class RedditPostsRepositoryImpl @Inject constructor(
-    private val postsPageKeyedRemoteMediator: PostsPageKeyedRemoteMediator,
-    private val redditPostsDao: RedditPostsDao,
     private val postsDataSource: PostsDataSource
 ) : RedditPostsRepository {
 
-    override fun getHomePopularPagingData(): Flow<PagingData<Post>> =
+    override fun getPopularPagingData(): Flow<PagingData<Post>> =
         Pager(
             config = PagingConfig(pageSize = 25, enablePlaceholders = true),
-            remoteMediator = postsPageKeyedRemoteMediator,
-            pagingSourceFactory = {
-                redditPostsDao.getRedditPosts()
-            }
-        ).flow.map { pagingData ->
-            pagingData.map(RedditPostsEntity::asExternalModel)
-        }
+            pagingSourceFactory = { PopularPostsPagingSource(postsDataSource) }
+        ).flow
+
+    override fun getHomePagingData(): Flow<PagingData<Post>> =
+        Pager(
+            config = PagingConfig(pageSize = 25, enablePlaceholders = true),
+            pagingSourceFactory = { HomePostsPagingSource(postsDataSource) }
+        ).flow
 
     override suspend fun postVote(
         postId: String,
         request: PostVoteStatus
-    ): Result<Unit> {
-        return try {
+    ) {
+        try {
             postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
-
-            val post = postsDataSource.getPostById(postId = postId).children.first().data.asEntity()
-            redditPostsDao.update(post)
-            Result.Success(Unit)
         } catch (exception: Exception) {
-            Result.Error(exception)
+            Timber.e(exception)
         }
     }
 }

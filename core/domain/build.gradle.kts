@@ -26,6 +26,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:base"))
     implementation(project(":core:model"))
+    implementation(project(":core:auth"))
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.room.ktx)

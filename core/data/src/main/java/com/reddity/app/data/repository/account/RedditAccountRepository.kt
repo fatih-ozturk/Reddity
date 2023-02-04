@@ -16,10 +16,7 @@
 package com.reddity.app.data.repository.account
 
 import com.reddity.app.model.RedditUser
-import com.reddity.app.model.Result
-import kotlinx.coroutines.flow.Flow
 
 interface RedditAccountRepository {
-    suspend fun syncAccountDetails(): Result<Unit>
-    fun getAccount(): Flow<RedditUser>
+    suspend fun getUser(): RedditUser
 }

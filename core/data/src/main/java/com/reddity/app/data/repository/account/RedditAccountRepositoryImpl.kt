@@ -15,28 +15,17 @@
  */
 package com.reddity.app.data.repository.account
 
-import com.reddity.app.datastore.datasource.UserDataSource
 import com.reddity.app.model.RedditUser
-import com.reddity.app.model.Result
 import com.reddity.app.network.datasource.account.AccountDataSource
 import com.reddity.app.network.model.asExternalModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 internal class RedditAccountRepositoryImpl @Inject constructor(
-    private val accountDataSource: AccountDataSource,
-    private val userDataSource: UserDataSource
+    private val accountDataSource: AccountDataSource
 ) : RedditAccountRepository {
-    override suspend fun syncAccountDetails(): Result<Unit> {
-        return try {
-            val account = accountDataSource.getMe()
 
-            userDataSource.setUser(account.asExternalModel())
-            Result.Success(Unit)
-        } catch (exception: Exception) {
-            Result.Error(exception)
-        }
+    override suspend fun getUser(): RedditUser {
+        val user = accountDataSource.getMe()
+        return user.asExternalModel()
     }
-
-    override fun getAccount(): Flow<RedditUser> = userDataSource.getUser()
 }

@@ -24,5 +24,5 @@ import javax.inject.Inject
 class GetPopularPostsUseCase @Inject constructor(
     private val redditPostsRepository: RedditPostsRepository
 ) {
-    operator fun invoke(): Flow<PagingData<Post>> = redditPostsRepository.getHomePopularPagingData()
+    operator fun invoke(): Flow<PagingData<Post>> = redditPostsRepository.getPopularPagingData()
 }

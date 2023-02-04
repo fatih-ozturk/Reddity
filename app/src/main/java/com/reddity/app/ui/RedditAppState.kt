@@ -24,6 +24,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.google.accompanist.navigation.material.BottomSheetNavigator
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.reddity.app.home.navigation.navigateToHome
 import com.reddity.app.navigation.navigateToChat
 import com.reddity.app.navigation.navigateToCreatePost
@@ -36,18 +39,23 @@ import com.reddity.app.ui.TopLevelDestination.HOME
 import com.reddity.app.ui.TopLevelDestination.NOTIFICATION
 import com.reddity.app.ui.TopLevelDestination.values
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun rememberRedditAppState(
-    navController: NavHostController = rememberNavController()
+    bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator(),
+    navController: NavHostController = rememberNavController(bottomSheetNavigator)
+
 ): RedditAppState {
-    return remember(navController) {
-        RedditAppState(navController)
+    return remember(navController, bottomSheetNavigator) {
+        RedditAppState(navController,bottomSheetNavigator)
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Stable
 class RedditAppState(
     val navController: NavHostController,
+    val bottomSheetNavigator: BottomSheetNavigator,
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController

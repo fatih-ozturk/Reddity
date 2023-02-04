@@ -15,6 +15,7 @@
  */
 plugins {
     id("reddity.android.library")
+    id("reddity.android.library.jacoco")
     id("reddity.android.hilt")
     id("kotlin-parcelize")
 }
@@ -28,7 +29,6 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:model"))
     implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
 
     implementation(libs.androidx.paging.runtime)
     implementation(libs.room.ktx)
