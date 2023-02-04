@@ -34,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -42,11 +41,11 @@ import androidx.paging.compose.itemsIndexed
 import com.reddity.app.home.listing.ListingItemView
 import com.reddity.app.ui.widget.FeedLoadingIcon
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PopularTabScreen(
     viewModel: PopularTabViewModel = hiltViewModel(),
-    onLoginRequired: () -> Unit = {},
+    onLoginRequired: () -> Unit = {}
 ) {
     val items = viewModel.feed.collectAsLazyPagingItems()
     val isRefreshing by remember { derivedStateOf { items.loadState.refresh is LoadState.Loading } }
@@ -58,11 +57,11 @@ fun PopularTabScreen(
     )
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
     Box(
         Modifier
             .pullRefresh(state)
-            .fillMaxSize()) {
+            .fillMaxSize()
+    ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             itemsIndexed(
                 items = items,

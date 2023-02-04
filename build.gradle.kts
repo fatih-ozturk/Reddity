@@ -17,7 +17,7 @@ plugins {
 subprojects {
     apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
     spotless {
-        val ktlintVersion = "0.43.2"
+        val ktlintVersion = "0.46.0"
         kotlin {
             target("**/*.kt")
             targetExclude("**/build/**/*.kt")

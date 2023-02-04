@@ -47,7 +47,7 @@ fun rememberRedditAppState(
 
 ): RedditAppState {
     return remember(navController, bottomSheetNavigator) {
-        RedditAppState(navController,bottomSheetNavigator)
+        RedditAppState(navController, bottomSheetNavigator)
     }
 }
 
@@ -55,7 +55,7 @@ fun rememberRedditAppState(
 @Stable
 class RedditAppState(
     val navController: NavHostController,
-    val bottomSheetNavigator: BottomSheetNavigator,
+    val bottomSheetNavigator: BottomSheetNavigator
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController

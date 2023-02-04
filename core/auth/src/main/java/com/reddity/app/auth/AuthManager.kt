@@ -18,28 +18,21 @@ package com.reddity.app.auth
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.reddity.app.base.MainDispatcher
 import com.reddity.app.base.restartApp
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import net.openid.appauth.AuthState
 import net.openid.appauth.TokenResponse
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
-@OptIn(DelicateCoroutinesApi::class)
 @Singleton
 class AuthManager @Inject constructor(
-    @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @Named("auth") private val authPrefs: SharedPreferences,
-    @ApplicationContext private val context: Context,
-    ) {
+    @ApplicationContext private val context: Context
+) {
 
-    val currentAuthState: AuthState
+    val state: AuthState
         get() {
             val stateJson = authPrefs.getString(PreferenceAuthKey, null)
             return when {
@@ -48,45 +41,40 @@ class AuthManager @Inject constructor(
             }
         }
 
-    fun onNewAuthState(newState: AuthState) {
-        GlobalScope.launch(mainDispatcher) {
-            persistAuthState(newState)
-        }
-    }
-
-    private fun persistAuthState(state: AuthState) {
+    fun saveAuthState(state: AuthState) {
         authPrefs.edit(commit = true) {
             putString(PreferenceAuthKey, state.jsonSerializeString())
-        }.also {
-            //temp
-            context.restartApp()
+        }
+        if (state.isAuthorized != state.isAuthorized) {
+            restartApp()
         }
     }
 
-    private fun clearPersistedAuthState() {
+    fun clearAuthState() {
         authPrefs.edit(commit = true) {
             remove(PreferenceAuthKey)
         }
+        restartApp()
     }
 
-    fun clearAuth() {
-        clearPersistedAuthState()
+    private fun restartApp() {
+        context.restartApp()
     }
 
     fun expireAccessToken() {
         val expiredTokenResponse =
-            TokenResponse.Builder(currentAuthState.createTokenRefreshRequest())
-                .setRefreshToken(currentAuthState.refreshToken)
+            TokenResponse.Builder(state.createTokenRefreshRequest())
+                .setRefreshToken(state.refreshToken)
                 .setAccessToken("x")
-                .setIdToken(currentAuthState.lastTokenResponse?.idToken)
-                .setScope(currentAuthState.scope)
-                .setTokenType(currentAuthState.lastTokenResponse?.tokenType)
+                .setIdToken(state.lastTokenResponse?.idToken)
+                .setScope(state.scope)
+                .setTokenType(state.lastTokenResponse?.tokenType)
                 .build()
 
-        val expiredAuthState = currentAuthState.apply {
+        val expiredAuthState = state.apply {
             update(expiredTokenResponse, null)
         }
-        onNewAuthState(expiredAuthState)
+        saveAuthState(expiredAuthState)
     }
 
     companion object {

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.base.IoDispatcher
 import com.reddity.app.domain.usecase.ChangePostVoteStatusUseCase
@@ -40,6 +41,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeTabViewModel @Inject constructor(
+    private val authManager: AuthManager,
     private val redditAuthManager: ReddityAuthManager,
     getHomePostsUseCase: GetHomePostsUseCase,
     getAuthStateUseCase: GetAuthStateUseCase,

@@ -48,7 +48,7 @@ fun ItemBodyLinkView(
                 text = title,
                 style = MaterialTheme.typography.h2,
                 color = MaterialTheme.colors.onSurface,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
         if (image != null) {

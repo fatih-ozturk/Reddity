@@ -28,7 +28,9 @@ class PostsDataSourceImpl @Inject constructor(
         after: String?,
         before: String?
     ): NetworkListingDataResponse = postApi.getPopularPostList(
-        loadSize = loadSize, after = after, before = before
+        loadSize = loadSize,
+        after = after,
+        before = before
     ).data
 
     override suspend fun getHomePostList(
@@ -36,7 +38,9 @@ class PostsDataSourceImpl @Inject constructor(
         after: String?,
         before: String?
     ): NetworkListingDataResponse = postApi.getHomePostList(
-        loadSize = loadSize, after = after, before = before
+        loadSize = loadSize,
+        after = after,
+        before = before
     ).data
 
     override suspend fun postVote(

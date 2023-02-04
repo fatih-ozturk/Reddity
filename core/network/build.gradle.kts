@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         manifestPlaceholders += mapOf(
-            "appAuthRedirectScheme" to "empty",
+            "appAuthRedirectScheme" to "empty"
         )
     }
 }

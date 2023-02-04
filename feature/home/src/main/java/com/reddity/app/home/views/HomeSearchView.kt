@@ -19,6 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -50,11 +51,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.reddity.app.home.R
+import com.reddity.app.home.home.ToolbarUiState
 
 @Composable
 fun HomeSearchView(
     onMenuClicked: (() -> Unit)? = {},
     onProfileClicked: (() -> Unit)? = {},
+    toolbarUiState: ToolbarUiState
 ) {
     var searchText by remember { mutableStateOf("") }
     var onSearchFocused by remember { mutableStateOf(false) }
@@ -99,13 +102,18 @@ fun HomeSearchView(
             )
             AnimatedVisibility(visible = !onSearchFocused) {
                 AsyncImage(
-                    model = null,
+                    model = toolbarUiState.redditUser?.avatarUrl,
                     placeholder = painterResource(id = R.drawable.icon_user_fill),
+                    error = painterResource(id = R.drawable.icon_user_fill),
+                    fallback = painterResource(id = R.drawable.icon_user_fill),
                     contentDescription = "Profile",
                     modifier = Modifier
                         .size(36.dp)
                         .padding(start = 16.dp)
-                        .clickable {
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
                             onProfileClicked?.invoke()
                         },
                     alignment = Alignment.CenterEnd,

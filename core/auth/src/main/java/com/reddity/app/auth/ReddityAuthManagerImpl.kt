@@ -28,7 +28,7 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authManager: AuthManager,
     private val clientAuth: ClientAuthentication,
-    private val requestProvider: AuthorizationRequest,
+    private val requestProvider: AuthorizationRequest
 ) : ReddityAuthManager {
     private val authService = AuthorizationService(context)
 
@@ -40,14 +40,15 @@ internal class ReddityAuthManagerImpl @Inject constructor(
         when {
             response != null -> {
                 authService.performTokenRequest(
-                    response.createTokenExchangeRequest(), clientAuth
+                    response.createTokenExchangeRequest(),
+                    clientAuth
                 ) { token, ex ->
-                    val state = authManager.currentAuthState.apply {
+                    val state = authManager.state.apply {
                         update(response, ex)
                         update(token, ex)
                     }
                     Timber.e("accessToken = %s", state.accessToken.toString())
-                    authManager.onNewAuthState(state)
+                    authManager.saveAuthState(state)
                 }
             }
 
@@ -60,16 +61,17 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     override fun refreshAccessToken() {
         try {
             authService.performTokenRequest(
-                authManager.currentAuthState.createTokenRefreshRequest(), clientAuth
+                authManager.state.createTokenRefreshRequest(),
+                clientAuth
             ) { token, ex ->
-                val state = authManager.currentAuthState.apply {
+                val state = authManager.state.apply {
                     update(token, ex)
                 }
                 Timber.e("refreshAccessToken = %s", state.accessToken.toString())
-                authManager.onNewAuthState(state)
+                authManager.saveAuthState(state)
             }
         } catch (exception: IllegalStateException) {
-            authManager.clearAuth()
+            authManager.clearAuthState()
         }
     }
 }

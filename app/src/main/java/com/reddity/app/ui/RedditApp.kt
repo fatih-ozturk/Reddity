@@ -50,7 +50,8 @@ import com.reddity.app.navigation.exploreScreen
 import com.reddity.app.navigation.notificationScreen
 
 @OptIn(
-    ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class,
+    ExperimentalComposeUiApi::class,
+    ExperimentalLayoutApi::class,
     ExperimentalMaterialNavigationApi::class
 )
 @Composable
@@ -81,7 +82,6 @@ fun RedditApp(
                 )
             }
         }
-
     }
 }
 

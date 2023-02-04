@@ -29,10 +29,10 @@ class ReddityAuthInterceptor @Inject constructor(
         val originalRequest = chain.request()
         val requestBuilder = originalRequest.newBuilder()
 
-        if (authManager.currentAuthState.isAuthorized) {
+        if (authManager.state.isAuthorized) {
             requestBuilder.header(
                 "Authorization",
-                "Bearer " + authManager.currentAuthState.accessToken
+                "Bearer " + authManager.state.accessToken
             )
         }
 
@@ -41,5 +41,4 @@ class ReddityAuthInterceptor @Inject constructor(
         Timber.e(request.headers["Authorization"].toString())
         return chain.proceed(request)
     }
-
 }

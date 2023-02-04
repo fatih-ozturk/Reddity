@@ -65,9 +65,11 @@ object NetworkModule {
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder().add(
         PolymorphicJsonAdapterFactory.of(
-            NetworkListingKind::class.java, "kind"
+            NetworkListingKind::class.java,
+            "kind"
         ).withSubtype(
-            NetworkListingEnveloped::class.java, NetworkListingType.LINK.name
+            NetworkListingEnveloped::class.java,
+            NetworkListingType.LINK.name
         )
     ).build()
 
@@ -80,7 +82,7 @@ object NetworkModule {
     @Provides
     @Singleton
     internal fun provideReddityAuthInterceptor(
-        authManager: AuthManager,
+        authManager: AuthManager
     ): ReddityAuthInterceptor {
         return ReddityAuthInterceptor(authManager)
     }
@@ -92,7 +94,8 @@ object NetworkModule {
         authManager: AuthManager
     ): ReddityAuthenticator {
         return ReddityAuthenticator(
-            reddityAuthManager, authManager
+            reddityAuthManager,
+            authManager
         )
     }
 

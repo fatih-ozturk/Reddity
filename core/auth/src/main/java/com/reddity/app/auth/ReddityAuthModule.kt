@@ -49,7 +49,7 @@ object ReddityAuthModule {
     @Provides
     fun provideAuthConfig(): AuthorizationServiceConfiguration {
         return AuthorizationServiceConfiguration(
-            Uri.parse("https://www.reddit.com/api/v1/authorize.compact"),
+            Uri.parse("https://www.reddit.com/api/v1/authorize"),
             Uri.parse("https://www.reddit.com/api/v1/access_token")
         )
     }
@@ -107,7 +107,7 @@ object ReddityAuthModule {
         @ApplicationContext context: Context,
         authManager: AuthManager,
         clientAuth: ClientAuthentication,
-        requestProvider: AuthorizationRequest,
+        requestProvider: AuthorizationRequest
     ): ReddityAuthManager {
         return ReddityAuthManagerImpl(context, authManager, clientAuth, requestProvider)
     }

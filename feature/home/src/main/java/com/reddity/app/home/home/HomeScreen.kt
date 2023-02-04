@@ -20,10 +20,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -42,10 +44,12 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
+    val toolbarUiState by viewModel.toolbarUiState.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
             Column {
-                HomeSearchView()
+                HomeSearchView(toolbarUiState = toolbarUiState)
                 HomeTabView(pagerState = pagerState, coroutineScope = coroutineScope)
                 Divider()
             }
@@ -64,7 +68,7 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier,
     pagerState: PagerState,
-    onLoginRequired: () -> Unit = {},
+    onLoginRequired: () -> Unit = {}
 ) {
     HorizontalPager(
         modifier = modifier,
