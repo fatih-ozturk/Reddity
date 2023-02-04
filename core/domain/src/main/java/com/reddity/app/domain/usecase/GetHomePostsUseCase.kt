@@ -15,13 +15,14 @@
  */
 package com.reddity.app.domain.usecase
 
-import com.reddity.app.data.repository.account.RedditAccountRepository
-import com.reddity.app.model.RedditUser
+import androidx.paging.PagingData
+import com.reddity.app.data.repository.post.RedditPostsRepository
+import com.reddity.app.model.Post
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAccountDetailUseCase @Inject constructor(
-    private val redditAccountRepository: RedditAccountRepository
+class GetHomePostsUseCase @Inject constructor(
+    private val redditPostsRepository: RedditPostsRepository
 ) {
-    operator fun invoke(): Flow<RedditUser> = redditAccountRepository.getAccount()
+    operator fun invoke(): Flow<PagingData<Post>> = redditPostsRepository.getHomePagingData()
 }

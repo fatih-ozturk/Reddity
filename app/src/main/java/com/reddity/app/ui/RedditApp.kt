@@ -38,40 +38,50 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.reddity.app.home.navigation.homeNavigationRoute
 import com.reddity.app.home.navigation.homeScreen
+import com.reddity.app.login.navigation.loginScreen
+import com.reddity.app.login.navigation.navigateToLogin
 import com.reddity.app.navigation.chatScreen
 import com.reddity.app.navigation.createPostScreen
 import com.reddity.app.navigation.exploreScreen
 import com.reddity.app.navigation.notificationScreen
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
+@OptIn(
+    ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class,
+    ExperimentalMaterialNavigationApi::class
+)
 @Composable
 fun RedditApp(
     appState: RedditAppState = rememberRedditAppState()
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        Scaffold(
-            modifier = Modifier.semantics { testTagsAsResourceId = true },
-            contentColor = MaterialTheme.colors.onBackground,
-            bottomBar = {
-                RedditBottomNavigation(
-                    destinations = appState.topLevelDestinations,
-                    onNavigateToDestination = appState::navigateToTopLevelDestination,
-                    currentDestination = appState.currentDestination
+    ModalBottomSheetLayout(appState.bottomSheetNavigator) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Scaffold(
+                modifier = Modifier.semantics { testTagsAsResourceId = true },
+                contentColor = MaterialTheme.colors.onBackground,
+                bottomBar = {
+                    RedditBottomNavigation(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestination,
+                        currentDestination = appState.currentDestination
+                    )
+                }
+            ) { padding ->
+                RedditNavHost(
+                    navController = appState.navController,
+                    modifier = Modifier
+                        .padding(padding)
+                        .consumedWindowInsets(padding)
                 )
             }
-        ) { padding ->
-            RedditNavHost(
-                navController = appState.navController,
-                modifier = Modifier
-                    .padding(padding)
-                    .consumedWindowInsets(padding)
-            )
         }
+
     }
 }
 
@@ -86,11 +96,14 @@ fun RedditNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        homeScreen()
+        homeScreen(onLoginRequired = {
+            navController.navigateToLogin()
+        })
         exploreScreen()
         createPostScreen()
         chatScreen()
         notificationScreen()
+        loginScreen()
     }
 }
 

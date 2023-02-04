@@ -15,44 +15,31 @@
  */
 package com.reddity.app.network.utils
 
-import com.reddity.app.auth.AuthPersistManager
+import com.reddity.app.auth.AuthManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 import javax.inject.Inject
 
 class ReddityAuthInterceptor @Inject constructor(
-    private val authPersistManager: AuthPersistManager
+    private val authManager: AuthManager
 ) : Interceptor {
-
-    private val url: String
-        get() = if (authPersistManager.currentAuthState.isAuthorized) oauthBaseUrl else baseUrl
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val requestBuilder = originalRequest.newBuilder()
-        val urlBuilder = originalRequest.url
-            .newBuilder()
-            .scheme(originalRequest.url.scheme)
-            .host(url)
-            .build()
 
-        if (authPersistManager.currentAuthState.isAuthorized) {
+        if (authManager.currentAuthState.isAuthorized) {
             requestBuilder.header(
                 "Authorization",
-                "Bearer " + authPersistManager.currentAuthState.accessToken
+                "Bearer " + authManager.currentAuthState.accessToken
             )
         }
 
-        requestBuilder.url(urlBuilder)
         val request = requestBuilder.build()
 
         Timber.e(request.headers["Authorization"].toString())
         return chain.proceed(request)
     }
 
-    companion object {
-        const val oauthBaseUrl = "oauth.reddit.com"
-        const val baseUrl = "reddit.com"
-    }
 }

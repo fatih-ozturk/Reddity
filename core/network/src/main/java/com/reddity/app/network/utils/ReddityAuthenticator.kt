@@ -15,7 +15,7 @@
  */
 package com.reddity.app.network.utils
 
-import com.reddity.app.auth.AuthPersistManager
+import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class ReddityAuthenticator @Inject constructor(
     private val reddityAuthManager: ReddityAuthManager,
-    private val authPersistManager: AuthPersistManager
+    private val authManager: AuthManager
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request {
@@ -33,7 +33,7 @@ class ReddityAuthenticator @Inject constructor(
 
         return response.request.newBuilder().header(
             "Authorization",
-            "Bearer " + authPersistManager.currentAuthState.accessToken
+            "Bearer " + authManager.currentAuthState.accessToken
         ).build()
     }
 }

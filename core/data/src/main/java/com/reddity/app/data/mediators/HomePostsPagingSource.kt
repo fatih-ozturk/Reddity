@@ -22,13 +22,14 @@ import com.reddity.app.network.datasource.home.PostsDataSource
 import com.reddity.app.network.model.asExternal
 import javax.inject.Inject
 
-class PostsPageKeyedRemotePagingSource @Inject constructor(
+class HomePostsPagingSource @Inject constructor(
     private val postsDataSource: PostsDataSource
 ) : PagingSource<String, Post>() {
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
         return try {
-            val response = postsDataSource.getPopularPostList(
+            //TODO next page not loading properly
+            val response = postsDataSource.getHomePostList(
                 loadSize = params.loadSize,
                 before = if (params is LoadParams.Prepend) params.key else null,
                 after = if (params is LoadParams.Append) params.key else null

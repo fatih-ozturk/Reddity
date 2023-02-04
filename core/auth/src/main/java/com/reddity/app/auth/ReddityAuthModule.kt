@@ -20,7 +20,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.net.toUri
 import com.reddity.app.base.inject.ApplicationId
-import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -106,10 +105,10 @@ object ReddityAuthModule {
     @Provides
     fun provideAuthManager(
         @ApplicationContext context: Context,
-        authPersistManager: AuthPersistManager,
-        clientAuth: Lazy<ClientAuthentication>,
-        requestProvider: Lazy<AuthorizationRequest>,
+        authManager: AuthManager,
+        clientAuth: ClientAuthentication,
+        requestProvider: AuthorizationRequest,
     ): ReddityAuthManager {
-        return ReddityAuthManagerImpl(context, authPersistManager, clientAuth, requestProvider)
+        return ReddityAuthManagerImpl(context, authManager, clientAuth, requestProvider)
     }
 }
