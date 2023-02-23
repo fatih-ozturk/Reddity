@@ -24,30 +24,33 @@ import javax.inject.Inject
 
 class HomePostsPagingSource @Inject constructor(
     private val postsDataSource: PostsDataSource
-) : PagingSource<String, Post>() {
+) : PagingSource<Pair<String?, String?>, Post>() {
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
+    override val keyReuseSupported: Boolean = true
+
+    override suspend fun load(params: LoadParams<Pair<String?, String?>>): LoadResult<Pair<String?, String?>, Post> {
         return try {
-            // TODO next page not loading properly
+            val (before, after) = params.key ?: Pair(null, null)
+
             val response = postsDataSource.getHomePostList(
                 loadSize = params.loadSize,
-                before = if (params is LoadParams.Prepend) params.key else null,
-                after = if (params is LoadParams.Append) params.key else null
+                before = if (params is LoadParams.Prepend) before else null,
+                after = if (params is LoadParams.Append) after else null
             )
 
             val items = response.children.map { it.data.asExternal() }
 
             LoadResult.Page(
                 data = items,
-                prevKey = response.before,
-                nextKey = response.after
+                prevKey = Pair(before, after),
+                nextKey = Pair(response.before, response.after)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }
 
-    override fun getRefreshKey(state: PagingState<String, Post>): String? {
+    override fun getRefreshKey(state: PagingState<Pair<String?, String?>, Post>): Pair<String?, String?>? {
         return null
     }
 }
