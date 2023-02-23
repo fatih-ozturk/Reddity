@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.reddity.app.home.home.HomeScreen
 
 const val homeNavigationRoute = "home"
@@ -29,7 +28,6 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(homeNavigationRoute, navOptions)
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.homeScreen(
     onLoginRequired: () -> Unit
 ) {
