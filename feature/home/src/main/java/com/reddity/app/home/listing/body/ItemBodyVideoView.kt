@@ -15,28 +15,78 @@
  */
 package com.reddity.app.home.listing.body
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import coil.compose.AsyncImage
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView.SHOW_BUFFERING_ALWAYS
 
 @Composable
 fun ItemBodyVideoView(
     awardCount: Int,
-    awardList: List<String>
+    awardList: List<String>,
+    exoPlayer: ExoPlayer,
+    isVideoPlaying: Boolean,
+    thumbnailUrl: String?
 ) {
     ItemBodyAwardsView(awardCount = awardCount, awardList = awardList)
-    // TODO auto play video player
-    Box(
+    if (isVideoPlaying) {
+        ReddityVideoView(exoPlayer = exoPlayer)
+    } else {
+        ReddityVideoThumbnail(thumbnailUrl)
+    }
+}
+
+@Composable
+fun ReddityVideoView(
+    modifier: Modifier = Modifier,
+    exoPlayer: Player
+) {
+    val context = LocalContext.current
+
+    AndroidView(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 8.dp),
+        factory = {
+            StyledPlayerView(context).apply {
+                layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                player = exoPlayer
+                resizeMode = RESIZE_MODE_ZOOM
+                setShowBuffering(SHOW_BUFFERING_ALWAYS)
+                controllerShowTimeoutMs = 1000
+                setShowPreviousButton(false)
+                setShowNextButton(false)
+                setShowFastForwardButton(false)
+                setShowRewindButton(false)
+                setShowSubtitleButton(false)
+            }
+        }
+    )
+}
+
+@Composable
+fun ReddityVideoThumbnail(
+    thumbnailUrl: String?
+) {
+    AsyncImage(
+        model = thumbnailUrl,
+        contentDescription = "Video Thumbnail",
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .padding(top = 8.dp)
-            .background(color = Color.Black)
+            .padding(top = 8.dp),
+        contentScale = ContentScale.FillWidth
     )
 }
