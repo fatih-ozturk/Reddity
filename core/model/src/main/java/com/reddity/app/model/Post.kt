@@ -26,6 +26,7 @@ data class Post(
     val image: String?,
     val timestamp: Int,
     val videoUrl: String?,
+    val videoThumbnail: String?,
     val voteCount: Int,
     val commentCount: Int,
     val awardsCount: Int,

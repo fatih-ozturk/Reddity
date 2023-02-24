@@ -78,6 +78,7 @@ fun NetworkListingPost.asExternal(): Post = Post(
     image = preview?.images?.firstOrNull()?.source?.url,
     timestamp = created,
     videoUrl = media?.redditVideo?.videoUrl,
+    videoThumbnail = preview?.images?.firstOrNull()?.source?.url,
     voteCount = upvoteCount,
     commentCount = commentCount,
     awardsCount = awardsCount,

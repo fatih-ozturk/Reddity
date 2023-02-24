@@ -17,6 +17,7 @@ package com.reddity.app.home.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -34,6 +36,8 @@ import com.reddity.app.home.tabs.home.HomeTabScreen
 import com.reddity.app.home.tabs.popular.PopularTabScreen
 import com.reddity.app.home.views.HomeSearchView
 import com.reddity.app.home.views.HomeTabView
+import com.reddity.app.model.Post
+import kotlin.math.abs
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -84,5 +88,21 @@ fun HomeContent(
                 onLoginRequired = onLoginRequired
             )
         }
+    }
+}
+
+fun LazyListState.currentVideoPostItem(items: LazyPagingItems<Post>): Post? {
+    val videoPostItems =
+        layoutInfo.visibleItemsInfo.map { items.itemSnapshotList.items[it.index] }
+            .filter { !it.videoUrl.isNullOrEmpty() }
+
+    return if (videoPostItems.size == 1) {
+        videoPostItems.first()
+    } else {
+        val midPoint = (layoutInfo.viewportStartOffset + layoutInfo.viewportEndOffset) / 2
+        val itemsFromCenter =
+            layoutInfo.visibleItemsInfo.sortedBy { abs((it.offset + it.size / 2) - midPoint) }
+        itemsFromCenter.map { items.itemSnapshotList.items[it.index] }
+            .firstOrNull { !it.videoUrl.isNullOrEmpty() }
     }
 }

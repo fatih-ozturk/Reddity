@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.google.android.exoplayer2.ExoPlayer
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.model.ReddityAuthState
@@ -32,7 +33,9 @@ fun ListingItemView(
     onShareClicked: () -> Unit = {},
     onGiveAwardClicked: () -> Unit = {},
     onLoginRequired: () -> Unit = {},
-    authState: ReddityAuthState
+    authState: ReddityAuthState,
+    exoPlayer: ExoPlayer,
+    isVideoPlaying: Boolean
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth()
@@ -41,7 +44,7 @@ fun ListingItemView(
             modifier = Modifier
         ) {
             ListingItemHeaderView(post)
-            ListingItemBodyView(post)
+            ListingItemBodyView(post, exoPlayer, isVideoPlaying)
             ListingItemFooterView(
                 post = post,
                 onVoteClicked = onVoteClicked,

@@ -16,6 +16,7 @@
 package com.reddity.app.home.listing
 
 import androidx.compose.runtime.Composable
+import com.google.android.exoplayer2.ExoPlayer
 import com.reddity.app.home.listing.body.ItemBodyImageView
 import com.reddity.app.home.listing.body.ItemBodyLinkView
 import com.reddity.app.home.listing.body.ItemBodySelfView
@@ -24,7 +25,11 @@ import com.reddity.app.model.Post
 import com.reddity.app.model.PostType
 
 @Composable
-fun ListingItemBodyView(post: Post) {
+fun ListingItemBodyView(
+    post: Post,
+    exoPlayer: ExoPlayer,
+    isVideoPlaying: Boolean
+) {
     when (post.postType) {
         PostType.IMAGE -> {
             ItemBodyImageView(
@@ -47,7 +52,10 @@ fun ListingItemBodyView(post: Post) {
         PostType.HOSTED_VIDEO, PostType.RICH_VIDEO -> {
             ItemBodyVideoView(
                 awardCount = post.awardsCount,
-                awardList = post.awardsIconList
+                awardList = post.awardsIconList,
+                exoPlayer = exoPlayer,
+                isVideoPlaying = isVideoPlaying,
+                thumbnailUrl = post.videoThumbnail
             )
         }
 
