@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -43,7 +45,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeTabView(
     pagerState: PagerState,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    popularTabLazyListState: LazyListState,
+    homeTabLazyListState: LazyListState
 ) {
     Surface(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -68,11 +72,16 @@ fun HomeTabView(
                     )
                 }
             ) {
-                Tab(modifier = Modifier, selected = pagerState.currentPage == 0, onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(0)
+                Tab(
+                    modifier = Modifier,
+                    selected = pagerState.currentPage == 0,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(0)
+                            if (pagerState.currentPage == 0) homeTabLazyListState.animateScrollToItem(0)
+                        }
                     }
-                }) {
+                ) {
                     Text(
                         text = "Home",
                         style = MaterialTheme.typography.subtitle2,
@@ -82,6 +91,7 @@ fun HomeTabView(
                 Tab(modifier = Modifier, selected = pagerState.currentPage == 1, onClick = {
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(1)
+                        if (pagerState.currentPage == 1) popularTabLazyListState.animateScrollToItem(0)
                     }
                 }) {
                     Text(
@@ -108,6 +118,11 @@ fun getTabTextColor(isSelected: Boolean): Color {
 @Composable
 fun HomeTabViewPreview() {
     ReddityTheme {
-        HomeTabView(pagerState = rememberPagerState(), coroutineScope = rememberCoroutineScope())
+        HomeTabView(
+            pagerState = rememberPagerState(),
+            coroutineScope = rememberCoroutineScope(),
+            homeTabLazyListState = rememberLazyListState(),
+            popularTabLazyListState = rememberLazyListState()
+        )
     }
 }

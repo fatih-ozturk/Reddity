@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -63,11 +63,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Composable
 fun PopularTabScreen(
     viewModel: PopularTabViewModel = hiltViewModel(),
-    onLoginRequired: () -> Unit = {}
+    onLoginRequired: () -> Unit = {},
+    listState: LazyListState
 ) {
     val context = LocalContext.current
     val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
-    val listState = rememberLazyListState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val exoPlayer = remember { ExoPlayer.Builder(context).build() }
     var playingVideoItem by remember { mutableStateOf<Post?>(null) }

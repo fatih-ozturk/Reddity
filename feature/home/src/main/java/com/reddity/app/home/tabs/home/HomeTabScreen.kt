@@ -35,13 +35,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -62,7 +61,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -83,14 +81,14 @@ import com.reddity.app.home.listing.ListingItemView
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.model.ReddityAuthState
-import com.reddity.app.ui.theme.ReddityTheme
 import com.reddity.app.ui.widget.FeedLoadingIcon
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun HomeTabScreen(
     viewModel: HomeTabViewModel = hiltViewModel(),
-    onLoginRequired: () -> Unit = {}
+    onLoginRequired: () -> Unit = {},
+    listState: LazyListState
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -104,7 +102,8 @@ fun HomeTabScreen(
                     viewModel.onVoteClicked(id, itemVoteStatus)
                 },
                 onLoginRequired = onLoginRequired,
-                authState = ReddityAuthState.LOGGED_IN
+                authState = ReddityAuthState.LOGGED_IN,
+                listState = listState
             )
         }
         HomeTabUiState.Loading -> {
@@ -130,12 +129,12 @@ fun HomePostsScreen(
     items: LazyPagingItems<Post>,
     onVoteClicked: (postId: String, vote: PostVoteStatus) -> Unit,
     onLoginRequired: () -> Unit = {},
-    authState: ReddityAuthState
+    authState: ReddityAuthState,
+    listState: LazyListState
 ) {
     val context = LocalContext.current
     val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
     val isRefreshing by remember { derivedStateOf { items.loadState.refresh is LoadState.Loading } }
-    val listState = rememberLazyListState()
     val exoPlayer = remember { ExoPlayer.Builder(context).build() }
     var playingVideoItem by remember { mutableStateOf<Post?>(null) }
 
@@ -383,14 +382,4 @@ fun HomeUnauthorizedScreen(
 
 private fun getRedditRegisterIntent(): Intent = Intent(Intent.ACTION_VIEW).apply {
     data = Uri.parse("https://www.reddit.com/register/")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeTabScreenPreview() {
-    ReddityTheme {
-        Surface {
-            HomeTabScreen()
-        }
-    }
 }
