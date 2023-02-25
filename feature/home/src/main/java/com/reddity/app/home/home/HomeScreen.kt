@@ -18,6 +18,7 @@ package com.reddity.app.home.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -47,6 +48,8 @@ fun HomeScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
+    val popularTabLazyListState = rememberLazyListState()
+    val homeTabLazyListState = rememberLazyListState()
 
     val toolbarUiState by viewModel.toolbarUiState.collectAsStateWithLifecycle()
 
@@ -54,7 +57,12 @@ fun HomeScreen(
         topBar = {
             Column {
                 HomeSearchView(toolbarUiState = toolbarUiState)
-                HomeTabView(pagerState = pagerState, coroutineScope = coroutineScope)
+                HomeTabView(
+                    pagerState = pagerState,
+                    coroutineScope = coroutineScope,
+                    popularTabLazyListState = popularTabLazyListState,
+                    homeTabLazyListState = homeTabLazyListState
+                )
                 Divider()
             }
         }
@@ -62,7 +70,9 @@ fun HomeScreen(
         HomeContent(
             modifier = Modifier.padding(it),
             pagerState = pagerState,
-            onLoginRequired = onLoginRequired
+            onLoginRequired = onLoginRequired,
+            popularTabLazyListState = popularTabLazyListState,
+            homeTabLazyListState = homeTabLazyListState
         )
     }
 }
@@ -72,7 +82,9 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier,
     pagerState: PagerState,
-    onLoginRequired: () -> Unit = {}
+    onLoginRequired: () -> Unit = {},
+    popularTabLazyListState: LazyListState,
+    homeTabLazyListState: LazyListState
 ) {
     HorizontalPager(
         modifier = modifier,
@@ -82,10 +94,13 @@ fun HomeContent(
     ) { page ->
         when (page) {
             0 -> HomeTabScreen(
-                onLoginRequired = onLoginRequired
+                onLoginRequired = onLoginRequired,
+                listState = homeTabLazyListState
             )
+
             1 -> PopularTabScreen(
-                onLoginRequired = onLoginRequired
+                onLoginRequired = onLoginRequired,
+                listState = popularTabLazyListState
             )
         }
     }
