@@ -16,68 +16,68 @@
 package com.reddity.app.auth
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.reddity.app.base.MainDispatcher
 import com.reddity.app.base.restartApp
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import net.openid.appauth.AuthState
-import net.openid.appauth.TokenResponse
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
+@OptIn(DelicateCoroutinesApi::class)
 class AuthManager @Inject constructor(
-    @Named("auth") private val authPrefs: SharedPreferences,
-    @ApplicationContext private val context: Context
+    @Named("auth") private val dataStore: DataStore<Preferences>,
+    @ApplicationContext private val context: Context,
+    @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) {
 
-    val state: AuthState
-        get() {
-            val stateJson = authPrefs.getString(PreferenceAuthKey, null)
-            return when {
+    val state: Flow<AuthState?>
+        get() = dataStore.data.map { preferences ->
+            val stateJson = preferences[AuthStateKey]
+            when {
                 stateJson != null -> AuthState.jsonDeserialize(stateJson)
                 else -> AuthState()
             }
         }
 
+    suspend fun getCurrentAuthState(): AuthState = state.filterNotNull().first()
+
     fun saveAuthState(state: AuthState) {
-        authPrefs.edit(commit = true) {
-            putString(PreferenceAuthKey, state.jsonSerializeString())
-        }
-        if (state.isAuthorized != state.isAuthorized) {
+        GlobalScope.launch(mainDispatcher) {
+            dataStore.edit { preferences ->
+                preferences[AuthStateKey] = state.jsonSerializeString()
+            }
             restartApp()
         }
     }
 
     fun clearAuthState() {
-        authPrefs.edit(commit = true) {
-            remove(PreferenceAuthKey)
+        GlobalScope.launch(mainDispatcher) {
+            dataStore.edit { preferences ->
+                preferences.clear()
+            }
+            restartApp()
         }
-        restartApp()
     }
 
     private fun restartApp() {
         context.restartApp()
     }
 
-    fun expireAccessToken() {
-        val expiredTokenResponse =
-            TokenResponse.Builder(state.createTokenRefreshRequest())
-                .setRefreshToken(state.refreshToken)
-                .setAccessToken("x")
-                .setIdToken(state.lastTokenResponse?.idToken)
-                .setScope(state.scope)
-                .setTokenType(state.lastTokenResponse?.tokenType)
-                .build()
-
-        val expiredAuthState = state.apply {
-            update(expiredTokenResponse, null)
-        }
-        saveAuthState(expiredAuthState)
-    }
-
     companion object {
-        private const val PreferenceAuthKey = "authState"
+        private val AuthStateKey = stringPreferencesKey("authState")
     }
 }

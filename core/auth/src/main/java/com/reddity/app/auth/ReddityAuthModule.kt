@@ -16,9 +16,12 @@
 package com.reddity.app.auth
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.net.toUri
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.reddity.app.base.inject.ApplicationId
 import dagger.Module
 import dagger.Provides
@@ -59,8 +62,10 @@ object ReddityAuthModule {
     @Named("auth")
     fun provideAuthSharedPrefs(
         @ApplicationContext context: Context
-    ): SharedPreferences {
-        return context.getSharedPreferences("reddity-auth", Context.MODE_PRIVATE)
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            produceFile = { context.preferencesDataStoreFile(AUTH_PREFERENCES) }
+        )
     }
 
     @Provides
@@ -112,3 +117,5 @@ object ReddityAuthModule {
         return ReddityAuthManagerImpl(context, authManager, clientAuth, requestProvider)
     }
 }
+
+private const val AUTH_PREFERENCES = "auth_preferences"

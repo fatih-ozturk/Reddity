@@ -17,6 +17,7 @@ package com.reddity.app.network.utils
 
 import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
+import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -29,14 +30,23 @@ class ReddityAuthenticator @Inject constructor(
     private val authManager: AuthManager
 ) : Authenticator {
 
-    override fun authenticate(route: Route?, response: Response): Request = synchronized(this) {
-        reddityAuthManager.refreshAccessToken()
+    override fun authenticate(route: Route?, response: Response): Request {
+        val originalRequest = response.request
+        val requestBuilder = originalRequest.newBuilder()
 
-        Timber.e("Refresh access token %s", authManager.state.accessToken)
+        runBlocking {
+            reddityAuthManager.refreshAccessToken()
 
-        response.request.newBuilder().header(
-            "Authorization",
-            "Bearer " + authManager.state.accessToken
-        ).build()
+            val authState = authManager.getCurrentAuthState()
+
+            Timber.e("Refresh access token %s", authState.accessToken)
+
+            requestBuilder.header(
+                "Authorization",
+                "Bearer " + authState.accessToken
+            )
+        }
+
+        return requestBuilder.build()
     }
 }

@@ -16,6 +16,7 @@
 package com.reddity.app.network.utils
 
 import com.reddity.app.auth.AuthManager
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
@@ -29,11 +30,14 @@ class ReddityAuthInterceptor @Inject constructor(
         val originalRequest = chain.request()
         val requestBuilder = originalRequest.newBuilder()
 
-        if (authManager.state.isAuthorized) {
-            requestBuilder.header(
-                "Authorization",
-                "Bearer " + authManager.state.accessToken
-            )
+        runBlocking {
+            val authState = authManager.getCurrentAuthState()
+            if (authState.isAuthorized) {
+                requestBuilder.header(
+                    "Authorization",
+                    "Bearer " + authState.accessToken
+                )
+            }
         }
 
         val request = requestBuilder.build()

@@ -18,6 +18,7 @@ package com.reddity.app.auth
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.runBlocking
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
@@ -30,41 +31,45 @@ internal class ReddityAuthManagerImpl @Inject constructor(
     private val clientAuth: ClientAuthentication,
     private val requestProvider: AuthorizationRequest
 ) : ReddityAuthManager {
+
     private val authService = AuthorizationService(context)
 
     override fun buildLoginIntent(): Intent =
         authService.getAuthorizationRequestIntent(requestProvider)
 
-    override fun onLoginResult(authorizationResult: LoginRedditContract.AuthorizationResult) {
-        val (response, error) = authorizationResult
-        when {
-            response != null -> {
-                authService.performTokenRequest(
-                    response.createTokenExchangeRequest(),
-                    clientAuth
-                ) { token, ex ->
-                    val state = authManager.state.apply {
-                        update(response, ex)
-                        update(token, ex)
+    override fun onLoginResult(authorizationResult: LoginRedditContract.AuthorizationResult) =
+        runBlocking {
+            val authState = authManager.getCurrentAuthState()
+            val (response, error) = authorizationResult
+            when {
+                response != null -> {
+                    authService.performTokenRequest(
+                        response.createTokenExchangeRequest(),
+                        clientAuth
+                    ) { token, ex ->
+                        val state = authState.apply {
+                            update(response, ex)
+                            update(token, ex)
+                        }
+                        Timber.e("accessToken = %s", state.accessToken.toString())
+                        authManager.saveAuthState(state)
                     }
-                    Timber.e("accessToken = %s", state.accessToken.toString())
-                    authManager.saveAuthState(state)
+                }
+
+                error != null -> {
+                    Timber.e(error.toString())
                 }
             }
-
-            error != null -> {
-                Timber.e(error.toString())
-            }
         }
-    }
 
-    override fun refreshAccessToken() {
+    override fun refreshAccessToken() = runBlocking {
+        val authState = authManager.getCurrentAuthState()
         try {
             authService.performTokenRequest(
-                authManager.state.createTokenRefreshRequest(),
+                authState.createTokenRefreshRequest(),
                 clientAuth
             ) { token, ex ->
-                val state = authManager.state.apply {
+                val state = authState.apply {
                     update(token, ex)
                 }
                 Timber.e("refreshAccessToken = %s", state.accessToken.toString())

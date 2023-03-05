@@ -36,4 +36,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     api(libs.appauth)
+
+    implementation(libs.androidx.datastore.preferences)
 }
