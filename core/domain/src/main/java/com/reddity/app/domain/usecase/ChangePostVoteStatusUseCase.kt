@@ -20,8 +20,19 @@ import com.reddity.app.model.PostVoteStatus
 import javax.inject.Inject
 
 class ChangePostVoteStatusUseCase @Inject constructor(
-    private val redditPostsRepository: RedditPostsRepository
+    private val redditPostsRepository: RedditPostsRepository,
+    private val checkAuthUseCase: CheckAuthUseCase
 ) {
-    suspend operator fun invoke(postId: String, vote: PostVoteStatus) =
-        redditPostsRepository.postVote(postId = postId, request = vote)
+    suspend operator fun invoke(postId: String, vote: PostVoteStatus): Result<Unit> {
+        val result = checkAuthUseCase()
+        return result.fold(
+            onSuccess = {
+                redditPostsRepository.postVote(postId = postId, request = vote)
+                Result.success(Unit)
+            },
+            onFailure = {
+                Result.failure(Exception())
+            }
+        )
+    }
 }

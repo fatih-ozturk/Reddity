@@ -33,7 +33,7 @@ REDDIT_CLIENT_SECRET="YOUR CLIENT SECRET"
 
 <p align="center">
 <img src="art/home.png" width="300px" />
-<img src="art/popular.png" width="300px" />
+<img src="art/home2.png" width="300px" />
 </p>
 
 ## License

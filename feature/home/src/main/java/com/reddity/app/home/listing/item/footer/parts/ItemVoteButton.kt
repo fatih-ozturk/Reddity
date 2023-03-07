@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.navigation
+package com.reddity.app.home.listing.item.footer.parts
 
-import androidx.compose.material3.Text
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
-import androidx.navigation.compose.composable
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
-const val exploreNavigationRoute = "explore"
-
-fun NavController.navigateToExplore(navOptions: NavOptions? = null) {
-    this.navigate(exploreNavigationRoute, navOptions)
-}
-
-fun NavGraphBuilder.exploreScreen() {
-    composable(route = exploreNavigationRoute) {
-        Text(text = "EXPLORE SCREEN")
+@Composable
+fun ItemVoteButton(
+    modifier: Modifier,
+    isVoted: Boolean = false,
+    onVoteClicked: () -> Unit = {},
+    icon: @Composable () -> Unit,
+    selectedIcon: @Composable () -> Unit
+) {
+    IconButton(modifier = modifier, onClick = onVoteClicked) {
+        if (isVoted) selectedIcon() else icon()
     }
 }

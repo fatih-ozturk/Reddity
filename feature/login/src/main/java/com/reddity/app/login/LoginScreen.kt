@@ -26,9 +26,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,14 +61,12 @@ fun LoginScreen(
         Text(
             modifier = Modifier.padding(top = 12.dp),
             text = "Login your account to continue",
-            style = MaterialTheme.typography.h1,
-            color = MaterialTheme.colors.onSurface
+            style = MaterialTheme.typography.bodySmall
         )
         Text(
             modifier = Modifier.padding(top = 12.dp),
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.labelSmall,
             textAlign = TextAlign.Start,
-            color = MaterialTheme.colors.onSurface,
             text = "By continuing, you agree to Reddit User Agreement and acknowledge " +
                 "that you understand the Privacy Policy"
         )
@@ -89,7 +87,7 @@ fun LoginButton(
             .fillMaxWidth()
             .padding(vertical = 12.dp)
             .border(
-                border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
                 shape = RoundedCornerShape(50.dp)
             )
             .clip(shape = RoundedCornerShape(50.dp))
@@ -110,8 +108,8 @@ fun LoginButton(
                     .padding(end = 48.dp),
                 text = "Continue with Reddit",
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.secondary
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }

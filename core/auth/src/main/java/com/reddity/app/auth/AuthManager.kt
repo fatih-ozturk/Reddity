@@ -21,7 +21,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.reddity.app.base.MainDispatcher
-import com.reddity.app.base.restartApp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -60,7 +59,6 @@ class AuthManager @Inject constructor(
             dataStore.edit { preferences ->
                 preferences[AuthStateKey] = state.jsonSerializeString()
             }
-            restartApp()
         }
     }
 
@@ -69,12 +67,7 @@ class AuthManager @Inject constructor(
             dataStore.edit { preferences ->
                 preferences.clear()
             }
-            restartApp()
         }
-    }
-
-    private fun restartApp() {
-        context.restartApp()
     }
 
     companion object {

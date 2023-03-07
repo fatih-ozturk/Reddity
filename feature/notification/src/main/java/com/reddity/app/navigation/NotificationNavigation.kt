@@ -15,7 +15,7 @@
  */
 package com.reddity.app.navigation
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions

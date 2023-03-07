@@ -26,13 +26,15 @@ android {
 dependencies {
     api(libs.compose.foundation.foundation)
     api(libs.compose.foundation.layout)
-    api(libs.compose.material.material)
     api(libs.compose.material.iconsext)
     api(libs.compose.animation.animation)
     api(libs.compose.ui.tooling)
     api(libs.androidx.metrics)
     api(libs.compose.runtime)
     api(libs.compose.runtime.livedata)
+
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material3.windowSizeClass)
 
     implementation(libs.lottie.compose)
     implementation(libs.accompanist.pager.pager)

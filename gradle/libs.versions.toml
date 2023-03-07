@@ -48,6 +48,7 @@ exoplayerVersion = "2.18.2"
 lottieVersion = "5.2.0"
 turbine = "0.12.1"
 androidDesugarJdkLibs = "2.0.0"
+androidxComposeMaterial3 = "1.1.0-alpha07"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
@@ -76,6 +77,8 @@ accompanist-systemuicontroller = { group = "com.google.accompanist", name = "acc
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
+androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidxComposeMaterial3" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
@@ -112,7 +115,6 @@ compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = 
 compose-foundation-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
 compose-material-iconsext = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-material-material = { group = "androidx.compose.material", name = "material" }
 compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }

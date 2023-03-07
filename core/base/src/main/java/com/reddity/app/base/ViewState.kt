@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.navigation
+package com.reddity.app.base
 
-import androidx.compose.material3.Text
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
-import androidx.navigation.compose.composable
-
-const val chatNavigationRoute = "chat"
-
-fun NavController.navigateToChat(navOptions: NavOptions? = null) {
-    this.navigate(chatNavigationRoute, navOptions)
-}
-
-fun NavGraphBuilder.chatScreen() {
-    composable(route = chatNavigationRoute) {
-        Text(text = "CHAT SCREEN")
-    }
+sealed class ViewState {
+    class Error(val t: Throwable) : ViewState()
+    object Success : ViewState()
+    object Loading : ViewState()
 }

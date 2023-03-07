@@ -18,8 +18,11 @@ package com.reddity.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
-import com.reddity.app.ui.RedditApp
+import androidx.compose.runtime.DisposableEffect
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.reddity.app.ui.ReddityApp
 import com.reddity.app.ui.commons.LocalReddityTextCreator
 import com.reddity.app.ui.theme.ReddityTheme
 import com.reddity.app.ui.utils.RedditTextCreator
@@ -35,11 +38,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val systemUiController = rememberSystemUiController()
+            val darkTheme = isSystemInDarkTheme()
+
+            DisposableEffect(systemUiController, darkTheme) {
+                systemUiController.systemBarsDarkContentEnabled = !darkTheme
+                onDispose {}
+            }
+
             CompositionLocalProvider(
                 LocalReddityTextCreator provides reddityTextCreator
             ) {
-                ReddityTheme {
-                    RedditApp()
+                ReddityTheme(
+                    darkTheme = darkTheme
+                ) {
+                    ReddityApp()
                 }
             }
         }

@@ -15,84 +15,100 @@
  */
 package com.reddity.app.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.reddity.app.ui.R
 
-private val Roboto = FontFamily(
-    Font(R.font.roboto_regular, FontWeight.Normal),
-    Font(R.font.roboto_medium, FontWeight.Medium),
-    Font(R.font.roboto_bold, FontWeight.Bold)
-)
-
-val Typography = Typography(
-    h1 = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Medium
+internal val Typography = Typography(
+    displayLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 57.sp,
+        lineHeight = 64.sp,
+        letterSpacing = 0.sp
     ),
-    h2 = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Light
+    displayMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 45.sp,
+        lineHeight = 52.sp,
+        letterSpacing = 0.sp
     ),
-    h3 = TextStyle(
-        fontFamily = Roboto,
+    displaySmall = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 36.sp,
+        lineHeight = 44.sp,
+        letterSpacing = 0.sp
+    ),
+    headlineLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 32.sp,
+        lineHeight = 40.sp,
+        letterSpacing = 0.sp
+    ),
+    headlineMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 28.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 0.sp
+    ),
+    headlineSmall = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
+    ),
+    titleLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
+    ),
+    titleMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        fontWeight = FontWeight.Normal
+        lineHeight = 24.sp,
+        letterSpacing = 0.1.sp
     ),
-    h4 = TextStyle(
-        fontFamily = Roboto,
+    titleSmall = TextStyle(
+        fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Normal
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
     ),
-    h5 = TextStyle(
-        fontFamily = Roboto,
+    labelLarge = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
+    ),
+    labelMedium = TextStyle(
+        fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
-        fontWeight = FontWeight.Medium
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
     ),
-    h6 = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 10.sp,
-        fontWeight = FontWeight.Normal
+    labelSmall = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
     ),
-    subtitle1 = TextStyle(
-        fontFamily = Roboto,
+    bodyLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        fontWeight = FontWeight.Normal
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
     ),
-    subtitle2 = TextStyle(
-        fontFamily = Roboto,
+    bodyMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Medium
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp
     ),
-    body1 = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Normal
-    ),
-    body2 = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Medium
-    ),
-    button = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.SemiBold
-    ),
-    caption = TextStyle(
-        fontFamily = Roboto,
+    bodySmall = TextStyle(
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        fontWeight = FontWeight.Normal
-    ),
-    overline = TextStyle(
-        fontFamily = Roboto,
-        fontSize = 10.sp,
-        fontWeight = FontWeight.Normal
+        lineHeight = 16.sp,
+        letterSpacing = 0.4.sp
     )
 )

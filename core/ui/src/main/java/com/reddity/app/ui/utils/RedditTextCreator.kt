@@ -26,6 +26,10 @@ class RedditTextCreator @Inject constructor() {
         return String.format("%.1f%c", count / 1000.0.pow(exp.toDouble()), "kMGTPE"[exp - 1])
     }
 
+    fun postReddit(reddit: String): String {
+        return "r/$reddit"
+    }
+
     fun postAuthor(author: String): String {
         return "u/$author"
     }

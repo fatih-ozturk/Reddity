@@ -15,109 +15,218 @@
  */
 package com.reddity.app.home.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.isContainer
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.LazyPagingItems
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
+import coil.compose.AsyncImage
 import com.reddity.app.home.tabs.home.HomeTabScreen
 import com.reddity.app.home.tabs.popular.PopularTabScreen
-import com.reddity.app.home.views.HomeSearchView
-import com.reddity.app.home.views.HomeTabView
-import com.reddity.app.model.Post
-import kotlin.math.abs
+import com.reddity.app.ui.commons.customTabIndicatorOffset
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    onLoginRequired: () -> Unit = {},
-    viewModel: HomeViewModel = hiltViewModel()
+    onLoginRequired: () -> Unit = {}
 ) {
+    val viewModel: HomeViewModel = hiltViewModel()
+
+    var text by rememberSaveable { mutableStateOf("") }
+    var active by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    val density = LocalDensity.current
+    val tabs = listOf("Home", "Popular")
+
+    val toolbarUiState by viewModel.toolbarUiState.collectAsStateWithLifecycle()
+    val tabWidths = remember {
+        val tabWidthStateList = mutableStateListOf<Dp>()
+        repeat(tabs.size) {
+            tabWidthStateList.add(0.dp)
+        }
+        tabWidthStateList
+    }
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val popularTabLazyListState = rememberLazyListState()
     val homeTabLazyListState = rememberLazyListState()
 
-    val toolbarUiState by viewModel.toolbarUiState.collectAsStateWithLifecycle()
+    Column(Modifier.fillMaxSize()) {
+        Box(
+            Modifier
+                .semantics { isContainer = true }
+                .zIndex(1f)
+                .fillMaxWidth()
+        ) {
+            SearchBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.TopCenter),
+                query = text,
+                onQueryChange = { text = it },
+                onSearch = {
+                    focusManager.clearFocus()
+                    active = false
+                },
+                active = active,
+                onActiveChange = {
+                    active = it
+                    if (!active) focusManager.clearFocus()
+                },
+                placeholder = { Text("Search", style = MaterialTheme.typography.bodyLarge) },
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            when (active) {
+                                true -> {
+                                    focusManager.clearFocus()
+                                    active = false
+                                    text = ""
+                                }
 
-    Scaffold(
-        topBar = {
-            Column {
-                HomeSearchView(toolbarUiState = toolbarUiState)
-                HomeTabView(
-                    pagerState = pagerState,
-                    coroutineScope = coroutineScope,
-                    popularTabLazyListState = popularTabLazyListState,
-                    homeTabLazyListState = homeTabLazyListState
-                )
-                Divider()
+                                false -> {
+                                    // TODO open community drawer
+                                }
+                            }
+                        },
+                        imageVector = if (active) Icons.Default.ArrowBack else Icons.Default.Menu,
+                        contentDescription = null
+                    )
+                },
+                trailingIcon = {
+                    if (active) {
+                        Icon(
+                            modifier = Modifier.clickable {
+                                text = ""
+                            },
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null
+                        )
+                    } else {
+                        val painter = rememberVectorPainter(image = Icons.Default.Person)
+                        AsyncImage(
+                            model = toolbarUiState.redditUser?.avatarUrl,
+                            placeholder = painter,
+                            error = painter,
+                            fallback = painter,
+                            contentDescription = "Profile",
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                ) {
+                                },
+                            alignment = Alignment.CenterEnd,
+                            contentScale = ContentScale.Fit
+                        )
+                    }
+                }
+            ) {
+                // TODO search suggestion
             }
         }
-    ) {
-        HomeContent(
-            modifier = Modifier.padding(it),
-            pagerState = pagerState,
-            onLoginRequired = onLoginRequired,
-            popularTabLazyListState = popularTabLazyListState,
-            homeTabLazyListState = homeTabLazyListState
-        )
-    }
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun HomeContent(
-    modifier: Modifier,
-    pagerState: PagerState,
-    onLoginRequired: () -> Unit = {},
-    popularTabLazyListState: LazyListState,
-    homeTabLazyListState: LazyListState
-) {
-    HorizontalPager(
-        modifier = modifier,
-        verticalAlignment = Alignment.Top,
-        state = pagerState,
-        count = 2
-    ) { page ->
-        when (page) {
-            0 -> HomeTabScreen(
-                onLoginRequired = onLoginRequired,
-                listState = homeTabLazyListState
-            )
-
-            1 -> PopularTabScreen(
-                onLoginRequired = onLoginRequired,
-                listState = popularTabLazyListState
-            )
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.customTabIndicatorOffset(
+                        currentTabPosition = tabPositions[pagerState.currentPage],
+                        tabWidth = tabWidths[pagerState.currentPage]
+                    )
+                )
+            }
+        ) {
+            tabs.forEachIndexed { index, title ->
+                Tab(
+                    modifier = Modifier,
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                            if (pagerState.currentPage == index) homeTabLazyListState.animateScrollToItem(
+                                0
+                            )
+                        }
+                    },
+                    text = {
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.titleSmall,
+                            onTextLayout = { textLayoutResult ->
+                                tabWidths[index] =
+                                    with(density) { textLayoutResult.size.width.toDp() }
+                            },
+                            color = if (pagerState.currentPage == index) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            }
+                        )
+                    }
+                )
+            }
         }
-    }
-}
+        HorizontalPager(
+            modifier = Modifier,
+            verticalAlignment = Alignment.Top,
+            state = pagerState,
+            pageCount = 2,
+            beyondBoundsPageCount = 2
+        ) { page ->
+            when (page) {
+                0 -> HomeTabScreen(
+                    listState = homeTabLazyListState
+                )
 
-fun LazyListState.currentVideoPostItem(items: LazyPagingItems<Post>): Post? {
-    val videoPostItems =
-        layoutInfo.visibleItemsInfo.map { items.itemSnapshotList.items[it.index] }
-            .filter { !it.videoUrl.isNullOrEmpty() }
-
-    return if (videoPostItems.size == 1) {
-        videoPostItems.first()
-    } else {
-        val midPoint = (layoutInfo.viewportStartOffset + layoutInfo.viewportEndOffset) / 2
-        val itemsFromCenter =
-            layoutInfo.visibleItemsInfo.sortedBy { abs((it.offset + it.size / 2) - midPoint) }
-        itemsFromCenter.map { items.itemSnapshotList.items[it.index] }
-            .firstOrNull { !it.videoUrl.isNullOrEmpty() }
+                1 -> PopularTabScreen(
+                    onLoginRequired = onLoginRequired,
+                    listState = popularTabLazyListState
+                )
+            }
+        }
     }
 }

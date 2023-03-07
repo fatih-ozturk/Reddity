@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.ui.theme
+package com.reddity.app.domain.usecase
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
-import androidx.compose.ui.unit.dp
+import com.reddity.app.auth.AuthManager
+import javax.inject.Inject
 
-val Shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
-)
+class CheckAuthUseCase @Inject constructor(
+    private val authManager: AuthManager
+) {
+    suspend operator fun invoke(): Result<Unit> {
+        return if (!authManager.getCurrentAuthState().isAuthorized) {
+            Result.failure(Exception())
+        } else {
+            Result.success(Unit)
+        }
+    }
+}

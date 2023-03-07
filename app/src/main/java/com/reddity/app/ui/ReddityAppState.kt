@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,19 +41,19 @@ import com.reddity.app.ui.TopLevelDestination.values
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
-fun rememberRedditAppState(
+fun rememberReddityAppState(
     bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator(),
     navController: NavHostController = rememberNavController(bottomSheetNavigator)
 
-): RedditAppState {
+): ReddityAppState {
     return remember(navController, bottomSheetNavigator) {
-        RedditAppState(navController, bottomSheetNavigator)
+        ReddityAppState(navController, bottomSheetNavigator)
     }
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Stable
-class RedditAppState(
+class ReddityAppState(
     val navController: NavHostController,
     val bottomSheetNavigator: BottomSheetNavigator
 ) {

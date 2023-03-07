@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,12 @@ import com.reddity.app.domain.usecase.GetAuthStateUseCase
 import com.reddity.app.domain.usecase.GetPopularPostsUseCase
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.model.ReddityAuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,28 +42,20 @@ class PopularTabViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
+    private val _events: Channel<PopularTabEvent> = Channel(Channel.UNLIMITED)
+    val events: Flow<PopularTabEvent> = _events.receiveAsFlow()
+
     val feed: Flow<PagingData<Post>> =
-        getPopularPostsUseCase().flowOn(dispatcher).cachedIn(viewModelScope)
+        getPopularPostsUseCase().cachedIn(viewModelScope).flowOn(dispatcher)
 
-    val uiState: StateFlow<PopularTabUiState> = getAuthStateUseCase().map { authState ->
-        PopularTabUiState(authState)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = PopularTabUiState.Empty
-    )
-
-    fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
-        changePostVoteStatusUseCase(postId, vote)
+    fun onVoteClicked(
+        postId: String,
+        vote: PostVoteStatus
+    ) = viewModelScope.launch {
+        // TODO
     }
 }
 
-data class PopularTabUiState(
-    val authState: ReddityAuthState
-) {
-    companion object {
-        val Empty = PopularTabUiState(
-            authState = ReddityAuthState.LOGGED_OUT
-        )
-    }
+sealed interface PopularTabEvent {
+    object LoginRequired : PopularTabEvent
 }

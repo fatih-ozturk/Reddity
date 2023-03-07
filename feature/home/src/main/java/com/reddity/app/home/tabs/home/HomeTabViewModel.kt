@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.base.IoDispatcher
 import com.reddity.app.domain.usecase.ChangePostVoteStatusUseCase
@@ -41,7 +40,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeTabViewModel @Inject constructor(
-    private val authManager: AuthManager,
     private val redditAuthManager: ReddityAuthManager,
     getHomePostsUseCase: GetHomePostsUseCase,
     getAuthStateUseCase: GetAuthStateUseCase,
@@ -50,12 +48,12 @@ class HomeTabViewModel @Inject constructor(
 ) : ViewModel(), ReddityAuthManager by redditAuthManager {
 
     val feed: Flow<PagingData<Post>> =
-        getHomePostsUseCase().flowOn(dispatcher).cachedIn(viewModelScope)
+        getHomePostsUseCase().cachedIn(viewModelScope).flowOn(dispatcher)
 
     val uiState: StateFlow<HomeTabUiState> = getAuthStateUseCase().map { authState ->
         when (authState) {
             ReddityAuthState.LOGGED_IN -> HomeTabUiState.Home
-            ReddityAuthState.LOGGED_OUT -> HomeTabUiState.Login
+            ReddityAuthState.LOGGED_OUT -> HomeTabUiState.UnauthorizedHome
         }
     }.stateIn(
         scope = viewModelScope,
@@ -64,12 +62,12 @@ class HomeTabViewModel @Inject constructor(
     )
 
     fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
-        changePostVoteStatusUseCase(postId, vote)
+        // TODO
     }
 }
 
 sealed interface HomeTabUiState {
     object Loading : HomeTabUiState
     object Home : HomeTabUiState
-    object Login : HomeTabUiState
+    object UnauthorizedHome : HomeTabUiState
 }

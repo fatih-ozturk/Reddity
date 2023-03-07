@@ -17,23 +17,23 @@ package com.reddity.app.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.contentColorFor
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -50,35 +50,33 @@ import com.reddity.app.navigation.exploreScreen
 import com.reddity.app.navigation.notificationScreen
 
 @OptIn(
-    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialNavigationApi::class,
     ExperimentalLayoutApi::class,
-    ExperimentalMaterialNavigationApi::class
+    ExperimentalComposeUiApi::class
 )
 @Composable
-fun RedditApp(
-    appState: RedditAppState = rememberRedditAppState()
+fun ReddityApp(
+    appState: ReddityAppState = rememberReddityAppState()
 ) {
     ModalBottomSheetLayout(appState.bottomSheetNavigator) {
         Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            modifier = Modifier.fillMaxSize()
         ) {
             Scaffold(
                 modifier = Modifier.semantics { testTagsAsResourceId = true },
-                contentColor = MaterialTheme.colors.onBackground,
                 bottomBar = {
-                    RedditBottomNavigation(
+                    ReddityBottomNavigation(
                         destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination
                     )
                 }
             ) { padding ->
-                RedditNavHost(
+                ReddityNavHost(
                     navController = appState.navController,
                     modifier = Modifier
                         .padding(padding)
-                        .consumedWindowInsets(padding)
+                        .consumeWindowInsets(padding)
                 )
             }
         }
@@ -86,7 +84,7 @@ fun RedditApp(
 }
 
 @Composable
-fun RedditNavHost(
+fun ReddityNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String = homeNavigationRoute
@@ -108,25 +106,24 @@ fun RedditNavHost(
 }
 
 @Composable
-fun RedditBottomNavigation(
+fun ReddityBottomNavigation(
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?
 ) {
-    BottomNavigation(
-        modifier = Modifier.fillMaxWidth(),
-        backgroundColor = MaterialTheme.colors.surface,
-        contentColor = contentColorFor(MaterialTheme.colors.surface)
+    NavigationBar(
+        modifier = Modifier.fillMaxWidth()
     ) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
-                    Crossfade(targetState = selected) {
+                    Crossfade(targetState = selected, label = "") {
                         val icon = if (it) destination.selectedIcon else destination.unselectedIcon
                         Icon(
+                            modifier = Modifier.size(24.dp),
                             painter = painterResource(icon),
                             contentDescription = null
                         )
