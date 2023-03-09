@@ -15,6 +15,9 @@
  */
 package com.reddity.app.ui
 
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -43,11 +46,22 @@ import com.reddity.app.ui.TopLevelDestination.values
 @Composable
 fun rememberReddityAppState(
     bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator(),
-    navController: NavHostController = rememberNavController(bottomSheetNavigator)
-
+    navController: NavHostController = rememberNavController(bottomSheetNavigator),
+    communitiesDrawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    profileDrawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 ): ReddityAppState {
-    return remember(navController, bottomSheetNavigator) {
-        ReddityAppState(navController, bottomSheetNavigator)
+    return remember(
+        navController,
+        bottomSheetNavigator,
+        communitiesDrawerState,
+        profileDrawerState
+    ) {
+        ReddityAppState(
+            navController,
+            bottomSheetNavigator,
+            communitiesDrawerState,
+            profileDrawerState
+        )
     }
 }
 
@@ -55,7 +69,9 @@ fun rememberReddityAppState(
 @Stable
 class ReddityAppState(
     val navController: NavHostController,
-    val bottomSheetNavigator: BottomSheetNavigator
+    val bottomSheetNavigator: BottomSheetNavigator,
+    val communitiesDrawerState: DrawerState,
+    val profileDrawerState: DrawerState
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -79,9 +95,5 @@ class ReddityAppState(
             CHAT -> navController.navigateToChat(topLevelNavOptions)
             NOTIFICATION -> navController.navigateToNotification(topLevelNavOptions)
         }
-    }
-
-    fun onBackClick() {
-        navController.popBackStack()
     }
 }

@@ -70,7 +70,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    onLoginRequired: () -> Unit = {}
+    onLoginRequired: () -> Unit = {},
+    openProfileDrawer: () -> Unit = {},
+    openCommunityDrawer: () -> Unit = {}
 ) {
     val viewModel: HomeViewModel = hiltViewModel()
 
@@ -128,7 +130,7 @@ fun HomeScreen(
                                 }
 
                                 false -> {
-                                    // TODO open community drawer
+                                    openCommunityDrawer()
                                 }
                             }
                         },
@@ -159,6 +161,7 @@ fun HomeScreen(
                                     indication = null,
                                     interactionSource = remember { MutableInteractionSource() }
                                 ) {
+                                    openProfileDrawer()
                                 },
                             alignment = Alignment.CenterEnd,
                             contentScale = ContentScale.Fit

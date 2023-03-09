@@ -22,18 +22,21 @@ import androidx.navigation.compose.composable
 import com.reddity.app.home.home.HomeScreen
 
 const val homeNavigationRoute = "home"
-const val onLoginScreenRoute = "should_login"
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(homeNavigationRoute, navOptions)
 }
 
 fun NavGraphBuilder.homeScreen(
-    onLoginRequired: () -> Unit
+    onLoginRequired: () -> Unit,
+    openProfileDrawer: () -> Unit = {},
+    openCommunityDrawer: () -> Unit = {}
 ) {
     composable(route = homeNavigationRoute) {
         HomeScreen(
-            onLoginRequired = onLoginRequired
+            onLoginRequired = onLoginRequired,
+            openProfileDrawer = openProfileDrawer,
+            openCommunityDrawer = openCommunityDrawer
         )
     }
 }
