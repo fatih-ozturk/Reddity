@@ -19,7 +19,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.reddity.app.model.Post
 import com.reddity.app.network.datasource.home.PostsDataSource
-import com.reddity.app.network.model.asExternal
+import com.reddity.app.network.model.response.posts.asExternal
 import javax.inject.Inject
 
 class HomePostsPagingSource @Inject constructor(

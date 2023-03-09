@@ -23,7 +23,7 @@ import com.reddity.app.data.mediators.PopularPostsPagingSource
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
 import com.reddity.app.network.datasource.home.PostsDataSource
-import com.reddity.app.network.model.request.NetworkVoteRequest
+import com.reddity.app.network.model.request.NetworkPostVoteRequest
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import javax.inject.Inject
@@ -49,7 +49,7 @@ internal class RedditPostsRepositoryImpl @Inject constructor(
         request: PostVoteStatus
     ) {
         try {
-            postsDataSource.postVote(postId = postId, request = NetworkVoteRequest.of(request.name))
+            postsDataSource.postVote(postId = postId, request = NetworkPostVoteRequest.of(request.name))
         } catch (exception: Exception) {
             Timber.e(exception)
         }

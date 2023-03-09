@@ -13,12 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model.request
+package com.reddity.app.network.model
 
-enum class NetworkVoteRequest(val value: Int) {
-    UPVOTE(1), DOWN_VOTE(-1), NONE(0);
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class EnvelopeKind(val type: String) : Parcelable {
+    COMMENT("t1"),
+    ACCOUNT("t2"),
+    LINK("t3"),
+    MESSAGE("t4"),
+    SUBREDDIT("t5"),
+    AWARD("t6"),
+    Listing("Listing"),
+    More("more");
 
     companion object {
-        fun of(value: String): NetworkVoteRequest = values().firstOrNull { it.name == value } ?: NONE
+        fun of(type: String): EnvelopeKind? = values().firstOrNull { it.type == type }
     }
 }

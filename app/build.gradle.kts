@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":feature:chat"))
     implementation(project(":feature:notification"))
     implementation(project(":feature:login"))
+    implementation(project(":feature:communities"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)

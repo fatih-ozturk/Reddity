@@ -15,7 +15,7 @@
  */
 package com.reddity.app.network.api
 
-import com.reddity.app.network.model.NetworkMe
+import com.reddity.app.network.model.response.user.NetworkMe
 import retrofit2.http.GET
 
 interface AccountApi {

@@ -15,7 +15,7 @@
  */
 package com.reddity.app.network.api
 
-import com.reddity.app.network.model.NetworkListingResponse
+import com.reddity.app.network.model.response.posts.EnvelopedPostDataListing
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -32,7 +32,7 @@ interface PostApi {
         @Query("raw_json") rawJson: Int = 1,
         @Query("count") loadSize: Int = 0,
         @Query("sr_detail") includeSrDetail: Boolean = true
-    ): NetworkListingResponse
+    ): EnvelopedPostDataListing
 
     @GET("/.json")
     suspend fun getHomePostList(
@@ -41,14 +41,14 @@ interface PostApi {
         @Query("raw_json") rawJson: Int = 1,
         @Query("count") loadSize: Int = 0,
         @Query("sr_detail") includeSrDetail: Boolean = true
-    ): NetworkListingResponse
+    ): EnvelopedPostDataListing
 
     @GET("/by_id/{postId}")
     suspend fun getRedditPostById(
         @Path("postId") postId: String,
         @Query("raw_json") rawJson: Int = 1,
         @Query("sr_detail") includeSrDetail: Boolean = true
-    ): NetworkListingResponse
+    ): EnvelopedPostDataListing
 
     @POST("/api/vote")
     suspend fun vote(

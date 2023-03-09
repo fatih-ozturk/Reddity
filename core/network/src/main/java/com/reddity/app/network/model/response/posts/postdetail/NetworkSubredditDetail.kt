@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.response.posts.postdetail
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
@@ -22,7 +22,15 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkListingResponse(
-    @Json(name = "kind") val kind: String,
-    @Json(name = "data") val data: NetworkListingDataResponse
-) : Parcelable
+data class NetworkSubredditDetail(
+    @Json(name = "icon_img") val iconImage: String?,
+    @Json(name = "community_icon") val communityIcon: String?
+) : Parcelable {
+    val subredditIconUrl: String?
+        get() {
+            return when {
+                !iconImage.isNullOrEmpty() -> iconImage
+                else -> communityIcon
+            }
+        }
+}

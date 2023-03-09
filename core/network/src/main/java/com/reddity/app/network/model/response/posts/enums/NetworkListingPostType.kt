@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.repository.account
+package com.reddity.app.network.model.response.posts.enums
 
-import com.reddity.app.model.RedditUser
-import com.reddity.app.network.datasource.account.AccountDataSource
-import com.reddity.app.network.model.response.user.asExternalModel
-import javax.inject.Inject
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-internal class RedditAccountRepositoryImpl @Inject constructor(
-    private val accountDataSource: AccountDataSource
-) : RedditAccountRepository {
+@Parcelize
+enum class NetworkListingPostType(private val type: String) : Parcelable {
+    IMAGE("image"),
+    LINK("link"),
+    HOSTED_VIDEO("hosted:video"),
+    RICH_VIDEO("rich:video"),
+    SELF("self");
 
-    override suspend fun getUser(): RedditUser {
-        val user = accountDataSource.getMe()
-        return user.asExternalModel()
+    companion object {
+        fun of(value: String): NetworkListingPostType =
+            values().firstOrNull { it.type == value } ?: SELF
     }
 }

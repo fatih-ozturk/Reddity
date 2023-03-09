@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.response.subreddit
 
-import android.os.Parcelable
+import com.reddity.app.network.model.Envelope
+import com.reddity.app.network.model.EnvelopeKind
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
 @Parcelize
-enum class NetworkListingType(val type: String) : Parcelable {
-    COMMENT("t1"),
-    ACCOUNT("t2"),
-    LINK("t3"),
-    MESSAGE("t4"),
-    SUBREDDIT("t5"),
-    AWARD("t6");
-
-    companion object {
-        fun of(type: String): NetworkListingType? = values().firstOrNull { it.type == type }
-    }
-}
+data class EnvelopedSubredditData(
+    @Json(name = "data") val data: NetworkSubredditData
+) : Envelope(kind = EnvelopeKind.SUBREDDIT)

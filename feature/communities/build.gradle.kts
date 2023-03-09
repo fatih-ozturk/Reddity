@@ -13,13 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+plugins {
+    id("reddity.android.feature")
+    id("reddity.android.library.compose")
+}
 
-import android.os.Parcelable
-import com.squareup.moshi.Json
-import kotlinx.parcelize.Parcelize
+android {
+    namespace = "com.reddity.app.communities"
 
-@Parcelize
-sealed class NetworkListingKind(
-    @Json(name = "kind") val kind: NetworkListingType
-) : Parcelable
+    packagingOptions {
+        resources {
+            excludes.add("META-INF/LICENSE.md")
+            excludes.add("META-INF/LICENSE-notice.md")
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":core:base"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:auth"))
+    implementation(project(":core:model"))
+}

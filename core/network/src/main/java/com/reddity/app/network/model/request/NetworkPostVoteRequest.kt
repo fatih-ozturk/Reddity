@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.request
 
-import android.os.Parcelable
-import com.reddity.app.network.model.image.NetworkImageSource
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
+enum class NetworkPostVoteRequest(val value: Int) {
+    UPVOTE(1), DOWN_VOTE(-1), NONE(0);
 
-@JsonClass(generateAdapter = true)
-@Parcelize
-data class NetworkAwards(
-    @Json(name = "resized_icons") val resizedIcons: List<NetworkImageSource>
-) : Parcelable
+    companion object {
+        fun of(value: String): NetworkPostVoteRequest = values().firstOrNull { it.name == value } ?: NONE
+    }
+}

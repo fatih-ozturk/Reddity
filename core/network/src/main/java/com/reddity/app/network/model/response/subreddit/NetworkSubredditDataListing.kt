@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.datasource.account
+package com.reddity.app.network.model.response.subreddit
 
-import com.reddity.app.network.model.response.user.NetworkMe
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
-interface AccountDataSource {
-    suspend fun getMe(): NetworkMe
-}
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class NetworkSubredditDataListing(
+    @Json(name = "after") val after: String?,
+    @Json(name = "before") val before: String?,
+    @Json(name = "children") val children: List<EnvelopedSubredditData>
+) : Parcelable

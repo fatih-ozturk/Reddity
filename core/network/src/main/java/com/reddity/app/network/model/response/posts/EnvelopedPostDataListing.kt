@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.repository.account
+package com.reddity.app.network.model.response.posts
 
-import com.reddity.app.model.RedditUser
-import com.reddity.app.network.datasource.account.AccountDataSource
-import com.reddity.app.network.model.response.user.asExternalModel
-import javax.inject.Inject
+import android.os.Parcelable
+import com.reddity.app.network.model.EnvelopeKind
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
-internal class RedditAccountRepositoryImpl @Inject constructor(
-    private val accountDataSource: AccountDataSource
-) : RedditAccountRepository {
-
-    override suspend fun getUser(): RedditUser {
-        val user = accountDataSource.getMe()
-        return user.asExternalModel()
-    }
-}
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class EnvelopedPostDataListing(
+    @Json(name = "kind") val kind: EnvelopeKind,
+    @Json(name = "data") val data: NetworkPostDataListing
+) : Parcelable

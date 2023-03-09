@@ -16,10 +16,10 @@
 package com.reddity.app.network.datasource.account
 
 import com.reddity.app.network.api.AccountApi
-import com.reddity.app.network.model.NetworkMe
+import com.reddity.app.network.model.response.user.NetworkMe
 import javax.inject.Inject
 
-class AccountDataSourceImpl @Inject constructor(
+internal class AccountDataSourceImpl @Inject constructor(
     private val accountApi: AccountApi
 ) : AccountDataSource {
     override suspend fun getMe(): NetworkMe =

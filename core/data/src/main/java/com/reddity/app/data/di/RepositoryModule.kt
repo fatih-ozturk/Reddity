@@ -19,8 +19,11 @@ import com.reddity.app.data.repository.account.RedditAccountRepository
 import com.reddity.app.data.repository.account.RedditAccountRepositoryImpl
 import com.reddity.app.data.repository.post.RedditPostsRepository
 import com.reddity.app.data.repository.post.RedditPostsRepositoryImpl
+import com.reddity.app.data.repository.subreddit.RedditSubredditRepository
+import com.reddity.app.data.repository.subreddit.RedditSubredditRepositoryImpl
 import com.reddity.app.network.datasource.account.AccountDataSource
 import com.reddity.app.network.datasource.home.PostsDataSource
+import com.reddity.app.network.datasource.subreddit.SubredditDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +46,10 @@ object RepositoryModule {
     fun provideAccountRepository(
         accountDataSource: AccountDataSource
     ): RedditAccountRepository = RedditAccountRepositoryImpl(accountDataSource)
+
+    @Provides
+    @Singleton
+    fun provideSubredditRepository(
+        subredditDataSource: SubredditDataSource
+    ): RedditSubredditRepository = RedditSubredditRepositoryImpl(subredditDataSource)
 }

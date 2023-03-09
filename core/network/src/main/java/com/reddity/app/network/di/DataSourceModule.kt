@@ -17,10 +17,13 @@ package com.reddity.app.network.di
 
 import com.reddity.app.network.api.AccountApi
 import com.reddity.app.network.api.PostApi
+import com.reddity.app.network.api.SubredditApi
 import com.reddity.app.network.datasource.account.AccountDataSource
 import com.reddity.app.network.datasource.account.AccountDataSourceImpl
 import com.reddity.app.network.datasource.home.PostsDataSource
 import com.reddity.app.network.datasource.home.PostsDataSourceImpl
+import com.reddity.app.network.datasource.subreddit.SubredditDataSource
+import com.reddity.app.network.datasource.subreddit.SubredditDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,5 +48,13 @@ object DataSourceModule {
         accountApi: AccountApi
     ): AccountDataSource {
         return AccountDataSourceImpl(accountApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSubredditDataSource(
+        subredditApi: SubredditApi
+    ): SubredditDataSource {
+        return SubredditDataSourceImpl(subredditApi)
     }
 }

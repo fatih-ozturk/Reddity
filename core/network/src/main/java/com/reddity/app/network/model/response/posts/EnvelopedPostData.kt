@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model.image
+package com.reddity.app.network.model.response.posts
 
-import android.os.Parcelable
+import com.reddity.app.network.model.Envelope
+import com.reddity.app.network.model.EnvelopeKind
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkImagePreview(
-    @Json(name = "enabled") val enabled: Boolean?,
-    @Json(name = "images") val images: List<NetworkImageList>?
-) : Parcelable
+data class EnvelopedPostData(
+    @Json(name = "data") val data: NetworkPostData
+) : Envelope(EnvelopeKind.LINK)

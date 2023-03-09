@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model.media
+package com.reddity.app.network.model.response.subreddit
 
 import android.os.Parcelable
+import com.reddity.app.network.model.EnvelopeKind
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkMedia(
-    @Json(name = "reddit_video") val redditVideo: NetworkVideo?
+data class EnvelopedSubredditDataListing(
+    @Json(name = "kind") val kind: EnvelopeKind,
+    @Json(name = "data") val data: NetworkSubredditDataListing
 ) : Parcelable

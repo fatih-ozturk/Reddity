@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model.media
+package com.reddity.app.network.datasource.subreddit
 
-import android.os.Parcelable
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
+import com.reddity.app.network.model.response.subreddit.NetworkSubredditDataListing
 
-@JsonClass(generateAdapter = true)
-@Parcelize
-data class NetworkVideo(
-    @Json(name = "is_gif") val isGif: Boolean?,
-    @Json(name = "fallback_url") val videoUrl: String?
-) : Parcelable
+interface SubredditDataSource {
+    suspend fun getFollowedSubreddits(): NetworkSubredditDataListing
+}

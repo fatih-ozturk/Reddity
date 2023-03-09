@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.response.subreddit
 
 import android.os.Parcelable
+import com.reddity.app.model.FollowedSubreddits
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkSubredditDetail(
-    @Json(name = "icon_img") val iconImage: String?,
-    @Json(name = "community_icon") val communityIcon: String?
-) : Parcelable {
-    val subredditIconUrl: String?
-        get() {
-            return when {
-                !iconImage.isNullOrEmpty() -> iconImage
-                else -> communityIcon
-            }
-        }
-}
+data class NetworkSubredditData(
+    @Json(name = "title") val title: String,
+    @Json(name = "display_name_prefixed") val displayNamePrefixed: String,
+    @Json(name = "name") val id: String,
+    @Json(name = "community_icon") val icon: String
+) : Parcelable
+
+fun NetworkSubredditData.asExternal(): FollowedSubreddits =
+    FollowedSubreddits(id = id, name = displayNamePrefixed, icon = icon)

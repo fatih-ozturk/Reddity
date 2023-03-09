@@ -19,9 +19,11 @@ import com.reddity.app.auth.AuthManager
 import com.reddity.app.auth.ReddityAuthManager
 import com.reddity.app.network.api.AccountApi
 import com.reddity.app.network.api.PostApi
-import com.reddity.app.network.model.NetworkListingEnveloped
-import com.reddity.app.network.model.NetworkListingKind
-import com.reddity.app.network.model.NetworkListingType
+import com.reddity.app.network.api.SubredditApi
+import com.reddity.app.network.model.Envelope
+import com.reddity.app.network.model.EnvelopeKind
+import com.reddity.app.network.model.response.posts.EnvelopedPostData
+import com.reddity.app.network.model.response.subreddit.EnvelopedSubredditData
 import com.reddity.app.network.utils.ReddityAuthInterceptor
 import com.reddity.app.network.utils.ReddityAuthenticator
 import com.squareup.moshi.Moshi
@@ -65,12 +67,11 @@ object NetworkModule {
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder().add(
         PolymorphicJsonAdapterFactory.of(
-            NetworkListingKind::class.java,
+            Envelope::class.java,
             "kind"
-        ).withSubtype(
-            NetworkListingEnveloped::class.java,
-            NetworkListingType.LINK.name
         )
+            .withSubtype(EnvelopedPostData::class.java, EnvelopeKind.LINK.name)
+            .withSubtype(EnvelopedSubredditData::class.java, EnvelopeKind.SUBREDDIT.name)
     ).build()
 
     @Provides
@@ -106,4 +107,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideHomeApi(retrofit: Retrofit): PostApi = retrofit.create(PostApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSubredditApi(retrofit: Retrofit): SubredditApi = retrofit.create(SubredditApi::class.java)
 }

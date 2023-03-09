@@ -13,38 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.response.posts
 
 import android.os.Parcelable
 import com.reddity.app.model.Post
 import com.reddity.app.model.PostVoteStatus
-import com.reddity.app.network.model.image.NetworkImagePreview
-import com.reddity.app.network.model.media.NetworkMedia
+import com.reddity.app.network.model.response.posts.enums.NetworkListingPostType
+import com.reddity.app.network.model.response.posts.image.NetworkPostImagePreview
+import com.reddity.app.network.model.response.posts.media.NetworkPostMedia
+import com.reddity.app.network.model.response.posts.postdetail.NetworkSubredditDetail
+import com.reddity.app.network.model.response.posts.postdetail.NetworkUserAwards
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkListingPost(
+data class NetworkPostData(
     @Json(name = "created_utc") val created: Int,
     @Json(name = "downs") val downvoteCount: Int?,
     @Json(name = "num_comments") val commentCount: Int,
     @Json(name = "selftext") val content: String?,
     @Json(name = "ups") val upvoteCount: Int,
     @Json(name = "author") val author: String,
-    @Json(name = "id") val id: String,
-    @Json(name = "name") val name: String,
+    @Json(name = "name") val id: String,
     @Json(name = "kind") val kind: String?,
     @Json(name = "post_hint") val postHint: String?,
     @Json(name = "is_video") val isVideo: Boolean?,
     @Json(name = "is_self") val isSelf: Boolean?,
-    @Json(name = "preview") val preview: NetworkImagePreview?,
+    @Json(name = "preview") val preview: NetworkPostImagePreview?,
     @Json(name = "subreddit") val subreddit: String,
     @Json(name = "title") val title: String,
-    @Json(name = "media") val media: NetworkMedia?,
+    @Json(name = "media") val media: NetworkPostMedia?,
     @Json(name = "sr_detail") val subredditDetail: NetworkSubredditDetail?,
-    @Json(name = "all_awardings") val awards: List<NetworkAwards>,
+    @Json(name = "all_awardings") val awards: List<NetworkUserAwards>,
     @Json(name = "total_awards_received") val awardsCount: Int,
     @Json(name = "likes") val likes: Boolean?
 ) : Parcelable {
@@ -67,8 +69,8 @@ data class NetworkListingPost(
         }
 }
 
-fun NetworkListingPost.asExternal(): Post = Post(
-    id = name,
+fun NetworkPostData.asExternal(): Post = Post(
+    id = id,
     postType = enumValueOf(postType.name),
     author = author,
     subreddit = subreddit,

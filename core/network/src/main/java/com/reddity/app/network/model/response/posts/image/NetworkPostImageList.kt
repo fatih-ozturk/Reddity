@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model
+package com.reddity.app.network.model.response.posts.image
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
 @Parcelize
-enum class NetworkListingPostType(private val type: String) : Parcelable {
-    IMAGE("image"),
-    LINK("link"),
-    HOSTED_VIDEO("hosted:video"),
-    RICH_VIDEO("rich:video"),
-    SELF("self");
-
-    companion object {
-        fun of(value: String): NetworkListingPostType =
-            values().firstOrNull { it.type == value } ?: SELF
-    }
-}
+data class NetworkPostImageList(
+    @Json(name = "id") val id: String?,
+    @Json(name = "source") val source: NetworkPostImageSource?
+) : Parcelable

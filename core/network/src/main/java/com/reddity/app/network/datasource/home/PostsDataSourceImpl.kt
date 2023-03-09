@@ -16,18 +16,18 @@
 package com.reddity.app.network.datasource.home
 
 import com.reddity.app.network.api.PostApi
-import com.reddity.app.network.model.NetworkListingDataResponse
-import com.reddity.app.network.model.request.NetworkVoteRequest
+import com.reddity.app.network.model.request.NetworkPostVoteRequest
+import com.reddity.app.network.model.response.posts.NetworkPostDataListing
 import javax.inject.Inject
 
-class PostsDataSourceImpl @Inject constructor(
+internal class PostsDataSourceImpl @Inject constructor(
     private val postApi: PostApi
 ) : PostsDataSource {
     override suspend fun getPopularPostList(
         loadSize: Int,
         after: String?,
         before: String?
-    ): NetworkListingDataResponse = postApi.getPopularPostList(
+    ): NetworkPostDataListing = postApi.getPopularPostList(
         loadSize = loadSize,
         after = after,
         before = before
@@ -37,7 +37,7 @@ class PostsDataSourceImpl @Inject constructor(
         loadSize: Int,
         after: String?,
         before: String?
-    ): NetworkListingDataResponse = postApi.getHomePostList(
+    ): NetworkPostDataListing = postApi.getHomePostList(
         loadSize = loadSize,
         after = after,
         before = before
@@ -45,10 +45,10 @@ class PostsDataSourceImpl @Inject constructor(
 
     override suspend fun postVote(
         postId: String,
-        request: NetworkVoteRequest
+        request: NetworkPostVoteRequest
     ) = postApi.vote(postId = postId, dir = request.value)
 
     override suspend fun getPostById(
         postId: String
-    ): NetworkListingDataResponse = postApi.getRedditPostById(postId = postId).data
+    ): NetworkPostDataListing = postApi.getRedditPostById(postId = postId).data
 }

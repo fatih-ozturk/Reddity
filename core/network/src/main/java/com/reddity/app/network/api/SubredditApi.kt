@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Fatih OZTURK
+ * Copyright 2023 Fatih OZTURK
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.data.repository.account
+package com.reddity.app.network.api
 
-import com.reddity.app.model.RedditUser
-import com.reddity.app.network.datasource.account.AccountDataSource
-import com.reddity.app.network.model.response.user.asExternalModel
-import javax.inject.Inject
+import com.reddity.app.network.model.response.subreddit.EnvelopedSubredditDataListing
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-internal class RedditAccountRepositoryImpl @Inject constructor(
-    private val accountDataSource: AccountDataSource
-) : RedditAccountRepository {
+interface SubredditApi {
 
-    override suspend fun getUser(): RedditUser {
-        val user = accountDataSource.getMe()
-        return user.asExternalModel()
-    }
+    @GET("/subreddits/mine/subscriber")
+    suspend fun getFollowedSubreddits(
+        @Query("raw_json") rawJson: Int = 1
+    ): EnvelopedSubredditDataListing
 }

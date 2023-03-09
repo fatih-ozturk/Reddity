@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.reddity.app.network.model.image
+package com.reddity.app.network.model.response.posts.media
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
@@ -22,7 +22,6 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class NetworkImageList(
-    @Json(name = "id") val id: String?,
-    @Json(name = "source") val source: NetworkImageSource?
+data class NetworkPostMedia(
+    @Json(name = "reddit_video") val redditVideo: NetworkPostVideo?
 ) : Parcelable

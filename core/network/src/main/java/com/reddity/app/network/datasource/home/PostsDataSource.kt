@@ -15,8 +15,8 @@
  */
 package com.reddity.app.network.datasource.home
 
-import com.reddity.app.network.model.NetworkListingDataResponse
-import com.reddity.app.network.model.request.NetworkVoteRequest
+import com.reddity.app.network.model.request.NetworkPostVoteRequest
+import com.reddity.app.network.model.response.posts.NetworkPostDataListing
 
 interface PostsDataSource {
 
@@ -24,14 +24,14 @@ interface PostsDataSource {
         loadSize: Int,
         after: String? = null,
         before: String? = null
-    ): NetworkListingDataResponse
+    ): NetworkPostDataListing
 
     suspend fun getHomePostList(
         loadSize: Int,
         after: String? = null,
         before: String? = null
-    ): NetworkListingDataResponse
+    ): NetworkPostDataListing
 
-    suspend fun postVote(postId: String, request: NetworkVoteRequest): Any
-    suspend fun getPostById(postId: String): NetworkListingDataResponse
+    suspend fun postVote(postId: String, request: NetworkPostVoteRequest): Any
+    suspend fun getPostById(postId: String): NetworkPostDataListing
 }
