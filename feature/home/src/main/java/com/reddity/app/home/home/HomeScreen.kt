@@ -15,6 +15,7 @@
  */
 package com.reddity.app.home.home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -65,6 +66,7 @@ import coil.compose.AsyncImage
 import com.reddity.app.home.tabs.home.HomeTabScreen
 import com.reddity.app.home.tabs.popular.PopularTabScreen
 import com.reddity.app.ui.commons.customTabIndicatorOffset
+import com.reddity.app.ui.commons.ifTrue
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -105,8 +107,9 @@ fun HomeScreen(
             SearchBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.TopCenter),
+                    .ifTrue(!active) { padding(horizontal = 16.dp) }
+                    .align(Alignment.TopCenter)
+                    .animateContentSize(),
                 query = text,
                 onQueryChange = { text = it },
                 onSearch = {

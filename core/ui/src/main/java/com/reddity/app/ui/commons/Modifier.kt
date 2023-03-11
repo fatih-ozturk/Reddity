@@ -67,3 +67,8 @@ fun Modifier.customTabIndicatorOffset(
         )
         .width(currentTabWidth)
 }
+
+inline fun Modifier.ifTrue(value: Boolean, builder: Modifier.() -> Modifier): Modifier {
+    val modifier = Modifier
+    return then(if (value) modifier.builder() else modifier)
+}
