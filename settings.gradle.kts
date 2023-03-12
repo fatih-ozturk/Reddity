@@ -35,4 +35,4 @@ include(":feature:home")
 include(":feature:notification")
 include(":feature:login")
 include(":feature:communities")
-enableFeaturePreview("VERSION_CATALOGS")
+
