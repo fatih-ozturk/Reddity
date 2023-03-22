@@ -43,7 +43,6 @@ internal fun Project.configureKotlinAndroid(
 
             freeCompilerArgs = freeCompilerArgs + listOf(
                 "-opt-in=kotlin.RequiresOptIn",
-                "-opt-in=kotlin.Experimental",
             )
 
             // Set JVM target to 1.8

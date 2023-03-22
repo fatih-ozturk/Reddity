@@ -61,6 +61,7 @@ class HomeTabViewModel @Inject constructor(
         initialValue = HomeTabUiState.Loading
     )
 
+    @Suppress("UNUSED_PARAMETER")
     fun onVoteClicked(postId: String, vote: PostVoteStatus) = viewModelScope.launch {
         // TODO
     }

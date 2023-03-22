@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@Suppress("UNUSED_PARAMETER")
 @HiltViewModel
 class PopularTabViewModel @Inject constructor(
     getPopularPostsUseCase: GetPopularPostsUseCase,
@@ -48,6 +49,7 @@ class PopularTabViewModel @Inject constructor(
     val feed: Flow<PagingData<Post>> =
         getPopularPostsUseCase().cachedIn(viewModelScope).flowOn(dispatcher)
 
+    @Suppress("UNUSED_PARAMETER")
     fun onVoteClicked(
         postId: String,
         vote: PostVoteStatus
