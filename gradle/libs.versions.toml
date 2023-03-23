@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.29.2-rc"
+accompanist = "0.30.0"
 androidxActivity = "1.7.0"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
 androidxCore = "1.9.0"
